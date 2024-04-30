@@ -1,9 +1,8 @@
 package com.example.FMIbook.server.course;
 
-import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.CourseDTO;
+import com.example.FMIbook.domain.course.CourseRequestDTO;
 import com.example.FMIbook.domain.course.CourseService;
-import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import jakarta.validation.Valid;
@@ -37,26 +36,14 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseDTO addOne(@RequestBody @Valid Course course) {
+    public CourseDTO addOne(@RequestBody @Valid CourseRequestDTO course) {
         return courseService.addOne(course);
     }
 
     @PutMapping("{courseId}")
     public CourseDTO update(@PathVariable UUID courseId,
-                             @RequestBody @Valid CourseDTO courseDto) {
+                             @RequestBody @Valid CourseRequestDTO courseDto) {
         return courseService.update(courseId, courseDto);
-    }
-
-    @PutMapping("{courseId}/students")
-    public CourseDTO enrollStudents(@PathVariable UUID courseId,
-                                    @RequestBody List<UUID> studentIds) {
-        return courseService.setStudents(courseId, studentIds);
-    }
-
-    @PutMapping("{courseId}/teachers")
-    public CourseDTO setTeachers(@PathVariable UUID courseId,
-                                    @RequestBody List<UUID> teacherIds) {
-        return courseService.setTeachers(courseId, teacherIds);
     }
 
     @DeleteMapping("{courseId}")

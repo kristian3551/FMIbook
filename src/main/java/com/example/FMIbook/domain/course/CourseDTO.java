@@ -1,15 +1,11 @@
 package com.example.FMIbook.domain.course;
 
-import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.section.SectionDTO;
-import com.example.FMIbook.domain.student.Student;
+import com.example.FMIbook.domain.department.Department;
+import com.example.FMIbook.domain.department.DepartmentDTO;
 import com.example.FMIbook.domain.student.StudentDTO;
-import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.student.grade.GradeDTO;
-import com.example.FMIbook.domain.teacher.Teacher;
 import com.example.FMIbook.domain.teacher.TeacherDTO;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.ArrayList;
@@ -40,6 +36,16 @@ public class CourseDTO {
     private List<TeacherDTO> teachers;
 
     private List<SectionDTO> sections;
+
+    private DepartmentDTO department;
+
+    public DepartmentDTO getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDTO department) {
+        this.department = department;
+    }
 
     public void setSections(List<SectionDTO> sections) {
         this.sections = sections;
@@ -75,7 +81,16 @@ public class CourseDTO {
         return grades;
     }
 
-    public CourseDTO(UUID id, String name, Integer year, String semester, String category, String type, String description, List<StudentDTO> students, List<TeacherDTO> teachers) {
+    public CourseDTO(UUID id,
+                     String name,
+                     Integer year,
+                     String semester,
+                     String category,
+                     String type,
+                     String description,
+                     List<StudentDTO> students,
+                     List<TeacherDTO> teachers,
+                     DepartmentDTO department) {
         this.id = id;
         this.name = name;
         this.year = year;
@@ -85,9 +100,17 @@ public class CourseDTO {
         this.description = description;
         this.students = students;
         this.teachers = teachers;
+        this.department = department;
     }
 
-    public CourseDTO(String name, Integer year, String semester, String category, String type, String description, List<StudentDTO> students, List<TeacherDTO> teachers) {
+    public CourseDTO(String name,
+                     Integer year,
+                     String semester,
+                     String category,
+                     String type,
+                     String description,
+                     List<StudentDTO> students,
+                     List<TeacherDTO> teachers) {
         this.name = name;
         this.year = year;
         this.semester = semester;
@@ -209,7 +232,8 @@ public class CourseDTO {
                 course.getType(),
                 course.getDescription(),
                 students,
-                teachers
+                teachers,
+                DepartmentDTO.serializeFromEntity(course.getDepartment())
         );
 
         result.setGrades(grades);

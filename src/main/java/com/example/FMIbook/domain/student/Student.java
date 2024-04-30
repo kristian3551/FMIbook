@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -93,7 +94,7 @@ public class Student {
     public Student() {
     }
 
-    @ManyToMany(targetEntity= Course.class, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "students")
     private List<Course> courses;
 
     @Override
@@ -113,8 +114,16 @@ public class Student {
                 '}';
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Grade> grades;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public void setGrades(List<Grade> grades) {
         this.grades = grades;

@@ -3,6 +3,7 @@ package com.example.FMIbook.domain.course.section;
 import com.example.FMIbook.domain.course.Course;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -21,7 +22,16 @@ public class Section {
     private Integer priority;
 
     @ManyToOne
+    @JoinColumn(name="course_id", nullable=false)
     private Course course;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Section() {
     }

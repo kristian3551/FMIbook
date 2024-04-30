@@ -5,6 +5,7 @@ import com.example.FMIbook.domain.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +29,14 @@ public class Grade {
 
     @Column
     private Double grade;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     @Override
     public String toString() {

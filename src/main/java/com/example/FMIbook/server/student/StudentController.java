@@ -38,13 +38,6 @@ public class StudentController {
         return studentService.addOne(student);
     }
 
-    @PutMapping("{studentId}/courses")
-    public StudentDTO setCourses(
-            @PathVariable UUID studentId,
-            @RequestBody List<UUID> coursesIds) {
-        return studentService.setCourses(studentId, coursesIds);
-    }
-
     @PutMapping("{studentId}")
     public StudentDTO update(@PathVariable UUID studentId,
             @RequestBody @Valid StudentDTO studentDto) {
