@@ -88,9 +88,7 @@ public class TeacherService {
             teacher.setPassword(teacherDto.getPassword());
         }
 
-        System.out.println(teacher);
         teacherRepository.save(teacher);
-        System.out.println("here");
         return TeacherDTO.serializeFromEntity(teacher);
     }
 

@@ -3,12 +3,12 @@ package com.example.FMIbook.domain.course;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.teacher.Teacher;
+import com.example.FMIbook.domain.course.section.Section;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -46,6 +46,12 @@ public class Course {
     @ManyToMany(targetEntity = Teacher.class, fetch = FetchType.LAZY)
     private List<Teacher> teachers;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Grade> grades;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Section> sections;
+
     public Course() {
     }
 
@@ -61,9 +67,6 @@ public class Course {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Grade> grades;
 
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
@@ -166,5 +169,13 @@ public class Course {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    public List<Section> getSections() {
+        return sections;
     }
 }

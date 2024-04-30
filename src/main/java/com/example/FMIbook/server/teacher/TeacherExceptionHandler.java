@@ -5,6 +5,7 @@ import com.example.FMIbook.utils.exception.BaseExceptionHandler;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class TeacherExceptionHandler extends BaseExceptionHandler {
         super(LoggerFactory.getLogger(TeacherController.class));
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(TeacherNotFoundException.class)
+    @ExceptionHandler(TeacherNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleStudentNotFoundException(TeacherNotFoundException ex) {
         return this.handleNotFoundException(ex);
     }
