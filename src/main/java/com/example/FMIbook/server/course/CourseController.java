@@ -3,6 +3,9 @@ package com.example.FMIbook.server.course;
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.CourseService;
+import com.example.FMIbook.domain.course.section.Section;
+import com.example.FMIbook.domain.course.section.SectionDTO;
+import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +62,20 @@ public class CourseController {
     @DeleteMapping("{courseId}")
     public void delete(@PathVariable UUID courseId) {
         courseService.delete(courseId);
+    }
+
+    @PostMapping("sections")
+    public SectionDTO addSection(@Valid @RequestBody SectionRequestDTO sectionDto) {
+        return courseService.addSection(sectionDto);
+    }
+
+    @DeleteMapping("sections/{sectionId}")
+    public void addSection(@PathVariable UUID sectionId) {
+        courseService.deleteSection(sectionId);
+    }
+
+    @PutMapping("sections/{sectionId}")
+    public SectionDTO updateSection(@PathVariable UUID sectionId, @RequestBody SectionRequestDTO sectionDto) {
+        return courseService.updateSection(sectionId, sectionDto);
     }
 }

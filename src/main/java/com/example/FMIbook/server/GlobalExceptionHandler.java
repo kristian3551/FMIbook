@@ -17,7 +17,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Map<String, Object>> handleGeneralError(RuntimeException ex) {
-        System.out.println(ex);
         return super.handleInternalError(ex);
     }
 

@@ -1,5 +1,7 @@
 package com.example.FMIbook.domain.course;
 
+import com.example.FMIbook.domain.course.section.Section;
+import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.StudentDTO;
 import com.example.FMIbook.domain.student.grade.Grade;
@@ -36,6 +38,16 @@ public class CourseDTO {
     private List<StudentDTO> students;
 
     private List<TeacherDTO> teachers;
+
+    private List<SectionDTO> sections;
+
+    public void setSections(List<SectionDTO> sections) {
+        this.sections = sections;
+    }
+
+    public List<SectionDTO> getSections() {
+        return sections;
+    }
 
     @Override
     public String toString() {
@@ -181,6 +193,13 @@ public class CourseDTO {
         }).toList()
                 : new ArrayList<>();
 
+        List<SectionDTO> sections = course.getSections() != null
+                ? course.getSections().stream().map(section -> {
+            section.setCourse(null);
+            return SectionDTO.serializeFromEntity(section);
+        }).toList()
+                : new ArrayList<>();
+
         CourseDTO result = new CourseDTO(
                 course.getId(),
                 course.getName(),
@@ -194,7 +213,7 @@ public class CourseDTO {
         );
 
         result.setGrades(grades);
-
+        result.setSections(sections);
         return result;
     }
 }

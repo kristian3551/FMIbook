@@ -18,7 +18,7 @@ public class Teacher {
     private UUID id;
 
     @Column(nullable = false)
-//    @Pattern(regexp = "[A-Za-z ]+]", message = "name is empty")
+    @Pattern(regexp = "[A-Za-z ]+]", message = "name is empty")
     private String name;
 
     @Column(nullable = false)
