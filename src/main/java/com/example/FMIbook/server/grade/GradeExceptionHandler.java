@@ -16,7 +16,7 @@ public class GradeExceptionHandler extends BaseExceptionHandler {
     }
 
     @ExceptionHandler(GradeNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleStudentNotFoundException(GradeNotFoundException ex) {
+    public ResponseEntity<Map<String, Object>> handleGradeNotFoundException(GradeNotFoundException ex) {
         return this.handleNotFoundException(ex);
     }
 }

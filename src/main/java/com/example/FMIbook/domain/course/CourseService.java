@@ -6,12 +6,14 @@ import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.section.SectionRepository;
 import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import com.example.FMIbook.domain.course.section.exception.SectionNotFoundException;
+import com.example.FMIbook.domain.department.Department;
+import com.example.FMIbook.domain.department.DepartmentRepository;
+import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.StudentRepository;
-import com.example.FMIbook.domain.student.grade.Grade;
-import com.example.FMIbook.domain.student.grade.GradeRepository;
 import com.example.FMIbook.domain.teacher.Teacher;
 import com.example.FMIbook.domain.teacher.TeacherRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,15 +30,15 @@ import java.util.UUID;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
-    private final GradeRepository gradeRepository;
+    private final DepartmentRepository departmentRepository;
     private final TeacherRepository teacherRepository;
     private final SectionRepository sectionRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, StudentRepository studentRepository, GradeRepository gradeRepository, TeacherRepository teacherRepository, SectionRepository sectionRepository) {
+    public CourseService(CourseRepository courseRepository, StudentRepository studentRepository, DepartmentRepository departmentRepository, TeacherRepository teacherRepository, SectionRepository sectionRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
-        this.gradeRepository = gradeRepository;
+        this.departmentRepository = departmentRepository;
         this.teacherRepository = teacherRepository;
         this.sectionRepository = sectionRepository;
     }
@@ -66,12 +69,39 @@ public class CourseService {
         return CourseDTO.serializeFromEntity(course.get());
     }
 
-    public CourseDTO addOne(Course course) {
+    @Transactional
+    public CourseDTO addOne(CourseRequestDTO courseDto) {
+        List<Student> students = courseDto.getStudents() != null
+                ? studentRepository.findAllById(courseDto.getStudents())
+                : new ArrayList<>();
+        List<Teacher> teachers = courseDto.getTeachers() != null
+                ? teacherRepository.findAllById(courseDto.getTeachers())
+                : new ArrayList<>();
+
+        Course course = new Course(
+                courseDto.getName(),
+                courseDto.getYear(),
+                courseDto.getSemester(),
+                courseDto.getCategory(),
+                courseDto.getType(),
+                courseDto.getDescription(),
+                students,
+                teachers
+        );
+        if (courseDto.getDepartment() != null) {
+            Optional<Department> departmentOpt = departmentRepository.findById(courseDto.getDepartment());
+
+            if (departmentOpt.isEmpty()) {
+                throw new DepartmentNotFoundException();
+            }
+            course.setDepartment(departmentOpt.get());
+        }
         courseRepository.save(course);
         return CourseDTO.serializeFromEntity(course);
     }
 
-    public CourseDTO update(UUID id, CourseDTO courseDto) {
+    @Transactional
+    public CourseDTO update(UUID id, CourseRequestDTO courseDto) {
         Optional<Course> courseOpt = courseRepository.findById(id);
 
         if (courseOpt.isEmpty()) {
@@ -104,41 +134,28 @@ public class CourseService {
             course.setDescription(courseDto.getDescription());
         }
 
+        if (courseDto.getStudents() != null) {
+            List<Student> students = studentRepository.findAllById(courseDto.getStudents());
+            course.setStudents(students);
+        }
+
+        if (courseDto.getTeachers() != null) {
+            List<Teacher> teachers = teacherRepository.findAllById(courseDto.getTeachers());
+            course.setTeachers(teachers);
+        }
+
+        if (courseDto.getDepartment() != null) {
+            Optional<Department> departmentOpt = departmentRepository.findById(courseDto.getDepartment());
+
+            if (departmentOpt.isEmpty()) {
+                throw new DepartmentNotFoundException();
+            }
+
+            course.setDepartment(departmentOpt.get());
+        }
+
         courseRepository.save(course);
         return CourseDTO.serializeFromEntity(course);
-    }
-
-    public CourseDTO setStudents(UUID id, List<UUID> gradeIds) {
-        Optional<Course> course = courseRepository.findById(id);
-        if (course.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        List<Student> students = studentRepository.findAllById(gradeIds);
-        course.get().setStudents(students);
-        courseRepository.save(course.get());
-        return CourseDTO.serializeFromEntity(course.get());
-    }
-
-    public CourseDTO setGrades(UUID id, List<UUID> gradeIds) {
-        Optional<Course> course = courseRepository.findById(id);
-        if (course.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        List<Grade> grades = gradeRepository.findAllById(gradeIds);
-        course.get().setGrades(grades);
-        courseRepository.save(course.get());
-        return CourseDTO.serializeFromEntity(course.get());
-    }
-
-    public CourseDTO setTeachers(UUID id, List<UUID> teacherIds) {
-        Optional<Course> course = courseRepository.findById(id);
-        if (course.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        List<Teacher> teachers = teacherRepository.findAllById(teacherIds);
-        course.get().setTeachers(teachers);
-        courseRepository.save(course.get());
-        return CourseDTO.serializeFromEntity(course.get());
     }
 
     public SectionDTO addSection(SectionRequestDTO sectionDto) {
@@ -182,17 +199,6 @@ public class CourseService {
 
         sectionRepository.save(section);
         return SectionDTO.serializeFromEntity(section);
-    }
-
-    public CourseDTO setSections(UUID id, List<UUID> sectionIds) {
-        Optional<Course> course = courseRepository.findById(id);
-        if (course.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        List<Section> sections = sectionRepository.findAllById(sectionIds);
-        course.get().setSections(sections);
-        courseRepository.save(course.get());
-        return CourseDTO.serializeFromEntity(course.get());
     }
 
     public void delete(UUID id) {

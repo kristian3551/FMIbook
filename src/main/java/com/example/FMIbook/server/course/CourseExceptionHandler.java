@@ -17,12 +17,12 @@ public class CourseExceptionHandler extends BaseExceptionHandler {
     }
 
     @ExceptionHandler(CourseNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleStudentNotFoundException(CourseNotFoundException ex) {
+    public ResponseEntity<Map<String, Object>> handleCourseNotFound(CourseNotFoundException ex) {
         return this.handleNotFoundException(ex);
     }
 
     @ExceptionHandler(SectionNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleStudentNotFoundException(SectionNotFoundException ex) {
+    public ResponseEntity<Map<String, Object>> handleSectionNotFoundException(SectionNotFoundException ex) {
         return this.handleNotFoundException(ex);
     }
 }

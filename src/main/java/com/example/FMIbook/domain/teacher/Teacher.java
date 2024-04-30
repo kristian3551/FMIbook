@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class Teacher {
     private UUID id;
 
     @Column(nullable = false)
-    @Pattern(regexp = "[A-Za-z ]+]", message = "name is empty")
+    @Pattern(regexp = "[A-Za-z ]+", message = "name is empty")
     private String name;
 
     @Column(nullable = false)
@@ -33,8 +34,16 @@ public class Teacher {
     @Pattern(regexp = "[A-Za-z ]+", message = "degree is empty")
     private String degree;
 
-    @ManyToMany(mappedBy = "teachers", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "teachers")
     private List<Course> courses;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Teacher() {
     }

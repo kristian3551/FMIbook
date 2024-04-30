@@ -1,5 +1,6 @@
 package com.example.FMIbook.domain.course;
 
+import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.teacher.Teacher;
@@ -7,7 +8,9 @@ import com.example.FMIbook.domain.course.section.Section;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,17 +43,29 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity= Student.class)
     private List<Student> students;
 
-    @ManyToMany(targetEntity = Teacher.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Teacher.class)
     private List<Teacher> teachers;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="course")
     private List<Section> sections;
+
+    @ManyToOne
+    @JoinColumn(name="department_id")
+    private Department department;
+
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Course() {
     }
@@ -177,5 +192,17 @@ public class Course {
 
     public List<Section> getSections() {
         return sections;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
