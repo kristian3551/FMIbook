@@ -43,10 +43,10 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany(targetEntity= Student.class, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     private List<Student> students;
 
-    @ManyToMany(targetEntity = Teacher.class)
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
     private List<Teacher> teachers;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
@@ -94,7 +94,15 @@ public class Course {
         return grades;
     }
 
-    public Course(UUID id, String name, Integer year, String semester, String category, String type, String description, List<Student> students, List<Teacher> teachers) {
+    public Course(UUID id,
+                  String name,
+                  Integer year,
+                  String semester,
+                  String category,
+                  String type,
+                  String description,
+                  List<Student> students,
+                  List<Teacher> teachers) {
         this.id = id;
         this.name = name;
         this.year = year;
@@ -106,7 +114,14 @@ public class Course {
         this.teachers = teachers;
     }
 
-    public Course(String name, Integer year, String semester, String category, String type, String description, List<Student> students, List<Teacher> teachers) {
+    public Course(String name,
+                  Integer year,
+                  String semester,
+                  String category,
+                  String type,
+                  String description,
+                  List<Student> students,
+                  List<Teacher> teachers) {
         this.name = name;
         this.year = year;
         this.semester = semester;
