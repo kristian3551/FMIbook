@@ -53,6 +53,16 @@ public class CourseController {
         courseService.delete(courseId);
     }
 
+    @PutMapping("{courseId}/students")
+    public CourseDTO updateStudents(@PathVariable UUID courseId, @RequestBody List<UUID> ids) {
+        return courseService.updateStudents(courseId, ids);
+    }
+
+    @PutMapping("{courseId}/teachers")
+    public CourseDTO updateTeachers(@PathVariable UUID courseId, @RequestBody List<UUID> ids) {
+        return courseService.updateTeachers(courseId, ids);
+    }
+
     @PostMapping("sections")
     public SectionDTO addSection(@Valid @RequestBody SectionRequestDTO sectionDto) {
         return courseService.addSection(sectionDto);

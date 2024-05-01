@@ -77,7 +77,7 @@ public class Student extends User {
         super();
     }
 
-    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Override

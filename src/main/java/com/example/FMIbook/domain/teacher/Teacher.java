@@ -21,7 +21,7 @@ public class Teacher extends User {
     @Pattern(regexp = ".+", message = "degree is empty")
     private String degree;
 
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Column(name = "createdAt")
