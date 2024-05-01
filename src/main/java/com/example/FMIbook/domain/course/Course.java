@@ -1,5 +1,6 @@
 package com.example.FMIbook.domain.course;
 
+import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.grade.Grade;
@@ -69,6 +70,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<CoursePost> posts;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Achievement> achievements;
 
     public Course() {
     }
@@ -230,5 +234,9 @@ public class Course {
 
     public void setPosts(List<CoursePost> posts) {
         this.posts = posts;
+    }
+
+    public List<Achievement> getAchievements() {
+        return achievements;
     }
 }

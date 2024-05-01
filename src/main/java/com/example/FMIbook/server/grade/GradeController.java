@@ -33,8 +33,8 @@ public class GradeController {
     }
 
     @GetMapping("{gradeId}")
-    public GradeDTO findOne(@PathVariable UUID teacherId) {
-        return gradeService.getOne(teacherId);
+    public GradeDTO findOne(@PathVariable UUID gradeId) {
+        return gradeService.getOne(gradeId);
     }
 
     @PostMapping

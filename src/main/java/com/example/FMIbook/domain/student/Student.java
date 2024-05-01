@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.student;
 
 import com.example.FMIbook.domain.course.Course;
+import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.utils.user.User;
 import jakarta.persistence.*;
@@ -44,6 +45,9 @@ public class Student extends User {
 
     @Column(nullable = false)
     private String degree;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Achievement> achievements;
 
     public List<Course> getCourses() {
         return courses;
@@ -209,5 +213,13 @@ public class Student extends User {
 
     public String getDegree() {
         return degree;
+    }
+
+    public List<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(List<Achievement> achievements) {
+        this.achievements = achievements;
     }
 }

@@ -1,9 +1,9 @@
 package com.example.FMIbook.domain.department;
 
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
+import com.example.FMIbook.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -26,18 +26,7 @@ public class DepartmentService {
             Integer offset,
             String sort
     ) {
-        Sort.Direction orderOptions = Sort.Direction.ASC;
-        String sortField = "name";
-        if (sort != null) {
-            sortField = sort.charAt(0) == '-' ? sort.substring(1) : sort;
-            orderOptions = sort.charAt(0) == '-' ? Sort.Direction.DESC : Sort.Direction.ASC;
-        }
-        int pageNumber = offset == null ? 0 : offset;
-        int pageSize = limit == null ? 5 : limit;
-
-        Pageable page = PageRequest.of(pageNumber, pageSize,
-                orderOptions == Sort.Direction.ASC ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Department> departments = departmentRepository.findAll(page);
         return departments.getContent().stream().map(DepartmentDTO::serializeFromEntity).toList();
     }

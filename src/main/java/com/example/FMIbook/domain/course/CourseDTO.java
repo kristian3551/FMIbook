@@ -223,6 +223,12 @@ public class CourseDTO {
         }).toList()
                 : new ArrayList<>();
 
+        DepartmentDTO departmentDTO = null;
+
+        if (course.getDepartment() != null) {
+            departmentDTO = new DepartmentDTO(course.getDepartment().getId(), course.getDepartment().getName(), new ArrayList<>());
+        }
+
         CourseDTO result = new CourseDTO(
                 course.getId(),
                 course.getName(),
@@ -233,7 +239,7 @@ public class CourseDTO {
                 course.getDescription(),
                 students,
                 teachers,
-                DepartmentDTO.serializeFromEntity(course.getDepartment())
+                departmentDTO
         );
 
         result.setGrades(grades);
