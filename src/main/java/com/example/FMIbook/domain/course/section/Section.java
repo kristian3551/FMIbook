@@ -21,8 +21,8 @@ public class Section {
     @Column(nullable = false)
     private Integer priority;
 
-    @ManyToOne
-    @JoinColumn(name="course_id", nullable=false)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Course.class)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column(name = "createdAt")

@@ -1,6 +1,8 @@
 package com.example.FMIbook.server.course;
 
 import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
+import com.example.FMIbook.domain.course.exception.CourseUpdateException;
+import com.example.FMIbook.domain.course.posts.exception.PostNotFoundException;
 import com.example.FMIbook.domain.course.section.exception.SectionNotFoundException;
 import com.example.FMIbook.utils.exception.BaseExceptionHandler;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,16 @@ public class CourseExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(SectionNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleSectionNotFoundException(SectionNotFoundException ex) {
         return this.handleNotFoundException(ex);
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handlePostNotFoundException(PostNotFoundException ex) {
+        return this.handleNotFoundException(ex);
+    }
+
+    @ExceptionHandler(CourseUpdateException.class)
+    public ResponseEntity<Map<String, Object>> handleCourseUpdateOrderException(CourseUpdateException ex) {
+        return this.handleDomainException(ex);
     }
 }
 

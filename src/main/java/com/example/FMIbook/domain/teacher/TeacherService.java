@@ -84,10 +84,6 @@ public class TeacherService {
             teacher.setDegree(teacherDto.getDegree());
         }
 
-        if (teacherDto.getPassword() != null) {
-            teacher.setPassword(teacherDto.getPassword());
-        }
-
         teacherRepository.save(teacher);
         return TeacherDTO.serializeFromEntity(teacher);
     }
