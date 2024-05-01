@@ -3,6 +3,8 @@ package com.example.FMIbook.server.course;
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.CourseRequestDTO;
 import com.example.FMIbook.domain.course.CourseService;
+import com.example.FMIbook.domain.course.achievement.AchievementDTO;
+import com.example.FMIbook.domain.course.achievement.AchievementRequestDTO;
 import com.example.FMIbook.domain.course.posts.PostDTO;
 import com.example.FMIbook.domain.course.posts.PostRequestDTO;
 import com.example.FMIbook.domain.course.section.SectionDTO;
@@ -105,5 +107,28 @@ public class CourseController {
     @DeleteMapping("posts/{postId}")
     public void deletePost(@PathVariable UUID postId) {
         courseService.deletePost(postId);
+    }
+
+    @GetMapping("{courseId}/achievements")
+    public List<AchievementDTO> findAchievementsByCourse(@PathVariable UUID courseId,
+                                                         @RequestParam(required = false) Integer limit,
+                                                         @RequestParam(required = false) Integer offset,
+                                                         @RequestParam(required = false) String sort) {
+        return courseService.findAllAchievementsByCourse(courseId, limit, offset, sort);
+    }
+
+    @PostMapping("achievements")
+    public AchievementDTO addPost(@RequestBody @Valid AchievementRequestDTO achievementDto) {
+        return courseService.addAchievement(achievementDto);
+    }
+
+    @PutMapping("achievements/{achievementId}")
+    public AchievementDTO updatePost(@PathVariable UUID achievementId, @RequestBody @Valid AchievementRequestDTO achievementRequestDTO) {
+        return courseService.updateAchievement(achievementId, achievementRequestDTO);
+    }
+
+    @DeleteMapping("achievements/{achievementId}")
+    public void deleteAchievement(@PathVariable UUID achievementId) {
+        courseService.deleteAchievement(achievementId);
     }
 }

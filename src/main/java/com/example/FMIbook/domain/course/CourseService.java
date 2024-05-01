@@ -1,7 +1,11 @@
 package com.example.FMIbook.domain.course;
 
+import com.example.FMIbook.domain.course.achievement.Achievement;
+import com.example.FMIbook.domain.course.achievement.AchievementDTO;
+import com.example.FMIbook.domain.course.achievement.AchievementRepository;
+import com.example.FMIbook.domain.course.achievement.AchievementRequestDTO;
+import com.example.FMIbook.domain.course.achievement.exception.AchievementNotFoundException;
 import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
-import com.example.FMIbook.domain.course.exception.CourseUpdateException;
 import com.example.FMIbook.domain.course.posts.CoursePost;
 import com.example.FMIbook.domain.course.posts.CoursePostRepository;
 import com.example.FMIbook.domain.course.posts.PostDTO;
@@ -17,16 +21,15 @@ import com.example.FMIbook.domain.department.DepartmentRepository;
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
 import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.StudentRepository;
-import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.teacher.Teacher;
 import com.example.FMIbook.domain.teacher.TeacherRepository;
+import com.example.FMIbook.server.student.StudentNotFoundException;
+import com.example.FMIbook.utils.ServiceUtils;
 import com.example.FMIbook.utils.user.User;
 import com.example.FMIbook.utils.user.UserRepository;
 import com.example.FMIbook.utils.user.exception.UserNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -45,6 +48,7 @@ public class CourseService {
     private final SectionRepository sectionRepository;
     private final CoursePostRepository coursePostRepository;
     private final UserRepository userRepository;
+    private final AchievementRepository achievementRepository;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
@@ -53,7 +57,8 @@ public class CourseService {
                          TeacherRepository teacherRepository,
                          SectionRepository sectionRepository,
                          CoursePostRepository coursePostRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository,
+                         AchievementRepository achievementRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
@@ -61,21 +66,11 @@ public class CourseService {
         this.sectionRepository = sectionRepository;
         this.coursePostRepository = coursePostRepository;
         this.userRepository = userRepository;
+        this.achievementRepository = achievementRepository;
     }
 
     public List<CourseDTO> findAll(Integer limit, Integer offset, String sort) {
-        Sort.Direction orderOptions = Sort.Direction.ASC;
-        String sortField = "name";
-        if (sort != null) {
-            sortField = sort.charAt(0) == '-' ? sort.substring(1) : sort;
-            orderOptions = sort.charAt(0) == '-' ? Sort.Direction.DESC : Sort.Direction.ASC;
-        }
-        int pageNumber = offset == null ? 0 : offset;
-        int pageSize = limit == null ? 5 : limit;
-
-        Pageable page = PageRequest.of(pageNumber, pageSize,
-                orderOptions == Sort.Direction.ASC ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Course> courses = courseRepository.findAll(page);
         return courses.getContent().stream().map(CourseDTO::serializeFromEntity).toList();
     }
@@ -172,7 +167,9 @@ public class CourseService {
                     course.getType(),
                     course.getDescription(),
                     course.getDepartment() == null ? null : course.getDepartment().getId());
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         return CourseDTO.serializeFromEntity(course);
     }
 
@@ -215,6 +212,7 @@ public class CourseService {
         course.setTeachers(teachers);
         return CourseDTO.serializeFromEntity(course);
     }
+
     public SectionDTO addSection(SectionRequestDTO sectionDto) {
         Optional<Course> course = courseRepository.findById(sectionDto.getCourseId());
 
@@ -274,18 +272,7 @@ public class CourseService {
             throw new CourseNotFoundException();
         }
 
-        Sort.Direction orderOptions = Sort.Direction.ASC;
-        String sortField = "created_at";
-        if (sort != null) {
-            sortField = sort.charAt(0) == '-' ? sort.substring(1) : sort;
-            orderOptions = sort.charAt(0) == '-' ? Sort.Direction.DESC : Sort.Direction.ASC;
-        }
-        int pageNumber = offset == null ? 0 : offset;
-        int pageSize = limit == null ? 5 : limit;
-
-        Pageable page = PageRequest.of(pageNumber, pageSize,
-                orderOptions == Sort.Direction.ASC ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
         Page<CoursePost> posts = coursePostRepository.findAllByCourse(id, page);
         return posts.getContent().stream().map(PostDTO::serializeFromEntity).toList();
     }
@@ -364,5 +351,72 @@ public class CourseService {
         }
 
         coursePostRepository.delete(postOpt.get());
+    }
+
+    public List<AchievementDTO> findAllAchievementsByCourse(
+            UUID courseId,
+            Integer limit,
+            Integer offset,
+            String sort
+    ) {
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
+        List<Achievement> achievements = achievementRepository.findByCourse(courseId, page);
+        return achievements.stream().map(AchievementDTO::serializeFromEntity).toList();
+    }
+
+    public AchievementDTO addAchievement(AchievementRequestDTO achievementDto) {
+        Optional<Student> student = studentRepository.findById(achievementDto.getStudentId());
+
+        if (student.isEmpty()) {
+            throw new StudentNotFoundException();
+        }
+
+        Optional<Course> course = courseRepository.findById(achievementDto.getCourseId());
+
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException();
+        }
+
+        Achievement achievement = new Achievement(
+                achievementDto.getName(),
+                achievementDto.getDescription(),
+                course.get(),
+                student.get()
+        );
+
+        achievementRepository.save(achievement);
+        return AchievementDTO.serializeFromEntity(achievement);
+    }
+
+    public AchievementDTO updateAchievement(UUID id, AchievementRequestDTO achievementDto) {
+        Optional<Achievement> achievementOpt = achievementRepository.findById(id);
+
+        if (achievementOpt.isEmpty()) {
+            throw new AchievementNotFoundException();
+        }
+
+        Achievement achievement = achievementOpt.get();
+
+        if (achievementDto.getName() != null) {
+            achievement.setName(achievementDto.getName());
+        }
+
+        if (achievementDto.getDescription() != null) {
+            achievement.setDescription(achievementDto.getDescription());
+        }
+
+        achievementRepository.save(achievement);
+        return AchievementDTO.serializeFromEntity(achievement);
+    }
+
+    public void deleteAchievement(UUID id) {
+        Optional<Achievement> achievementOpt = achievementRepository.findById(id);
+
+        if (achievementOpt.isEmpty()) {
+            throw new AchievementNotFoundException();
+        }
+
+        Achievement achievement = achievementOpt.get();
+        achievementRepository.delete(achievement);
     }
 }

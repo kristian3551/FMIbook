@@ -1,17 +1,15 @@
 package com.example.FMIbook.domain.student.grade;
 
 import com.example.FMIbook.domain.course.Course;
-import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.CourseRepository;
 import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
 import com.example.FMIbook.domain.student.Student;
-import com.example.FMIbook.domain.student.StudentDTO;
 import com.example.FMIbook.domain.student.StudentRepository;
 import com.example.FMIbook.domain.student.grade.exception.GradeNotFoundException;
 import com.example.FMIbook.server.student.StudentNotFoundException;
+import com.example.FMIbook.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -38,18 +36,7 @@ public class GradeService {
             Integer offset,
             String sort
     ) {
-        Sort.Direction orderOptions = Sort.Direction.ASC;
-        String sortField = "percentage";
-        if (sort != null) {
-            sortField = sort.charAt(0) == '-' ? sort.substring(1) : sort;
-            orderOptions = sort.charAt(0) == '-' ? Sort.Direction.DESC : Sort.Direction.ASC;
-        }
-        int pageNumber = offset == null ? 0 : offset;
-        int pageSize = limit == null ? 5 : limit;
-
-        Pageable page = PageRequest.of(pageNumber, pageSize,
-                orderOptions == Sort.Direction.ASC ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
-
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "percentage", Sort.Direction.DESC);
         Page<Grade> grades = gradeRepository.findAll(page);
         return grades.getContent().stream().map(GradeDTO::serializeFromEntity).toList();
     }
