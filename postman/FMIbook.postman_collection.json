@@ -108,7 +108,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Ako tova bachka, se pensioniram!\"\n}",
+							"raw": "{\n    \"description\": \"Ako tova bachka se pensioniram!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -153,7 +153,7 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "384b06c4-6baa-4473-8314-f436afffb67e"
+									"value": "384b06c4-6baa-4473-8314-f436afffb67f"
 								}
 							]
 						}
@@ -397,6 +397,152 @@
 										{
 											"key": "postId",
 											"value": "ee5d9fe5-e840-47f7-964c-b3144844578b"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "achievements",
+					"item": [
+						{
+							"name": "Get Achievements",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/:courseId/achievements",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										":courseId",
+										"achievements"
+									],
+									"variable": [
+										{
+											"key": "courseId",
+											"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add achievement",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"100 percent on exam\",\n    \"description\": \"No comment\",\n    \"courseId\": \"72d5c6ca-4e56-41ac-a718-e2d833c641f0\",\n    \"studentId\": \"59cdba27-7a53-47ec-93fc-f84ccf8fd9fe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/achievements",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"achievements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Achievement",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/achievements/:achievementId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"achievements",
+										":achievementId"
+									],
+									"variable": [
+										{
+											"key": "achievementId",
+											"value": "42a703e6-ceef-49d0-a83a-688fcbeab1c5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Achievement",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"90 percent on exam\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/achievements/:achievementId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"achievements",
+										":achievementId"
+									],
+									"variable": [
+										{
+											"key": "achievementId",
+											"value": "42a703e6-ceef-49d0-a83a-688fcbeab1c4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Achievement Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/achievements/:achievementId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"achievements",
+										":achievementId"
+									],
+									"variable": [
+										{
+											"key": "achievementId",
+											"value": "1d7c8b6d-f574-4dc6-b3df-9057295b99c3"
 										}
 									]
 								}
