@@ -17,11 +17,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         super(LoggerFactory.getLogger(GlobalExceptionHandler.class));
     }
 
-    @ExceptionHandler
-    public ResponseEntity<Map<String, Object>> handleGeneralError(RuntimeException ex) {
-        return super.handleInternalError(ex);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {

@@ -5,7 +5,7 @@ import com.example.FMIbook.utils.exception.NotFoundException;
 public class AchievementNotFoundException extends NotFoundException {
     public static final int CODE = 1701;
     public AchievementNotFoundException() {
-        super(CODE);
+        super("achievement not found", CODE);
     }
 
     public AchievementNotFoundException(String message) {

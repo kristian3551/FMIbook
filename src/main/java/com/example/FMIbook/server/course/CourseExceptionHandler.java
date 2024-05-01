@@ -1,5 +1,6 @@
 package com.example.FMIbook.server.course;
 
+import com.example.FMIbook.domain.course.achievement.exception.AchievementNotFoundException;
 import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
 import com.example.FMIbook.domain.course.exception.CourseUpdateException;
 import com.example.FMIbook.domain.course.posts.exception.PostNotFoundException;
@@ -36,6 +37,11 @@ public class CourseExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(CourseUpdateException.class)
     public ResponseEntity<Map<String, Object>> handleCourseUpdateOrderException(CourseUpdateException ex) {
         return this.handleDomainException(ex);
+    }
+
+    @ExceptionHandler(AchievementNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleAchievementNotFoundException(AchievementNotFoundException ex) {
+        return this.handleNotFoundException(ex);
     }
 }
 
