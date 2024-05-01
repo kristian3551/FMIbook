@@ -19,6 +19,16 @@ public class BaseExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNotFoundException(NotFoundException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("status", 404);
+        errorResponse.put("code", ex.getCode());
+        errorResponse.put("message", ex.getMessage());
+        logger.error(errorResponse.toString());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Map<String, Object>> handleDomainException(DomainException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 404);
+        errorResponse.put("code", ex.getCode());
         errorResponse.put("message", ex.getMessage());
         logger.error(errorResponse.toString());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
@@ -27,6 +37,15 @@ public class BaseExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleInternalError(RuntimeException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("status", 500);
+        errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "Error occurred");
+        logger.error(errorResponse.toString());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ResponseEntity<Map<String, Object>> handleApiError(ApiException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 400);
+        errorResponse.put("code", ex.getCode());
         errorResponse.put("message", ex.getMessage());
         logger.error(errorResponse.toString());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);

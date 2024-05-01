@@ -5,10 +5,10 @@ import com.example.FMIbook.domain.student.Student;
 import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.teacher.Teacher;
 import com.example.FMIbook.domain.course.section.Section;
+import com.example.FMIbook.domain.course.posts.CoursePost;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,7 +43,7 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany(targetEntity= Student.class)
+    @ManyToMany(targetEntity= Student.class, cascade = CascadeType.ALL)
     private List<Student> students;
 
     @ManyToMany(targetEntity = Teacher.class)
@@ -52,10 +52,10 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
-    @OneToMany(mappedBy="course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Section> sections;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Department.class)
     @JoinColumn(name="department_id")
     private Department department;
 
@@ -66,6 +66,9 @@ public class Course {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<CoursePost> posts;
 
     public Course() {
     }
@@ -204,5 +207,13 @@ public class Course {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public List<CoursePost> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<CoursePost> posts) {
+        this.posts = posts;
     }
 }

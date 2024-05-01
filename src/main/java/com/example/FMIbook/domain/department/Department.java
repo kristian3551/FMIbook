@@ -18,10 +18,10 @@ public class Department {
     private UUID id;
 
     @Column(nullable = false)
-    @Pattern(regexp = "[A-Za-z ]+", message = "name is empty")
+    @Pattern(regexp = ".+", message = "name is empty")
     private String name;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Column(name = "createdAt")

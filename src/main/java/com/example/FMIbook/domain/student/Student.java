@@ -2,26 +2,19 @@ package com.example.FMIbook.domain.student;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.student.grade.Grade;
+import com.example.FMIbook.utils.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "students")
-public class Student {
-    @Id
-    @GeneratedValue(
-            strategy = GenerationType.UUID
-    )
-    private UUID id;
-
+public class Student extends User {
     @Column(nullable = false)
     @NotNull(message = "name is null")
     @NotEmpty(message = "name is empty")
@@ -34,14 +27,6 @@ public class Student {
 
     @Transient
     private String specialty;
-
-    @Column(nullable = false)
-    @Email(message = "email is invalid")
-    private String email;
-
-    @Column(nullable = false)
-    @NotNull(message = "password is null")
-    private String password;
 
     @Column(nullable = false)
     @NotNull(message = "semester is null")
@@ -65,12 +50,10 @@ public class Student {
     }
 
     public Student(UUID id, String name, String facultyNumber, String specialty, String email, String password, Integer semester, Integer year, Integer group, String description, String degree) {
-        this.id = id;
+        super(id, email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
         this.specialty = specialty;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.year = year;
         this.group = group;
@@ -79,11 +62,10 @@ public class Student {
     }
 
     public Student(String name, String facultyNumber, String specialty, String email, String password, Integer semester, Integer year, Integer group, String description, String degree) {
+        super(email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
         this.specialty = specialty;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.year = year;
         this.group = group;
@@ -92,20 +74,21 @@ public class Student {
     }
 
     public Student() {
+        super();
     }
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students", cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", name='" + name + '\'' +
                 ", facultyNumber='" + facultyNumber + '\'' +
                 ", specialty='" + specialty + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", email='" + this.getEmail() + '\'' +
+                ", password='" + this.getPassword() + '\'' +
                 ", semester=" + semester +
                 ", year=" + year +
                 ", group=" + group +
@@ -138,11 +121,9 @@ public class Student {
     }
 
     public Student(UUID id, String name, String facultyNumber, String email, String password, Integer semester, Integer year, Integer group, String description, String degree, List<Course> courses) {
-        this.id = id;
+        super(id, email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.year = year;
         this.group = group;
@@ -152,10 +133,9 @@ public class Student {
     }
 
     public Student(String name, String facultyNumber, String email, String password, Integer semester, Integer year, Integer group, String description, String degree, List<Course> courses) {
+        super(email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.year = year;
         this.group = group;
@@ -164,24 +144,12 @@ public class Student {
         this.courses = courses;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public void setFacultyNumber(String facultyNumber) {
         this.facultyNumber = facultyNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setSemester(Integer semester) {
@@ -204,10 +172,6 @@ public class Student {
         this.degree = degree;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -222,14 +186,6 @@ public class Student {
         if (this.facultyNumber.contains("0900"))
             return "Software Engineering";
         return "Other";
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Integer getSemester() {

@@ -1,9 +1,8 @@
 package com.example.FMIbook.domain.student;
 
-import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.CourseDTO;
-import com.example.FMIbook.domain.student.grade.Grade;
 import com.example.FMIbook.domain.student.grade.GradeDTO;
+import com.example.FMIbook.utils.user.UserDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 
@@ -11,19 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class StudentDTO {
-    private UUID id;
-
-    @Pattern(regexp = "\\w{3,}", message = "name is invalid")
+public class StudentDTO extends UserDTO {
+    @Pattern(regexp = ".{3,}", message = "name is invalid")
     private String name;
 
     @Pattern(regexp = "\\dMI(0800|0900|0700|0600)\\d{3}", message = "faculty number is invalid")
     private String facultyNumber;
-
-    @Email(message = "email is invalid")
-    private String email;
-
-    private String password;
 
     private Integer semester;
 
@@ -40,12 +32,11 @@ public class StudentDTO {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", name='" + name + '\'' +
                 ", facultyNumber='" + facultyNumber + '\'' +
                 ", specialty='" + this.getSpecialty() + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", email='" + this.getEmail() + '\'' +
                 ", semester=" + semester +
                 ", year=" + this.getYear() +
                 ", group=" + group +
@@ -72,12 +63,18 @@ public class StudentDTO {
         this.courses = courses;
     }
 
-    public StudentDTO(UUID id, String name, String facultyNumber, String email, String password, Integer semester, Integer group, String description, String degree, List<CourseDTO> courses) {
-        this.id = id;
+    public StudentDTO(UUID id,
+                      String name,
+                      String facultyNumber,
+                      String email,
+                      Integer semester,
+                      Integer group,
+                      String description,
+                      String degree,
+                      List<CourseDTO> courses) {
+        super(id, email);
         this.name = name;
         this.facultyNumber = facultyNumber;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.group = group;
         this.description = description;
@@ -85,20 +82,22 @@ public class StudentDTO {
         this.courses = courses;
     }
 
-    public StudentDTO(String name, String facultyNumber, String email, String password, Integer semester, Integer group, String description, String degree, List<CourseDTO> courses) {
+    public StudentDTO(String name,
+                      String facultyNumber,
+                      String email,
+                      Integer semester,
+                      Integer group,
+                      String description,
+                      String degree,
+                      List<CourseDTO> courses) {
+        super(email);
         this.name = name;
         this.facultyNumber = facultyNumber;
-        this.email = email;
-        this.password = password;
         this.semester = semester;
         this.group = group;
         this.description = description;
         this.degree = degree;
         this.courses = courses;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -107,14 +106,6 @@ public class StudentDTO {
 
     public void setFacultyNumber(String facultyNumber) {
         this.facultyNumber = facultyNumber;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setSemester(Integer semester) {
@@ -133,9 +124,6 @@ public class StudentDTO {
         this.degree = degree;
     }
 
-    public UUID getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -156,13 +144,6 @@ public class StudentDTO {
         return "Other";
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
     public Integer getSemester() {
         return semester;
@@ -220,7 +201,6 @@ public class StudentDTO {
                 student.getName(),
                 student.getFacultyNumber(),
                 student.getEmail(),
-                null,
                 student.getSemester(),
                 student.getGroup(),
                 student.getDescription(),

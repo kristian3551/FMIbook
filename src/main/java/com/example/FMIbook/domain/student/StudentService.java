@@ -71,7 +71,7 @@ public class StudentService {
         Student student = studentOpt.get();
 
         if (studentDto.getName() != null) {
-            student.setName(student.getName());
+            student.setName(studentDto.getName());
         }
 
         if (studentDto.getFacultyNumber() != null) {
@@ -96,10 +96,6 @@ public class StudentService {
 
         if (studentDto.getDegree() != null) {
             student.setDegree(studentDto.getDegree());
-        }
-
-        if (studentDto.getPassword() != null) {
-            student.setPassword(studentDto.getPassword());
         }
 
         studentRepository.save(student);
