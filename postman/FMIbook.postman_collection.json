@@ -56,7 +56,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Kristian Todorov\",\n    \"email\": \"kristiyant@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"6MI0800076\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
+							"raw": "{\n    \"name\": \"Kristian Todorov\",\n    \"email\": \"kristiyand@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"6MI080007\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -79,6 +79,16 @@
 				{
 					"name": "Delete Student",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -94,7 +104,7 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "5be2cf31-fce5-4492-a122-959c33cdda5c"
+									"value": "357b2419-c377-4352-b9b5-305fe3061fd9"
 								}
 							]
 						}
@@ -104,11 +114,21 @@
 				{
 					"name": "Update student",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Ako tova bachka se pensioniram!\"\n}",
+							"raw": "{\n    \"description\": \"Ako tova bachka, se pensioniram!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -138,6 +158,16 @@
 				{
 					"name": "Get Student Details",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -153,7 +183,7 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "384b06c4-6baa-4473-8314-f436afffb67f"
+									"value": "59cdba27-7a53-47ec-93fc-f84ccf8fd9fe"
 								}
 							]
 						}
@@ -171,6 +201,16 @@
 						{
 							"name": "Add Couse Section",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -557,6 +597,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -591,6 +641,16 @@
 				{
 					"name": "Add Course",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -674,6 +734,16 @@
 				{
 					"name": "Delete Course",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -689,7 +759,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "abf0b963-3eb2-4117-81ec-bcc75bdad7f5"
+									"value": "31c8909b-0d7e-42e0-b9d6-91a4af16ff87"
 								}
 							]
 						}
@@ -699,6 +769,16 @@
 				{
 					"name": "Get Course Details",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1240,12 +1320,171 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"accessToken\", data.token);",
+									"pm.collectionVariables.set(\"accessToken\", data.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@abv.bg\",\n    \"password\": \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"admin\",\n    \"name\": \"admin2\",\n    \"email\": \"admin2@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI0800071\",\n    \"semester\": 6,\n    \"group\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/register-admin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"accessToken\", data.token);",
+									"pm.collectionVariables.set(\"accessToken\", data.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"student\",\n    \"name\": \"Kris\",\n    \"email\": \"tosho@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI0800071\",\n    \"semester\": 6,\n    \"group\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "url",
 			"value": "http://localhost:4000"
+		},
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiJ9"
 		}
 	]
 }
