@@ -1,6 +1,6 @@
 package com.example.FMIbook.server.teacher;
 
-import com.example.FMIbook.domain.teacher.exception.TeacherNotFoundException;
+import com.example.FMIbook.domain.users.teacher.exception.TeacherNotFoundException;
 import com.example.FMIbook.utils.exception.BaseExceptionHandler;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

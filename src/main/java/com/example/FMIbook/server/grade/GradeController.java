@@ -1,12 +1,8 @@
 package com.example.FMIbook.server.grade;
 
-import com.example.FMIbook.domain.student.grade.Grade;
-import com.example.FMIbook.domain.student.grade.GradeDTO;
-import com.example.FMIbook.domain.student.grade.GradeRequestDTO;
-import com.example.FMIbook.domain.student.grade.GradeService;
-import com.example.FMIbook.domain.teacher.Teacher;
-import com.example.FMIbook.domain.teacher.TeacherDTO;
-import com.example.FMIbook.domain.teacher.TeacherService;
+import com.example.FMIbook.domain.users.student.grade.GradeDTO;
+import com.example.FMIbook.domain.users.student.grade.GradeRequestDTO;
+import com.example.FMIbook.domain.users.student.grade.GradeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,12 @@
 package com.example.FMIbook.server.student;
 
-import com.example.FMIbook.domain.student.Student;
-import com.example.FMIbook.domain.student.StudentDTO;
-import com.example.FMIbook.domain.student.StudentService;
+import com.example.FMIbook.domain.users.student.Student;
+import com.example.FMIbook.domain.users.student.StudentDTO;
+import com.example.FMIbook.domain.users.student.StudentService;
+import com.example.FMIbook.domain.users.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class StudentController {
     }
 
     @GetMapping("{studentId}")
-    public StudentDTO findOne(@PathVariable UUID studentId) {
+    public StudentDTO findOne(@PathVariable UUID studentId, @AuthenticationPrincipal User user) {
         return studentService.getOne(studentId);
     }
 
@@ -40,8 +42,8 @@ public class StudentController {
 
     @PutMapping("{studentId}")
     public StudentDTO update(@PathVariable UUID studentId,
-            @RequestBody @Valid StudentDTO studentDto) {
-        return studentService.update(studentId, studentDto);
+            @RequestBody @Valid StudentDTO studentDto, @AuthenticationPrincipal User user) {
+        return studentService.update(studentId, studentDto, user);
     }
 
     @DeleteMapping("{studentId}")

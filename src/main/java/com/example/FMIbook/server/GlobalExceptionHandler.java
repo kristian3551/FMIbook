@@ -1,8 +1,8 @@
 package com.example.FMIbook.server;
 
-import com.example.FMIbook.utils.exception.ApiException;
 import com.example.FMIbook.utils.exception.BaseExceptionHandler;
-import com.example.FMIbook.utils.user.exception.UserNotFoundException;
+import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,5 +27,12 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleUserNotFoundExceptions(
             UserNotFoundException ex) {
         return super.handleNotFoundException(ex);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleConstraintViolationException(
+            ConstraintViolationException ex) {
+        System.out.println(ex);
+        return super.handleConstraintException(ex);
     }
 }

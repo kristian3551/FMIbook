@@ -1,11 +1,10 @@
 package com.example.FMIbook.domain.course;
 
 import com.example.FMIbook.domain.course.section.SectionDTO;
-import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.department.DepartmentDTO;
-import com.example.FMIbook.domain.student.StudentDTO;
-import com.example.FMIbook.domain.student.grade.GradeDTO;
-import com.example.FMIbook.domain.teacher.TeacherDTO;
+import com.example.FMIbook.domain.users.student.StudentDTO;
+import com.example.FMIbook.domain.users.student.grade.GradeDTO;
+import com.example.FMIbook.domain.users.teacher.TeacherDTO;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.ArrayList;

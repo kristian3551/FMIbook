@@ -1,13 +1,9 @@
 package com.example.FMIbook.server.teacher;
 
-import com.example.FMIbook.domain.course.Course;
-import com.example.FMIbook.domain.course.CourseDTO;
-import com.example.FMIbook.domain.course.CourseService;
-import com.example.FMIbook.domain.teacher.Teacher;
-import com.example.FMIbook.domain.teacher.TeacherDTO;
-import com.example.FMIbook.domain.teacher.TeacherService;
+import com.example.FMIbook.domain.users.teacher.Teacher;
+import com.example.FMIbook.domain.users.teacher.TeacherDTO;
+import com.example.FMIbook.domain.users.teacher.TeacherService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

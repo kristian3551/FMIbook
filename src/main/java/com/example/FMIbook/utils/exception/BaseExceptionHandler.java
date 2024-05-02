@@ -1,5 +1,6 @@
 package com.example.FMIbook.utils.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,13 @@ public class BaseExceptionHandler {
         errorResponse.put("errors", errors);
         errorResponse.put("status", 400);
         errorResponse.put("message", "validation errors");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    protected ResponseEntity<Map<String, Object>> handleConstraintException(ConstraintViolationException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 400);
+        errorResponse.put("message", "constraint errors");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

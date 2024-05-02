@@ -1,7 +1,7 @@
 package com.example.FMIbook.domain.course.achievement;
 
 import com.example.FMIbook.domain.course.CourseDTO;
-import com.example.FMIbook.domain.student.StudentDTO;
+import com.example.FMIbook.domain.users.student.StudentDTO;
 
 import java.util.ArrayList;
 import java.util.UUID;
