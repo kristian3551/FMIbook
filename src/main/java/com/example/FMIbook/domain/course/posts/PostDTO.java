@@ -1,8 +1,7 @@
 package com.example.FMIbook.domain.course.posts;
 
 import com.example.FMIbook.domain.course.CourseDTO;
-import com.example.FMIbook.domain.teacher.TeacherDTO;
-import com.example.FMIbook.utils.user.UserDTO;
+import com.example.FMIbook.domain.users.user.UserDTO;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.ArrayList;

@@ -19,15 +19,16 @@ import com.example.FMIbook.domain.course.section.exception.SectionNotFoundExcept
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.department.DepartmentRepository;
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
-import com.example.FMIbook.domain.student.Student;
-import com.example.FMIbook.domain.student.StudentRepository;
-import com.example.FMIbook.domain.teacher.Teacher;
-import com.example.FMIbook.domain.teacher.TeacherRepository;
+import com.example.FMIbook.domain.users.student.Student;
+import com.example.FMIbook.domain.users.student.StudentRepository;
+import com.example.FMIbook.domain.users.teacher.Teacher;
+import com.example.FMIbook.domain.users.teacher.TeacherRepository;
 import com.example.FMIbook.server.student.StudentNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
-import com.example.FMIbook.utils.user.User;
-import com.example.FMIbook.utils.user.UserRepository;
-import com.example.FMIbook.utils.user.exception.UserNotFoundException;
+import com.example.FMIbook.domain.users.user.User;
+import com.example.FMIbook.domain.users.user.UserRepository;
+import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -173,6 +174,7 @@ public class CourseService {
         return CourseDTO.serializeFromEntity(course);
     }
 
+    @Transactional
     public CourseDTO updateStudents(UUID id, List<UUID> studentIds) {
         List<Student> students = studentRepository.findAllById(studentIds);
 
@@ -186,6 +188,7 @@ public class CourseService {
         for (Student student : students) {
             student.getCourses().removeIf(c -> c.getId() == c.getId());
             student.getCourses().add(course);
+            List<Achievement> achievements = student.getAchievements();
             studentRepository.save(student);
         }
 
@@ -193,6 +196,7 @@ public class CourseService {
         return CourseDTO.serializeFromEntity(course);
     }
 
+    @Transactional
     public CourseDTO updateTeachers(UUID id, List<UUID> teacherIds) {
         List<Teacher> teachers = teacherRepository.findAllById(teacherIds);
 
@@ -203,10 +207,10 @@ public class CourseService {
         }
         Course course = courseOpt.get();
 
-        for (Teacher student : teachers) {
-            student.getCourses().removeIf(c -> c.getId() == c.getId());
-            student.getCourses().add(course);
-            teacherRepository.save(student);
+        for (Teacher teacher : teachers) {
+            teacher.getCourses().removeIf(c -> c.getId() == c.getId());
+            teacher.getCourses().add(course);
+            teacherRepository.save(teacher);
         }
 
         course.setTeachers(teachers);

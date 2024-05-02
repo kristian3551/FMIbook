@@ -1,7 +1,7 @@
 package com.example.FMIbook.domain.course.posts;
 
 import com.example.FMIbook.domain.course.Course;
-import com.example.FMIbook.utils.user.User;
+import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 

@@ -2,9 +2,9 @@ package com.example.FMIbook.domain.course;
 
 import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.department.Department;
-import com.example.FMIbook.domain.student.Student;
-import com.example.FMIbook.domain.student.grade.Grade;
-import com.example.FMIbook.domain.teacher.Teacher;
+import com.example.FMIbook.domain.users.student.Student;
+import com.example.FMIbook.domain.users.student.grade.Grade;
+import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.posts.CoursePost;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
 package com.example.FMIbook.domain.course.achievement;
 
 import com.example.FMIbook.domain.course.Course;
-import com.example.FMIbook.domain.student.Student;
+import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
