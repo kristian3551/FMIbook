@@ -1,6 +1,6 @@
 package com.example.FMIbook.domain.users.student;
 
-import com.example.FMIbook.server.student.StudentNotFoundException;
+import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.validation.Valid;

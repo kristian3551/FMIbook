@@ -6,7 +6,7 @@ import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
 import com.example.FMIbook.domain.users.student.Student;
 import com.example.FMIbook.domain.users.student.StudentRepository;
 import com.example.FMIbook.domain.grade.exception.GradeNotFoundException;
-import com.example.FMIbook.server.student.StudentNotFoundException;
+import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

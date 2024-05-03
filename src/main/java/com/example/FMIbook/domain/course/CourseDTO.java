@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.course;
 
 import com.example.FMIbook.domain.course.section.SectionDTO;
+import com.example.FMIbook.domain.course.task.TaskResponseDTO;
 import com.example.FMIbook.domain.department.DepartmentDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;
 import com.example.FMIbook.domain.grade.GradeDTO;
@@ -44,6 +45,8 @@ public class CourseDTO {
     private DepartmentDTO department;
 
     private List<GradeDTO> grades;
+
+    private List<TaskResponseDTO> tasks;
 
     @Override
     public String toString() {
@@ -97,7 +100,11 @@ public class CourseDTO {
             departmentDTO = new DepartmentDTO(course.getDepartment().getId(), course.getDepartment().getName(), new ArrayList<>());
         }
 
-        CourseDTO result = CourseDTO
+        List<TaskResponseDTO> tasks = course.getTasks() != null
+                ? course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList()
+                : new ArrayList<>();
+
+        return CourseDTO
                 .builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -109,10 +116,9 @@ public class CourseDTO {
                 .students(students)
                 .teachers(teachers)
                 .department(departmentDTO)
+                .tasks(tasks)
+                .grades(grades)
+                .sections(sections)
                         .build();
-
-        result.setGrades(grades);
-        result.setSections(sections);
-        return result;
     }
 }
