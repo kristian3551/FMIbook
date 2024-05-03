@@ -5,10 +5,18 @@ import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "achievements")
 public class Achievement {
@@ -26,12 +34,12 @@ public class Achievement {
     @Pattern(regexp = ".+", message = "description is empty")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     @NotNull(message = "course is null")
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
     @NotNull(message = "student is null")
     private Student student;
@@ -42,9 +50,6 @@ public class Achievement {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Achievement() {
     }
 
     public Achievement(UUID id, String name, String description, Course course, Student student) {
@@ -59,46 +64,6 @@ public class Achievement {
         this.name = name;
         this.description = description;
         this.course = course;
-        this.student = student;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public void setStudent(Student student) {
         this.student = student;
     }
 

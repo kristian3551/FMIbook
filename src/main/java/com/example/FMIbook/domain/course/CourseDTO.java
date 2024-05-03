@@ -3,14 +3,22 @@ package com.example.FMIbook.domain.course;
 import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.department.DepartmentDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;
-import com.example.FMIbook.domain.users.student.grade.GradeDTO;
+import com.example.FMIbook.domain.grade.GradeDTO;
 import com.example.FMIbook.domain.users.teacher.TeacherDTO;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CourseDTO {
     private UUID id;
 
@@ -21,9 +29,6 @@ public class CourseDTO {
     private String semester;
 
     private String category;
-
-    public CourseDTO() {
-    }
 
     @Pattern(regexp = "(compulsory|selectable)", message = "type is invalid")
     private String type;
@@ -38,21 +43,7 @@ public class CourseDTO {
 
     private DepartmentDTO department;
 
-    public DepartmentDTO getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(DepartmentDTO department) {
-        this.department = department;
-    }
-
-    public void setSections(List<SectionDTO> sections) {
-        this.sections = sections;
-    }
-
-    public List<SectionDTO> getSections() {
-        return sections;
-    }
+    private List<GradeDTO> grades;
 
     @Override
     public String toString() {
@@ -68,128 +59,6 @@ public class CourseDTO {
                 ", teachers=" + teachers +
                 ", grades=" + grades +
                 '}';
-    }
-
-    private List<GradeDTO> grades;
-
-    public void setGrades(List<GradeDTO> grades) {
-        this.grades = grades;
-    }
-
-    public List<GradeDTO> getGrades() {
-        return grades;
-    }
-
-    public CourseDTO(UUID id,
-                     String name,
-                     Integer year,
-                     String semester,
-                     String category,
-                     String type,
-                     String description,
-                     List<StudentDTO> students,
-                     List<TeacherDTO> teachers,
-                     DepartmentDTO department) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.category = category;
-        this.type = type;
-        this.description = description;
-        this.students = students;
-        this.teachers = teachers;
-        this.department = department;
-    }
-
-    public CourseDTO(String name,
-                     Integer year,
-                     String semester,
-                     String category,
-                     String type,
-                     String description,
-                     List<StudentDTO> students,
-                     List<TeacherDTO> teachers) {
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.category = category;
-        this.type = type;
-        this.description = description;
-        this.students = students;
-        this.teachers = teachers;
-    }
-
-    public void setTeachers(List<TeacherDTO> teachers) {
-        this.teachers = teachers;
-    }
-
-    public List<TeacherDTO> getTeachers() {
-        return teachers;
-    }
-
-    public List<StudentDTO> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<StudentDTO> students) {
-        this.students = students;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public static CourseDTO serializeFromEntity(Course course) {
@@ -228,18 +97,19 @@ public class CourseDTO {
             departmentDTO = new DepartmentDTO(course.getDepartment().getId(), course.getDepartment().getName(), new ArrayList<>());
         }
 
-        CourseDTO result = new CourseDTO(
-                course.getId(),
-                course.getName(),
-                course.getYear(),
-                course.getSemester(),
-                course.getCategory(),
-                course.getType(),
-                course.getDescription(),
-                students,
-                teachers,
-                departmentDTO
-        );
+        CourseDTO result = CourseDTO
+                .builder()
+                .id(course.getId())
+                .name(course.getName())
+                .year(course.getYear())
+                .semester(course.getSemester())
+                .category(course.getCategory())
+                .type(course.getType())
+                .description(course.getDescription())
+                .students(students)
+                .teachers(teachers)
+                .department(departmentDTO)
+                        .build();
 
         result.setGrades(grades);
         result.setSections(sections);

@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.users.student.grade;
+package com.example.FMIbook.domain.grade;
 
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;

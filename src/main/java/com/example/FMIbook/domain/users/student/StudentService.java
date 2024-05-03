@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,12 @@ import java.util.UUID;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<StudentDTO> findAll(Integer limit, Integer offset, String sort) {
@@ -39,6 +42,7 @@ public class StudentService {
     }
 
     public StudentDTO addOne(Student student) {
+        student.setPassword(this.passwordEncoder.encode(student.getPassword()));
         studentRepository.save(student);
         return StudentDTO.serializeFromEntity(student);
     }

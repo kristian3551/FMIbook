@@ -3,11 +3,19 @@ package com.example.FMIbook.domain.department;
 import com.example.FMIbook.domain.course.Course;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -32,9 +40,6 @@ public class Department {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Department() {
-    }
-
     public Department(UUID id, String name) {
         this.id = id;
         this.name = name;
@@ -42,34 +47,6 @@ public class Department {
 
     public Department(String name) {
         this.name = name;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override

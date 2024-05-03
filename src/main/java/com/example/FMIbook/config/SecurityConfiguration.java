@@ -50,6 +50,12 @@ public class SecurityConfiguration {
                                     // Courses endpoints permissions
                                     .requestMatchers(HttpMethod.GET, "/api/courses/**")
                                     .hasAnyAuthority(Permission.ADMIN_READ.getPermission(), Permission.STUDENT_READ.getPermission(), Permission.TEACHER_READ.getPermission())
+                                    .requestMatchers(HttpMethod.POST, "/api/courses/posts/**")
+                                    .hasAnyAuthority(Permission.ADMIN_CREATE.getPermission(), Permission.STUDENT_CREATE.getPermission(), Permission.TEACHER_CREATE.getPermission())
+                                    .requestMatchers(HttpMethod.PUT, "/api/courses/posts/**")
+                                    .hasAnyAuthority(Permission.ADMIN_CREATE.getPermission(), Permission.STUDENT_CREATE.getPermission(), Permission.TEACHER_CREATE.getPermission())
+                                    .requestMatchers(HttpMethod.DELETE, "/api/courses/posts/**")
+                                    .hasAnyAuthority(Permission.ADMIN_CREATE.getPermission(), Permission.STUDENT_CREATE.getPermission(), Permission.TEACHER_CREATE.getPermission())
                                     .requestMatchers(HttpMethod.POST, "/api/courses/**")
                                     .hasAnyAuthority(Permission.ADMIN_CREATE.getPermission(), Permission.TEACHER_CREATE.getPermission())
                                     .requestMatchers(HttpMethod.PUT, "/api/courses/**")
