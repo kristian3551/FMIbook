@@ -56,7 +56,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Kristian Todorov\",\n    \"email\": \"kristiyand@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"6MI080007\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
+							"raw": "{\n    \"name\": \"Kristian Todorov\",\n    \"email\": \"kristiyand@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"6MI0800076\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -128,7 +128,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"Ako tova bachka, se pensioniram!\"\n}",
+							"raw": "{\n    \"description\": \"Ako tova bachka se pensioniram!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -148,7 +148,7 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "59cdba27-7a53-47ec-93fc-f84ccf8fd9fe"
+									"value": "2452cce1-e198-4337-ba87-0adcaad219be"
 								}
 							]
 						}
@@ -199,7 +199,7 @@
 					"name": "sections",
 					"item": [
 						{
-							"name": "Add Couse Section",
+							"name": "Add Course Section",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -215,7 +215,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"courseId\": \"72d5c6ca-4e56-41ac-a718-e2d833c641f0\",\n    \"name\": \"General 2\",\n    \"priority\": 2\n}",
+									"raw": "{\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"name\": \"Seminars\",\n    \"priority\": 2\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -321,7 +321,7 @@
 									"variable": [
 										{
 											"key": "courseId",
-											"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
+											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
 										}
 									]
 								}
@@ -335,7 +335,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"title\": \"Въпрос\",\n    \"description\": \"А кога ще ни я кажете\",\n    \"userId\": \"59cdba27-7a53-47ec-93fc-f84ccf8fd9fe\",\n    \"courseId\": \"72d5c6ca-4e56-41ac-a718-e2d833c641f0\",\n    \"parentId\": \"845268df-b657-4eb6-8fa7-fcc6430f2806\"\n}",
+									"raw": "{\n    \"title\": \"Re: Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"userId\": \"2452cce1-e198-4337-ba87-0adcaad219be\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"parentId\": \"79bbed15-6532-4008-8b0d-a2be79aab693\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -389,7 +389,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"rate\": 5\n}",
+									"raw": "{\n    \"rate\": 5,\n    \"description\": \"Ajde she go editna\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -410,7 +410,7 @@
 									"variable": [
 										{
 											"key": "postId",
-											"value": "7dea2322-5c58-4270-9290-2b4a62d41468"
+											"value": "79bbed15-6532-4008-8b0d-a2be79aab693"
 										}
 									]
 								}
@@ -467,7 +467,7 @@
 									"variable": [
 										{
 											"key": "courseId",
-											"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
+											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
 										}
 									]
 								}
@@ -481,7 +481,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"100 percent on exam\",\n    \"description\": \"No comment\",\n    \"courseId\": \"72d5c6ca-4e56-41ac-a718-e2d833c641f0\",\n    \"studentId\": \"59cdba27-7a53-47ec-93fc-f84ccf8fd9fe\"\n}",
+									"raw": "{\n    \"name\": \"90 percent on exam\",\n    \"description\": \"No comment\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"studentId\": \"2452cce1-e198-4337-ba87-0adcaad219be\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -592,6 +592,215 @@
 					]
 				},
 				{
+					"name": "tasks",
+					"item": [
+						{
+							"name": "Get Tasks By Course",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/:courseId/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										":courseId",
+										"tasks"
+									],
+									"variable": [
+										{
+											"key": "courseId",
+											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Get Tasks By Course",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/:courseId/tasks",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												":courseId",
+												"tasks"
+											],
+											"variable": [
+												{
+													"key": "courseId",
+													"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 03 May 2024 09:31:42 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"04485aac-e2ea-4f51-96bf-8ea854bc213f\",\n        \"name\": \"Homework 1\",\n        \"startDate\": \"2024-04-08T12:30:00\",\n        \"endDate\": \"2024-04-22T12:30:00\",\n        \"description\": \"Sega vi precakahme\",\n        \"course\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n        \"type\": \"homework\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Add Task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Homework 2\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/tasks",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Tasks",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Homework\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/tasks/:taskId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "07e0be69-f924-4ca6-a542-14141e131e3e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Task",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/tasks/:taskId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "07e0be69-f924-4ca6-a542-14141e131e3e"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Courses",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -641,21 +850,11 @@
 				{
 					"name": "Add Course",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{accessToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"ВиС\",\n    \"year\": 2024,\n    \"semester\": \"summer\",\n    \"category\": \"Applied mathematics\",\n    \"type\": \"compulsory\",\n    \"description\": \"Dexter rules!\"\n}",
+							"raw": "{\n    \"name\": \"PS\",\n    \"year\": 2024,\n    \"semester\": \"summer\",\n    \"category\": \"Applied mathematics\",\n    \"type\": \"compulsory\",\n    \"description\": \"Dexter rules!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -808,7 +1007,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"department\": \"1b2f32a8-31e0-46de-9d08-25741c0945f8\"\n}",
+							"raw": "{\n    \"name\": \"PS\",\n    \"description\": \"Ako i tova raboti..\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -828,77 +1027,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Course Students",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    \"59cdba27-7a53-47ec-93fc-f84ccf8fd9fe\"\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/courses/:courseId/students",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								":courseId",
-								"students"
-							],
-							"variable": [
-								{
-									"key": "courseId",
-									"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Course Teachers",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    \"985e55fe-69a8-4067-b54d-3693ed4e22b0\"\n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/courses/:courseId/teachers",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"courses",
-								":courseId",
-								"teachers"
-							],
-							"variable": [
-								{
-									"key": "courseId",
-									"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
+									"value": "46d27263-1dba-423c-8b8d-836bbf924369"
 								}
 							]
 						}
@@ -1069,7 +1198,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"studentId\": \"59cdba27-7a53-47ec-93fc-f84ccf8fd9fe\",\n    \"courseId\": \"72d5c6ca-4e56-41ac-a718-e2d833c641f0\",\n    \"percentage\": 100,\n    \"grade\": 6\n}",
+							"raw": "{\n    \"studentId\": \"2452cce1-e198-4337-ba87-0adcaad219be\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"percentage\": 70,\n    \"grade\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1421,7 +1550,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"student\",\n    \"name\": \"Kris\",\n    \"email\": \"tosho@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI0800071\",\n    \"semester\": 6,\n    \"group\": 6\n}",
+							"raw": "{\n    \"type\": \"student\",\n    \"name\": \"admin\",\n    \"email\": \"admin@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI08000\",\n    \"semester\": 6,\n    \"group\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
