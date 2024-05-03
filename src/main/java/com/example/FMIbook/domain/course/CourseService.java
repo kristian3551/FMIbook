@@ -24,6 +24,14 @@ import com.example.FMIbook.domain.course.task.exception.TaskNotFoundException;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.department.DepartmentRepository;
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
+import com.example.FMIbook.domain.policy.CreatePolicy;
+import com.example.FMIbook.domain.policy.DeletePolicy;
+import com.example.FMIbook.domain.policy.ReadPolicy;
+import com.example.FMIbook.domain.policy.UpdatePolicy;
+import com.example.FMIbook.domain.policy.exception.CannotCreateException;
+import com.example.FMIbook.domain.policy.exception.CannotDeleteException;
+import com.example.FMIbook.domain.policy.exception.CannotReadException;
+import com.example.FMIbook.domain.policy.exception.CannotUpdateException;
 import com.example.FMIbook.domain.users.student.Student;
 import com.example.FMIbook.domain.users.student.StudentRepository;
 import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
@@ -85,16 +93,20 @@ public class CourseService {
         return courses.getContent().stream().map(CourseDTO::serializeFromEntity).toList();
     }
 
-    public CourseDTO getOne(UUID id) {
+    public CourseDTO getOne(UUID id, User user) {
         Optional<Course> course = courseRepository.findById(id);
         if (course.isEmpty()) {
             throw new CourseNotFoundException();
         }
 
+        if (!ReadPolicy.canReadCourse(user, course.get())) {
+            throw new CannotReadException();
+        }
+
         return CourseDTO.serializeFromEntity(course.get());
     }
 
-    public CourseDTO addOne(CourseRequestDTO courseDto) {
+    public CourseDTO addOne(CourseRequestDTO courseDto, User user) {
         List<Student> students = courseDto.getStudents() != null
                 ? studentRepository.findAllById(courseDto.getStudents())
                 : new ArrayList<>();
@@ -112,6 +124,11 @@ public class CourseService {
                 students,
                 teachers
         );
+
+        if (!CreatePolicy.canCreateCourse(user, course)) {
+            throw new CannotCreateException();
+        }
+
         if (courseDto.getDepartment() != null) {
             Optional<Department> departmentOpt = departmentRepository.findById(courseDto.getDepartment());
 
@@ -124,7 +141,7 @@ public class CourseService {
         return CourseDTO.serializeFromEntity(course);
     }
 
-    public CourseDTO update(UUID id, CourseRequestDTO courseDto) {
+    public CourseDTO update(UUID id, CourseRequestDTO courseDto, User user) {
         Optional<Course> courseOpt = courseRepository.findById(id);
 
         if (courseOpt.isEmpty()) {
@@ -132,6 +149,10 @@ public class CourseService {
         }
 
         Course course = courseOpt.get();
+
+        if (!UpdatePolicy.canModifyCourse(user, course)) {
+            throw new CannotUpdateException();
+        }
 
         if (courseDto.getName() != null) {
             course.setName(courseDto.getName());
@@ -181,7 +202,7 @@ public class CourseService {
         return CourseDTO.serializeFromEntity(course);
     }
 
-    public SectionDTO addSection(SectionRequestDTO sectionDto) {
+    public SectionDTO addSection(SectionRequestDTO sectionDto, User user) {
         Optional<Course> course = courseRepository.findById(sectionDto.getCourseId());
 
         if (course.isEmpty()) {
@@ -189,21 +210,30 @@ public class CourseService {
         }
 
         Section section = new Section(sectionDto.getName(), sectionDto.getPriority(), course.get());
+
+        if (!CreatePolicy.canCreateSection(user, section)) {
+            throw new CannotCreateException();
+        }
+
         sectionRepository.save(section);
         return SectionDTO.serializeFromEntity(section);
     }
 
-    public void deleteSection(UUID id) {
+    public void deleteSection(UUID id, User user) {
         Optional<Section> section = sectionRepository.findById(id);
 
         if (section.isEmpty()) {
             throw new SectionNotFoundException();
         }
 
+        if (!DeletePolicy.canDeleteSection(user, section.get())) {
+            throw new CannotDeleteException();
+        }
+
         sectionRepository.delete(section.get());
     }
 
-    public SectionDTO updateSection(UUID id, SectionRequestDTO sectionDto) {
+    public SectionDTO updateSection(UUID id, SectionRequestDTO sectionDto, User user) {
         Optional<Section> sectionOpt = sectionRepository.findById(id);
 
         if (sectionOpt.isEmpty()) {
@@ -211,6 +241,10 @@ public class CourseService {
         }
 
         Section section = sectionOpt.get();
+
+        if (!UpdatePolicy.canModifySection(user, section)) {
+            throw new CannotUpdateException();
+        }
 
         if (sectionDto.getName() != null) {
             section.setName(sectionDto.getName());
@@ -224,20 +258,28 @@ public class CourseService {
         return SectionDTO.serializeFromEntity(section);
     }
 
-    public void delete(UUID id) {
+    public void delete(UUID id, User user) {
         Optional<Course> course = courseRepository.findById(id);
         if (course.isEmpty()) {
             throw new CourseNotFoundException();
         }
 
+        if (!DeletePolicy.canDeleteCourse(user, course.get())) {
+            throw new CannotDeleteException();
+        }
+
         courseRepository.delete(course.get());
     }
 
-    public List<PostDTO> findAllPostsByCourse(UUID id, Integer limit, Integer offset, String sort) {
+    public List<PostDTO> findAllPostsByCourse(UUID id, Integer limit, Integer offset, String sort, User user) {
         Optional<Course> courseOpt = courseRepository.findById(id);
 
         if (courseOpt.isEmpty()) {
             throw new CourseNotFoundException();
+        }
+
+        if (!ReadPolicy.canReadCourse(user, courseOpt.get())) {
+            throw new CannotReadException();
         }
 
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
@@ -245,17 +287,21 @@ public class CourseService {
         return posts.getContent().stream().map(PostDTO::serializeFromEntity).toList();
     }
 
-    public PostDTO getOnePost(UUID id) {
+    public PostDTO getOnePost(UUID id, User user) {
         Optional<CoursePost> post = coursePostRepository.findById(id);
 
         if (post.isEmpty()) {
             throw new PostNotFoundException();
         }
 
+        if (!ReadPolicy.canReadPost(user, post.get())) {
+            throw new CannotReadException();
+        }
+
         return PostDTO.serializeFromEntity(post.get());
     }
 
-    public PostDTO addPost(PostRequestDTO postDto) {
+    public PostDTO addPost(PostRequestDTO postDto, User loggedUser) {
         CoursePost post = new CoursePost(postDto.getTitle(), postDto.getDescription(), postDto.getRate());
 
         Optional<Course> courseOpt = courseRepository.findById(postDto.getCourseId());
@@ -282,11 +328,15 @@ public class CourseService {
             post.setParentPost(parentPost.get());
         }
 
+        if (!CreatePolicy.canCreatePost(loggedUser, post)) {
+            throw new CannotCreateException();
+        }
+
         coursePostRepository.save(post);
         return PostDTO.serializeFromEntity(post);
     }
 
-    public PostDTO updatePost(UUID id, PostRequestDTO postDto) {
+    public PostDTO updatePost(UUID id, PostRequestDTO postDto, User user) {
         Optional<CoursePost> postOpt = coursePostRepository.findById(id);
 
         if (postOpt.isEmpty()) {
@@ -307,15 +357,23 @@ public class CourseService {
             post.setRate(postDto.getRate());
         }
 
+        if (!UpdatePolicy.canModifyPost(user, post)) {
+            throw new CannotUpdateException();
+        }
+
         coursePostRepository.save(post);
         return PostDTO.serializeFromEntity(post);
     }
 
-    public void deletePost(UUID id) {
+    public void deletePost(UUID id, User user) {
         Optional<CoursePost> postOpt = coursePostRepository.findById(id);
 
         if (postOpt.isEmpty()) {
             throw new PostNotFoundException();
+        }
+
+        if (!DeletePolicy.canDeletePost(user, postOpt.get())) {
+            throw new CannotDeleteException();
         }
 
         coursePostRepository.delete(postOpt.get());
@@ -325,14 +383,24 @@ public class CourseService {
             UUID courseId,
             Integer limit,
             Integer offset,
-            String sort
+            String sort,
+            User user
     ) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException();
+        }
+
+        if (!ReadPolicy.canReadCourse(user, course.get())) {
+            throw new CannotReadException();
+        }
+
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         List<Achievement> achievements = achievementRepository.findByCourse(courseId, page);
         return achievements.stream().map(AchievementDTO::serializeFromEntity).toList();
     }
 
-    public AchievementDTO addAchievement(AchievementRequestDTO achievementDto) {
+    public AchievementDTO addAchievement(AchievementRequestDTO achievementDto, User user) {
         Optional<Student> student = studentRepository.findById(achievementDto.getStudentId());
 
         if (student.isEmpty()) {
@@ -352,11 +420,15 @@ public class CourseService {
                 student.get()
         );
 
+        if (!CreatePolicy.canCreateAchievement(user, achievement)) {
+            throw new CannotCreateException();
+        }
+
         achievementRepository.save(achievement);
         return AchievementDTO.serializeFromEntity(achievement);
     }
 
-    public AchievementDTO updateAchievement(UUID id, AchievementRequestDTO achievementDto) {
+    public AchievementDTO updateAchievement(UUID id, AchievementRequestDTO achievementDto, User user) {
         Optional<Achievement> achievementOpt = achievementRepository.findById(id);
 
         if (achievementOpt.isEmpty()) {
@@ -373,11 +445,15 @@ public class CourseService {
             achievement.setDescription(achievementDto.getDescription());
         }
 
+        if (!UpdatePolicy.canModifyAchievement(user, achievement)) {
+            throw new CannotUpdateException();
+        }
+
         achievementRepository.save(achievement);
         return AchievementDTO.serializeFromEntity(achievement);
     }
 
-    public void deleteAchievement(UUID id) {
+    public void deleteAchievement(UUID id, User user) {
         Optional<Achievement> achievementOpt = achievementRepository.findById(id);
 
         if (achievementOpt.isEmpty()) {
@@ -385,29 +461,48 @@ public class CourseService {
         }
 
         Achievement achievement = achievementOpt.get();
+
+        if (!DeletePolicy.canDeleteAchievement(user, achievement)) {
+            throw new CannotDeleteException();
+        }
+
         achievementRepository.delete(achievement);
     }
 
     public List<TaskResponseDTO> findAllTasksByCourse(UUID courseId,
                                                        Integer limit,
                                                        Integer offset,
-                                                       String sort) {
+                                                       String sort,
+                                                      User user) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException();
+        }
+
+        if (!ReadPolicy.canReadCourse(user, course.get())) {
+            throw new CannotReadException();
+        }
+
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
         Page<Task> tasks = taskRepository.findAllByCourse(courseId, page);
         return tasks.getContent().stream().map(TaskResponseDTO::serializeFromEntity).toList();
     }
 
-    public TaskResponseDTO findOneTask(UUID id) {
+    public TaskResponseDTO findOneTask(UUID id, User user) {
         Optional<Task> task = taskRepository.findById(id);
 
         if (task.isEmpty()) {
             throw new TaskNotFoundException();
         }
 
+        if (!ReadPolicy.canReadTask(user, task.get())) {
+            throw new CannotReadException();
+        }
+
         return TaskResponseDTO.serializeFromEntity(task.get());
     }
 
-    public TaskResponseDTO addTask(TaskRequestDTO taskDto) {
+    public TaskResponseDTO addTask(TaskRequestDTO taskDto, User user) {
         Optional<Course> course = courseRepository.findById(taskDto.getCourseId());
         if (course.isEmpty()) {
             throw new CourseNotFoundException();
@@ -423,11 +518,15 @@ public class CourseService {
                 .type(taskDto.getType())
                 .build();
 
+        if (!CreatePolicy.canCreateTask(user, task)) {
+            throw new CannotCreateException();
+        }
+
         taskRepository.save(task);
         return TaskResponseDTO.serializeFromEntity(task);
     }
 
-    public TaskResponseDTO updateTask(UUID id, TaskRequestDTO taskDto) {
+    public TaskResponseDTO updateTask(UUID id, TaskRequestDTO taskDto, User user) {
         Optional<Task> taskOpt = taskRepository.findById(id);
 
         if (taskOpt.isEmpty()) {
@@ -435,6 +534,10 @@ public class CourseService {
         }
 
         Task task = taskOpt.get();
+
+        if (!UpdatePolicy.canModifyTask(user, task)) {
+            throw new CannotUpdateException();
+        }
 
         if (taskDto.getName() != null) {
             task.setName(taskDto.getName());
@@ -460,11 +563,15 @@ public class CourseService {
         return TaskResponseDTO.serializeFromEntity(task);
     }
 
-    public void deleteTask(UUID id) {
+    public void deleteTask(UUID id, User user) {
         Optional<Task> taskOpt = taskRepository.findById(id);
 
         if (taskOpt.isEmpty()) {
             throw new TaskNotFoundException();
+        }
+
+        if (!DeletePolicy.canDeleteTask(user, taskOpt.get())) {
+            throw new CannotDeleteException();
         }
 
         taskRepository.delete(taskOpt.get());
