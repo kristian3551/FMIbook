@@ -31,13 +31,13 @@ public class StudentController {
     }
 
     @GetMapping("{studentId}")
-    public StudentDTO findOne(@PathVariable UUID studentId, @AuthenticationPrincipal User user) {
+    public StudentDTO findOne(@PathVariable UUID studentId) {
         return studentService.getOne(studentId);
     }
 
     @PostMapping
-    public StudentDTO addOne(@RequestBody Student student) {
-        return studentService.addOne(student);
+    public StudentDTO addOne(@RequestBody Student student, @AuthenticationPrincipal User user) {
+        return studentService.addOne(student, user);
     }
 
     @PutMapping("{studentId}")
@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{studentId}")
-    public void delete(@PathVariable UUID studentId) {
-        studentService.delete(studentId);
+    public void delete(@PathVariable UUID studentId, @AuthenticationPrincipal User user) {
+        studentService.delete(studentId, user);
     }
 }

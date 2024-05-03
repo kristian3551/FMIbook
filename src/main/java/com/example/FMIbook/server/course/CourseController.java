@@ -11,8 +11,10 @@ import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import com.example.FMIbook.domain.course.task.TaskRequestDTO;
 import com.example.FMIbook.domain.course.task.TaskResponseDTO;
+import com.example.FMIbook.domain.users.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,39 +39,42 @@ public class CourseController {
     }
 
     @GetMapping("{studentId}")
-    public CourseDTO findOne(@PathVariable UUID studentId) {
-        return courseService.getOne(studentId);
+    public CourseDTO findOne(@PathVariable UUID studentId, @AuthenticationPrincipal User user) {
+        return courseService.getOne(studentId, user);
     }
 
     @PostMapping
-    public CourseDTO addOne(@RequestBody @Valid CourseRequestDTO course) {
-        return courseService.addOne(course);
+    public CourseDTO addOne(@RequestBody @Valid CourseRequestDTO course, @AuthenticationPrincipal User user) {
+        return courseService.addOne(course, user);
     }
 
     @PutMapping("{courseId}")
     public CourseDTO update(@PathVariable UUID courseId,
-                             @RequestBody @Valid CourseRequestDTO courseDto) {
-        return courseService.update(courseId, courseDto);
+                             @RequestBody @Valid CourseRequestDTO courseDto,
+                            @AuthenticationPrincipal User user) {
+        return courseService.update(courseId, courseDto, user);
     }
 
     @DeleteMapping("{courseId}")
-    public void delete(@PathVariable UUID courseId) {
-        courseService.delete(courseId);
+    public void delete(@PathVariable UUID courseId, @AuthenticationPrincipal User user) {
+        courseService.delete(courseId, user);
     }
 
     @PostMapping("sections")
-    public SectionDTO addSection(@Valid @RequestBody SectionRequestDTO sectionDto) {
-        return courseService.addSection(sectionDto);
+    public SectionDTO addSection(@Valid @RequestBody SectionRequestDTO sectionDto, @AuthenticationPrincipal User user) {
+        return courseService.addSection(sectionDto, user);
     }
 
     @DeleteMapping("sections/{sectionId}")
-    public void addSection(@PathVariable UUID sectionId) {
-        courseService.deleteSection(sectionId);
+    public void addSection(@PathVariable UUID sectionId, @AuthenticationPrincipal User user) {
+        courseService.deleteSection(sectionId, user);
     }
 
     @PutMapping("sections/{sectionId}")
-    public SectionDTO updateSection(@PathVariable UUID sectionId, @RequestBody SectionRequestDTO sectionDto) {
-        return courseService.updateSection(sectionId, sectionDto);
+    public SectionDTO updateSection(@PathVariable UUID sectionId,
+                                    @RequestBody SectionRequestDTO sectionDto,
+                                    @AuthenticationPrincipal User user) {
+        return courseService.updateSection(sectionId, sectionDto, user);
     }
 
     @GetMapping("{courseId}/posts")
@@ -77,73 +82,80 @@ public class CourseController {
             @PathVariable UUID courseId,
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset,
-            @RequestParam(required = false) String sort) {
-        return courseService.findAllPostsByCourse(courseId, limit, offset, sort);
+            @RequestParam(required = false) String sort,
+            @AuthenticationPrincipal User user) {
+        return courseService.findAllPostsByCourse(courseId, limit, offset, sort, user);
     }
 
     @GetMapping("posts/{postId}")
-    public PostDTO findPost(@PathVariable UUID postId) {
-        return courseService.getOnePost(postId);
+    public PostDTO findPost(@PathVariable UUID postId, @AuthenticationPrincipal User user) {
+        return courseService.getOnePost(postId, user);
     }
 
     @PostMapping("posts")
-    public PostDTO addPost(@RequestBody @Valid PostRequestDTO postDto) {
-        return courseService.addPost(postDto);
+    public PostDTO addPost(@RequestBody @Valid PostRequestDTO postDto, @AuthenticationPrincipal User user) {
+        return courseService.addPost(postDto, user);
     }
 
     @PutMapping("posts/{postId}")
-    public PostDTO updatePost(@PathVariable UUID postId, @RequestBody @Valid PostRequestDTO postDto) {
-        return courseService.updatePost(postId, postDto);
+    public PostDTO updatePost(@PathVariable UUID postId,
+                              @RequestBody @Valid PostRequestDTO postDto,
+                              @AuthenticationPrincipal User user) {
+        return courseService.updatePost(postId, postDto, user);
     }
 
     @DeleteMapping("posts/{postId}")
-    public void deletePost(@PathVariable UUID postId) {
-        courseService.deletePost(postId);
+    public void deletePost(@PathVariable UUID postId, @AuthenticationPrincipal User user) {
+        courseService.deletePost(postId, user);
     }
 
     @GetMapping("{courseId}/achievements")
     public List<AchievementDTO> findAchievementsByCourse(@PathVariable UUID courseId,
                                                          @RequestParam(required = false) Integer limit,
                                                          @RequestParam(required = false) Integer offset,
-                                                         @RequestParam(required = false) String sort) {
-        return courseService.findAllAchievementsByCourse(courseId, limit, offset, sort);
+                                                         @RequestParam(required = false) String sort,
+                                                         @AuthenticationPrincipal User user) {
+        return courseService.findAllAchievementsByCourse(courseId, limit, offset, sort, user);
     }
 
     @PostMapping("achievements")
-    public AchievementDTO addPost(@RequestBody @Valid AchievementRequestDTO achievementDto) {
-        return courseService.addAchievement(achievementDto);
+    public AchievementDTO addPost(@RequestBody @Valid AchievementRequestDTO achievementDto, @AuthenticationPrincipal User user) {
+        return courseService.addAchievement(achievementDto, user);
     }
 
     @PutMapping("achievements/{achievementId}")
-    public AchievementDTO updatePost(@PathVariable UUID achievementId, @RequestBody @Valid AchievementRequestDTO achievementRequestDTO) {
-        return courseService.updateAchievement(achievementId, achievementRequestDTO);
+    public AchievementDTO updatePost(@PathVariable UUID achievementId,
+                                     @RequestBody @Valid AchievementRequestDTO achievementRequestDTO,
+                                     @AuthenticationPrincipal User user) {
+        return courseService.updateAchievement(achievementId, achievementRequestDTO, user);
     }
 
     @DeleteMapping("achievements/{achievementId}")
-    public void deleteAchievement(@PathVariable UUID achievementId) {
-        courseService.deleteAchievement(achievementId);
+    public void deleteAchievement(@PathVariable UUID achievementId, @AuthenticationPrincipal User user) {
+        courseService.deleteAchievement(achievementId, user);
     }
 
     @GetMapping("{taskId}/tasks")
     public List<TaskResponseDTO> findTasksByCourse(@PathVariable UUID taskId,
                                                    @RequestParam(required = false) Integer limit,
                                                    @RequestParam(required = false) Integer offset,
-                                                   @RequestParam(required = false) String sort) {
-        return courseService.findAllTasksByCourse(taskId, limit, offset, sort);
+                                                   @RequestParam(required = false) String sort,
+                                                   @AuthenticationPrincipal User user) {
+        return courseService.findAllTasksByCourse(taskId, limit, offset, sort, user);
     }
 
     @PostMapping("tasks")
-    public TaskResponseDTO addTask(@RequestBody @Valid TaskRequestDTO taskDto) {
-        return courseService.addTask(taskDto);
+    public TaskResponseDTO addTask(@RequestBody @Valid TaskRequestDTO taskDto, @AuthenticationPrincipal User user) {
+        return courseService.addTask(taskDto, user);
     }
 
     @PutMapping("tasks/{taskId}")
-    public TaskResponseDTO updateTask(@PathVariable UUID taskId, @RequestBody TaskRequestDTO taskDto) {
-        return courseService.updateTask(taskId, taskDto);
+    public TaskResponseDTO updateTask(@PathVariable UUID taskId, @RequestBody TaskRequestDTO taskDto, @AuthenticationPrincipal User user) {
+        return courseService.updateTask(taskId, taskDto, user);
     }
 
     @DeleteMapping("tasks/{taskId}")
-    public void deleteTask(@PathVariable UUID taskId) {
-        courseService.deleteTask(taskId);
+    public void deleteTask(@PathVariable UUID taskId, @AuthenticationPrincipal User user) {
+        courseService.deleteTask(taskId, user);
     }
 }

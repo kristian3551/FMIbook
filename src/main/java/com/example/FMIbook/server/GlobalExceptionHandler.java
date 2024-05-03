@@ -1,7 +1,8 @@
 package com.example.FMIbook.server;
 
 import com.example.FMIbook.utils.exception.BaseExceptionHandler;
-import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
+import com.example.FMIbook.utils.exception.DomainException;
+import com.example.FMIbook.utils.exception.ForbiddenException;
 import com.example.FMIbook.utils.exception.NotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,17 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleConstraintViolationException(
             ConstraintViolationException ex) {
         return super.handleConstraintException(ex);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Map<String, Object>> handleForbiddenException(
+            ForbiddenException ex) {
+        return super.handleForbiddenException(ex);
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<Map<String, Object>> handleDomainException(
+            DomainException ex) {
+        return super.handleDomainException(ex);
     }
 }

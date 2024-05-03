@@ -30,11 +30,20 @@ public class BaseExceptionHandler {
 
     public ResponseEntity<Map<String, Object>> handleDomainException(DomainException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("status", 404);
+        errorResponse.put("status", 400);
         errorResponse.put("code", ex.getCode());
         errorResponse.put("message", ex.getMessage());
         logger.error(errorResponse.toString());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Map<String, Object>> handleForbiddenException(ForbiddenException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 403);
+        errorResponse.put("code", ex.getCode());
+        errorResponse.put("message", ex.getMessage());
+        logger.error(errorResponse.toString());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     public ResponseEntity<Map<String, Object>> handleInternalError(RuntimeException ex) {

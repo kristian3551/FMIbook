@@ -1,5 +1,10 @@
 package com.example.FMIbook.domain.users.student;
 
+import com.example.FMIbook.domain.policy.CreatePolicy;
+import com.example.FMIbook.domain.policy.DeletePolicy;
+import com.example.FMIbook.domain.policy.UpdatePolicy;
+import com.example.FMIbook.domain.policy.exception.CannotDeleteException;
+import com.example.FMIbook.domain.policy.exception.CannotUpdateException;
 import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
 import com.example.FMIbook.domain.users.user.User;
@@ -41,7 +46,7 @@ public class StudentService {
         return StudentDTO.serializeFromEntity(student.get());
     }
 
-    public StudentDTO addOne(Student student) {
+    public StudentDTO addOne(Student student, User user) {
         student.setPassword(this.passwordEncoder.encode(student.getPassword()));
         studentRepository.save(student);
         return StudentDTO.serializeFromEntity(student);
@@ -55,6 +60,10 @@ public class StudentService {
         }
 
         Student student = studentOpt.get();
+
+        if (!UpdatePolicy.canModifyStudent(user, student)) {
+            throw new CannotUpdateException();
+        }
 
         if (studentDto.getName() != null) {
             student.setName(studentDto.getName());
@@ -89,11 +98,16 @@ public class StudentService {
         return StudentDTO.serializeFromEntity(student);
     }
 
-    public void delete(UUID id) {
+    public void delete(UUID id, User user) {
         Optional<Student> student = studentRepository.findById(id);
         if (student.isEmpty()) {
             throw new StudentNotFoundException();
         }
+
+        if (!DeletePolicy.canDeleteStudent(user, student.get())) {
+            throw new CannotDeleteException();
+        }
+
         studentRepository.delete(student.get());
     }
 }
