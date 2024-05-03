@@ -9,6 +9,8 @@ import com.example.FMIbook.domain.course.posts.PostDTO;
 import com.example.FMIbook.domain.course.posts.PostRequestDTO;
 import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.section.SectionRequestDTO;
+import com.example.FMIbook.domain.course.task.TaskRequestDTO;
+import com.example.FMIbook.domain.course.task.TaskResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,16 +55,6 @@ public class CourseController {
     @DeleteMapping("{courseId}")
     public void delete(@PathVariable UUID courseId) {
         courseService.delete(courseId);
-    }
-
-    @PutMapping("{courseId}/students")
-    public CourseDTO updateStudents(@PathVariable UUID courseId, @RequestBody List<UUID> ids) {
-        return courseService.updateStudents(courseId, ids);
-    }
-
-    @PutMapping("{courseId}/teachers")
-    public CourseDTO updateTeachers(@PathVariable UUID courseId, @RequestBody List<UUID> ids) {
-        return courseService.updateTeachers(courseId, ids);
     }
 
     @PostMapping("sections")
@@ -130,5 +122,28 @@ public class CourseController {
     @DeleteMapping("achievements/{achievementId}")
     public void deleteAchievement(@PathVariable UUID achievementId) {
         courseService.deleteAchievement(achievementId);
+    }
+
+    @GetMapping("{taskId}/tasks")
+    public List<TaskResponseDTO> findTasksByCourse(@PathVariable UUID taskId,
+                                                   @RequestParam(required = false) Integer limit,
+                                                   @RequestParam(required = false) Integer offset,
+                                                   @RequestParam(required = false) String sort) {
+        return courseService.findAllTasksByCourse(taskId, limit, offset, sort);
+    }
+
+    @PostMapping("tasks")
+    public TaskResponseDTO addTask(@RequestBody @Valid TaskRequestDTO taskDto) {
+        return courseService.addTask(taskDto);
+    }
+
+    @PutMapping("tasks/{taskId}")
+    public TaskResponseDTO updateTask(@PathVariable UUID taskId, @RequestBody TaskRequestDTO taskDto) {
+        return courseService.updateTask(taskId, taskDto);
+    }
+
+    @DeleteMapping("tasks/{taskId}")
+    public void deleteTask(@PathVariable UUID taskId) {
+        courseService.deleteTask(taskId);
     }
 }

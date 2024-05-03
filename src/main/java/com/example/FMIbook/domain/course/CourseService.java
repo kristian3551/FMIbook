@@ -18,19 +18,21 @@ import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import com.example.FMIbook.domain.course.section.exception.SectionNotFoundException;
 import com.example.FMIbook.domain.course.task.Task;
 import com.example.FMIbook.domain.course.task.TaskRepository;
+import com.example.FMIbook.domain.course.task.TaskRequestDTO;
+import com.example.FMIbook.domain.course.task.TaskResponseDTO;
+import com.example.FMIbook.domain.course.task.exception.TaskNotFoundException;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.department.DepartmentRepository;
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
 import com.example.FMIbook.domain.users.student.Student;
 import com.example.FMIbook.domain.users.student.StudentRepository;
+import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.users.teacher.TeacherRepository;
-import com.example.FMIbook.server.student.StudentNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
 import com.example.FMIbook.domain.users.user.User;
 import com.example.FMIbook.domain.users.user.UserRepository;
 import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +40,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +57,6 @@ public class CourseService {
     private final UserRepository userRepository;
     private final AchievementRepository achievementRepository;
     private final TaskRepository taskRepository;
-    private final EntityManager entityManager;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
@@ -65,8 +67,7 @@ public class CourseService {
                          CoursePostRepository coursePostRepository,
                          UserRepository userRepository,
                          AchievementRepository achievementRepository,
-                         TaskRepository taskRepository,
-                         EntityManager entityManager) {
+                         TaskRepository taskRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
@@ -76,7 +77,6 @@ public class CourseService {
         this.userRepository = userRepository;
         this.achievementRepository = achievementRepository;
         this.taskRepository = taskRepository;
-        this.entityManager = entityManager;
     }
 
     public List<CourseDTO> findAll(Integer limit, Integer offset, String sort) {
@@ -178,49 +178,6 @@ public class CourseService {
         }
 
         courseRepository.save(course);
-        return CourseDTO.serializeFromEntity(course);
-    }
-
-    @Transactional
-    public CourseDTO updateStudents(UUID id, List<UUID> studentIds) {
-        List<Student> students = studentRepository.findAllById(studentIds);
-
-        Optional<Course> courseOpt = courseRepository.findById(id);
-
-        if (courseOpt.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        Course course = courseOpt.get();
-
-        for (Student student : students) {
-            student.getCourses().removeIf(c -> c.getId() == c.getId());
-            student.getCourses().add(course);
-            List<Achievement> achievements = student.getAchievements();
-            studentRepository.save(student);
-        }
-
-        course.setStudents(students);
-        return CourseDTO.serializeFromEntity(course);
-    }
-
-    @Transactional
-    public CourseDTO updateTeachers(UUID id, List<UUID> teacherIds) {
-        List<Teacher> teachers = teacherRepository.findAllById(teacherIds);
-
-        Optional<Course> courseOpt = courseRepository.findById(id);
-
-        if (courseOpt.isEmpty()) {
-            throw new CourseNotFoundException();
-        }
-        Course course = courseOpt.get();
-
-        for (Teacher teacher : teachers) {
-            teacher.getCourses().removeIf(c -> c.getId() == c.getId());
-            teacher.getCourses().add(course);
-            teacherRepository.save(teacher);
-        }
-
-        course.setTeachers(teachers);
         return CourseDTO.serializeFromEntity(course);
     }
 
@@ -431,7 +388,85 @@ public class CourseService {
         achievementRepository.delete(achievement);
     }
 
-    public List<Task> findAllTasksForCourse(UUID courseId) {
-        return null;
+    public List<TaskResponseDTO> findAllTasksByCourse(UUID courseId,
+                                                       Integer limit,
+                                                       Integer offset,
+                                                       String sort) {
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
+        Page<Task> tasks = taskRepository.findAllByCourse(courseId, page);
+        return tasks.getContent().stream().map(TaskResponseDTO::serializeFromEntity).toList();
+    }
+
+    public TaskResponseDTO findOneTask(UUID id) {
+        Optional<Task> task = taskRepository.findById(id);
+
+        if (task.isEmpty()) {
+            throw new TaskNotFoundException();
+        }
+
+        return TaskResponseDTO.serializeFromEntity(task.get());
+    }
+
+    public TaskResponseDTO addTask(TaskRequestDTO taskDto) {
+        Optional<Course> course = courseRepository.findById(taskDto.getCourseId());
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException();
+        }
+
+        Task task = Task
+                .builder()
+                .name(taskDto.getName())
+                .startDate(LocalDateTime.parse(taskDto.getStartDate()))
+                .endDate(LocalDateTime.parse(taskDto.getEndDate()))
+                .description(taskDto.getDescription())
+                .course(course.get())
+                .type(taskDto.getType())
+                .build();
+
+        taskRepository.save(task);
+        return TaskResponseDTO.serializeFromEntity(task);
+    }
+
+    public TaskResponseDTO updateTask(UUID id, TaskRequestDTO taskDto) {
+        Optional<Task> taskOpt = taskRepository.findById(id);
+
+        if (taskOpt.isEmpty()) {
+            throw new TaskNotFoundException();
+        }
+
+        Task task = taskOpt.get();
+
+        if (taskDto.getName() != null) {
+            task.setName(taskDto.getName());
+        }
+
+        if (taskDto.getStartDate() != null) {
+            task.setStartDate(LocalDateTime.parse(taskDto.getStartDate()));
+        }
+
+        if (taskDto.getEndDate() != null) {
+            task.setEndDate(LocalDateTime.parse(taskDto.getEndDate()));
+        }
+
+        if (taskDto.getDescription() != null) {
+            task.setDescription(taskDto.getDescription());
+        }
+
+        if (taskDto.getType() != null) {
+            task.setType(taskDto.getType());
+        }
+
+        taskRepository.save(task);
+        return TaskResponseDTO.serializeFromEntity(task);
+    }
+
+    public void deleteTask(UUID id) {
+        Optional<Task> taskOpt = taskRepository.findById(id);
+
+        if (taskOpt.isEmpty()) {
+            throw new TaskNotFoundException();
+        }
+
+        taskRepository.delete(taskOpt.get());
     }
 }
