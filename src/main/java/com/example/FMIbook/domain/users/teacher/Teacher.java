@@ -5,6 +5,10 @@ import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
@@ -12,6 +16,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "teachers")
 public class Teacher extends User {
@@ -23,7 +30,7 @@ public class Teacher extends User {
     @Pattern(regexp = ".+", message = "degree is empty")
     private String degree;
 
-    @ManyToMany(targetEntity = Course.class)
+    @ManyToMany(mappedBy = "teachers")
     private List<Course> courses;
 
     @Column(name = "createdAt")
@@ -32,30 +39,6 @@ public class Teacher extends User {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
     }
 
     @Override

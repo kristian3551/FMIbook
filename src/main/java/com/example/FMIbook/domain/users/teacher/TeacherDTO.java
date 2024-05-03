@@ -3,11 +3,18 @@ package com.example.FMIbook.domain.users.teacher;
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TeacherDTO extends UserDTO {
     @Pattern(regexp = ".+", message = "name is empty")
     private String name;
@@ -16,33 +23,6 @@ public class TeacherDTO extends UserDTO {
     private String degree;
 
     private List<CourseDTO> courses;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public TeacherDTO() {
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public void setCourses(List<CourseDTO> courses) {
-        this.courses = courses;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public List<CourseDTO> getCourses() {
-        return courses;
-    }
 
     public TeacherDTO(String name, String email, String degree, List<CourseDTO> courses) {
         super(email);

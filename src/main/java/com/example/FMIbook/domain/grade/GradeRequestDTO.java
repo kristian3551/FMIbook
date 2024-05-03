@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.users.student.grade;
+package com.example.FMIbook.domain.grade;
 
 import jakarta.validation.constraints.NotNull;
 

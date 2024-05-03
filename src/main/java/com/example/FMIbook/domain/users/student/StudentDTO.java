@@ -3,14 +3,21 @@ package com.example.FMIbook.domain.users.student;
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.course.achievement.AchievementDTO;
-import com.example.FMIbook.domain.users.student.grade.GradeDTO;
+import com.example.FMIbook.domain.grade.GradeDTO;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentDTO extends UserDTO {
     @Pattern(regexp = ".{3,}", message = "name is invalid")
     private String name;
@@ -46,22 +53,6 @@ public class StudentDTO extends UserDTO {
                 ", description='" + description + '\'' +
                 ", degree='" + degree + '\'' +
                 '}';
-    }
-
-    public List<CourseDTO> getCourses() {
-        return courses;
-    }
-
-    public void setGrades(List<GradeDTO> grades) {
-        this.grades = grades;
-    }
-
-    public List<GradeDTO> getGrades() {
-        return grades;
-    }
-
-    public void setCourses(List<CourseDTO> courses) {
-        this.courses = courses;
     }
 
     public StudentDTO(UUID id,
@@ -124,39 +115,6 @@ public class StudentDTO extends UserDTO {
         this.achievements = achievements;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFacultyNumber(String facultyNumber) {
-        this.facultyNumber = facultyNumber;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public void setGroup(Integer group) {
-        this.group = group;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFacultyNumber() {
-        return facultyNumber;
-    }
-
     public String getSpecialty() {
         if (this.facultyNumber == null) {
             return null;
@@ -168,39 +126,11 @@ public class StudentDTO extends UserDTO {
         return "Other";
     }
 
-
-    public Integer getSemester() {
-        return semester;
-    }
-
     public Integer getYear() {
         if (this.semester == null) {
             return null;
         }
         return this.semester / 2;
-    }
-
-    public Integer getGroup() {
-        return group;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public StudentDTO() {
-    }
-
-    public List<AchievementDTO> getAchievements() {
-        return achievements;
-    }
-
-    public void setAchievements(List<AchievementDTO> achievements) {
-        this.achievements = achievements;
     }
 
     public static StudentDTO serializeFromEntity(Student student) {

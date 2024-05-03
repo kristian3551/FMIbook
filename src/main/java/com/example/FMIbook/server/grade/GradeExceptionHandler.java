@@ -1,6 +1,6 @@
 package com.example.FMIbook.server.grade;
 
-import com.example.FMIbook.domain.users.student.grade.exception.GradeNotFoundException;
+import com.example.FMIbook.domain.grade.exception.GradeNotFoundException;
 import com.example.FMIbook.utils.exception.BaseExceptionHandler;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

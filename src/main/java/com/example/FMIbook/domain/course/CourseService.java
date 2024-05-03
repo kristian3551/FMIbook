@@ -16,6 +16,8 @@ import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.section.SectionRepository;
 import com.example.FMIbook.domain.course.section.SectionRequestDTO;
 import com.example.FMIbook.domain.course.section.exception.SectionNotFoundException;
+import com.example.FMIbook.domain.course.task.Task;
+import com.example.FMIbook.domain.course.task.TaskRepository;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.department.DepartmentRepository;
 import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
@@ -28,6 +30,7 @@ import com.example.FMIbook.utils.ServiceUtils;
 import com.example.FMIbook.domain.users.user.User;
 import com.example.FMIbook.domain.users.user.UserRepository;
 import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,6 +53,8 @@ public class CourseService {
     private final CoursePostRepository coursePostRepository;
     private final UserRepository userRepository;
     private final AchievementRepository achievementRepository;
+    private final TaskRepository taskRepository;
+    private final EntityManager entityManager;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
@@ -59,7 +64,9 @@ public class CourseService {
                          SectionRepository sectionRepository,
                          CoursePostRepository coursePostRepository,
                          UserRepository userRepository,
-                         AchievementRepository achievementRepository) {
+                         AchievementRepository achievementRepository,
+                         TaskRepository taskRepository,
+                         EntityManager entityManager) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.departmentRepository = departmentRepository;
@@ -68,6 +75,8 @@ public class CourseService {
         this.coursePostRepository = coursePostRepository;
         this.userRepository = userRepository;
         this.achievementRepository = achievementRepository;
+        this.taskRepository = taskRepository;
+        this.entityManager = entityManager;
     }
 
     public List<CourseDTO> findAll(Integer limit, Integer offset, String sort) {
@@ -158,19 +167,17 @@ public class CourseService {
             course.setDepartment(departmentOpt.get());
         }
 
-        try {
-            courseRepository.updatePartially(
-                    course.getId(),
-                    course.getName(),
-                    course.getYear(),
-                    course.getSemester(),
-                    course.getCategory(),
-                    course.getType(),
-                    course.getDescription(),
-                    course.getDepartment() == null ? null : course.getDepartment().getId());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        if (courseDto.getStudents() != null) {
+            List<Student> students = studentRepository.findAllById(courseDto.getStudents());
+            course.setStudents(students);
         }
+
+        if (courseDto.getTeachers() != null) {
+            List<Teacher> teachers = teacherRepository.findAllById(courseDto.getTeachers());
+            course.setTeachers(teachers);
+        }
+
+        courseRepository.save(course);
         return CourseDTO.serializeFromEntity(course);
     }
 
@@ -422,5 +429,9 @@ public class CourseService {
 
         Achievement achievement = achievementOpt.get();
         achievementRepository.delete(achievement);
+    }
+
+    public List<Task> findAllTasksForCourse(UUID courseId) {
+        return null;
     }
 }

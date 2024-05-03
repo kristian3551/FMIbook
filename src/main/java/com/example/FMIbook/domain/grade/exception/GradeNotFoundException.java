@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.users.student.grade.exception;
+package com.example.FMIbook.domain.grade.exception;
 
 import com.example.FMIbook.utils.exception.NotFoundException;
 

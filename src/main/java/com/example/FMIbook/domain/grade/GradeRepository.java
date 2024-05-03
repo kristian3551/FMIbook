@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.users.student.grade;
+package com.example.FMIbook.domain.grade;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

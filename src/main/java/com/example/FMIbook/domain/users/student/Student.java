@@ -2,13 +2,16 @@ package com.example.FMIbook.domain.users.student;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.achievement.Achievement;
-import com.example.FMIbook.domain.users.student.grade.Grade;
+import com.example.FMIbook.domain.grade.Grade;
 import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
@@ -16,6 +19,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "students")
 public class Student extends User {
@@ -43,7 +49,7 @@ public class Student extends User {
     @NotNull(message = "group is null")
     private Integer group;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
@@ -52,10 +58,10 @@ public class Student extends User {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Achievement> achievements;
 
-    @ManyToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "students")
     private List<Course> courses;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student")
     private List<Grade> grades;
 
     @Column(name = "createdAt")
@@ -108,7 +114,17 @@ public class Student extends User {
         this.setRole(Role.STUDENT);
     }
 
-    public Student(UUID id, String name, String facultyNumber, String email, String password, Integer semester, Integer year, Integer group, String description, String degree, List<Course> courses) {
+    public Student(UUID id,
+                   String name,
+                   String facultyNumber,
+                   String email,
+                   String password,
+                   Integer semester,
+                   Integer year,
+                   Integer group,
+                   String description,
+                   String degree,
+                   List<Course> courses) {
         super(id, email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
@@ -121,7 +137,16 @@ public class Student extends User {
         this.setRole(Role.STUDENT);
     }
 
-    public Student(String name, String facultyNumber, String email, String password, Integer semester, Integer year, Integer group, String description, String degree, List<Course> courses) {
+    public Student(String name,
+                   String facultyNumber,
+                   String email,
+                   String password,
+                   Integer semester,
+                   Integer year,
+                   Integer group,
+                   String description,
+                   String degree,
+                   List<Course> courses) {
         super(email, password);
         this.name = name;
         this.facultyNumber = facultyNumber;
@@ -139,58 +164,6 @@ public class Student extends User {
         return this.getRole().getAuthorities();
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
-    }
-
-    public List<Grade> getGrades() {
-        return grades;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFacultyNumber(String facultyNumber) {
-        this.facultyNumber = facultyNumber;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public void setGroup(Integer group) {
-        this.group = group;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFacultyNumber() {
-        return facultyNumber;
-    }
-
     public String getSpecialty() {
         if (this.facultyNumber.contains("0800"))
             return "Computer Science";
@@ -199,35 +172,12 @@ public class Student extends User {
         return "Other";
     }
 
-    public Integer getSemester() {
-        return semester;
-    }
 
     public Integer getYear() {
         if (this.semester == null) {
             return null;
         }
         return this.semester / 2;
-    }
-
-    public Integer getGroup() {
-        return group;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public List<Achievement> getAchievements() {
-        return achievements;
-    }
-
-    public void setAchievements(List<Achievement> achievements) {
-        this.achievements = achievements;
     }
 
     @Override

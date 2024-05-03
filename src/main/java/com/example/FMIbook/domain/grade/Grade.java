@@ -1,13 +1,21 @@
-package com.example.FMIbook.domain.users.student.grade;
+package com.example.FMIbook.domain.grade;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "grades")
 public class Grade {
@@ -17,10 +25,12 @@ public class Grade {
     )
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     @Column(nullable = false)
@@ -49,25 +59,6 @@ public class Grade {
                 '}';
     }
 
-    public void setPercentage(Integer percentage) {
-        this.percentage = percentage;
-    }
-
-    public void setGrade(Double grade) {
-        this.grade = grade;
-    }
-
-    public Integer getPercentage() {
-        return percentage;
-    }
-
-    public double getGrade() {
-        return grade;
-    }
-
-    public Grade() {
-    }
-
     public Grade(UUID id, Student student, Course course, Integer percentage, Double grade) {
         this.id = id;
         this.student = student;
@@ -81,29 +72,5 @@ public class Grade {
         this.course = course;
         this.percentage = percentage;
         this.grade = grade;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.id = uuid;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public Course getCourse() {
-        return course;
     }
 }

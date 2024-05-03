@@ -2,10 +2,20 @@ package com.example.FMIbook.domain.course.section;
 
 import com.example.FMIbook.domain.course.Course;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "sections")
 public class Section {
@@ -16,13 +26,14 @@ public class Section {
     private UUID id;
 
     @Column(nullable = false)
+    @NotEmpty(message = "name is empty")
     private String name;
 
     @Column(nullable = false)
     private Integer priority;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Course.class)
-    @JoinColumn(name = "course_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     @Column(name = "createdAt")
@@ -31,9 +42,6 @@ public class Section {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Section() {
     }
 
     public Section(String name, Integer priority, Course course) {
@@ -48,39 +56,6 @@ public class Section {
         this.priority = priority;
         this.course = course;
     }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
     @Override
     public String toString() {
         return "Section{" +

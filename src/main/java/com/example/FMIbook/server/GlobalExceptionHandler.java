@@ -32,7 +32,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, Object>> handleConstraintViolationException(
             ConstraintViolationException ex) {
-        System.out.println(ex);
         return super.handleConstraintException(ex);
     }
 }
