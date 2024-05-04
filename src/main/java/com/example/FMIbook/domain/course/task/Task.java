@@ -2,12 +2,14 @@ package com.example.FMIbook.domain.course.task;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.CourseDTO;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -49,6 +51,9 @@ public class Task {
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
 
     @PrePersist
     protected void onCreate() {
