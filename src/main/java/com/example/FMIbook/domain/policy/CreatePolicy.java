@@ -6,6 +6,7 @@ import com.example.FMIbook.domain.course.course_material.CourseMaterial;
 import com.example.FMIbook.domain.course.posts.CoursePost;
 import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.task.Task;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.grade.Grade;
 import com.example.FMIbook.domain.users.user.Permission;
@@ -55,5 +56,9 @@ public class CreatePolicy {
 
     public static boolean canCreateCourseMaterial(User user, CourseMaterial courseMaterial) {
         return UpdatePolicy.canModifySection(user, courseMaterial.getSection());
+    }
+
+    public static boolean canCreateSubmission(User user, Submission submission) {
+        return ReadPolicy.canReadCourse(user, submission.getTask().getCourse());
     }
 }

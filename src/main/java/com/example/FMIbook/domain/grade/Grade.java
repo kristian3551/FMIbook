@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.grade;
 
 import com.example.FMIbook.domain.course.Course;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -39,6 +41,9 @@ public class Grade {
 
     @Column
     private Double grade;
+
+    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

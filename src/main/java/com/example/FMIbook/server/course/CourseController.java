@@ -135,13 +135,13 @@ public class CourseController {
         courseService.deleteAchievement(achievementId, user);
     }
 
-    @GetMapping("{taskId}/tasks")
-    public List<TaskResponseDTO> findTasksByCourse(@PathVariable UUID taskId,
+    @GetMapping("{courseId}/tasks")
+    public List<TaskResponseDTO> findTasksByCourse(@PathVariable UUID courseId,
                                                    @RequestParam(required = false) Integer limit,
                                                    @RequestParam(required = false) Integer offset,
                                                    @RequestParam(required = false) String sort,
                                                    @AuthenticationPrincipal User user) {
-        return courseService.findAllTasksByCourse(taskId, limit, offset, sort, user);
+        return courseService.findAllTasksByCourse(courseId, limit, offset, sort, user);
     }
 
     @PostMapping("tasks")
@@ -152,6 +152,11 @@ public class CourseController {
     @PutMapping("tasks/{taskId}")
     public TaskResponseDTO updateTask(@PathVariable UUID taskId, @RequestBody TaskRequestDTO taskDto, @AuthenticationPrincipal User user) {
         return courseService.updateTask(taskId, taskDto, user);
+    }
+
+    @GetMapping("tasks/{taskId}")
+    public TaskResponseDTO findOneTask(@PathVariable UUID taskId, @AuthenticationPrincipal User user) {
+        return courseService.findOneTask(taskId, user);
     }
 
     @DeleteMapping("tasks/{taskId}")

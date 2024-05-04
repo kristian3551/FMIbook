@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.material;
 
 import com.example.FMIbook.domain.course.course_material.CourseMaterial;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,9 @@ public class Material {
 
     @ManyToMany(mappedBy = "materials")
     private List<CourseMaterial> sections;
+
+    @ManyToMany(mappedBy = "materials")
+    private List<Submission> submissions;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

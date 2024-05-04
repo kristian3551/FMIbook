@@ -5,6 +5,7 @@ import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.course.posts.CoursePost;
 import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.task.Task;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.grade.Grade;
 import com.example.FMIbook.domain.users.student.Student;
@@ -65,5 +66,13 @@ public class DeletePolicy {
 
     public static boolean canDeleteGrade(User user, Grade grade) {
         return UpdatePolicy.canModifyCourse(user, grade.getCourse());
+    }
+
+    public static boolean canDeleteSubmission(User user, Submission submission) {
+        if (hasAdminDeleteRights(user)) {
+            return true;
+        }
+
+        return user.getId().equals(submission.getStudent().getId());
     }
 }

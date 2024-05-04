@@ -20,7 +20,7 @@ public class SectionDTO {
     private String name;
     private Integer priority;
     private CourseDTO course;
-    private List<CourseMaterialDTO> materials;
+    private List<CourseMaterialDTO> courseMaterials;
 
     public SectionDTO(String name, Integer priority, CourseDTO course) {
         this.name = name;
@@ -46,7 +46,7 @@ public class SectionDTO {
                 .name(section.getName())
                 .priority(section.getPriority())
                 .course(CourseDTO.serializeLightweight(section.getCourse()))
-                .materials(section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList())
+                .courseMaterials(section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList())
                 .build();
     }
 

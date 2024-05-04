@@ -2,6 +2,7 @@ package com.example.FMIbook.domain.users.student;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.achievement.Achievement;
+import com.example.FMIbook.domain.course.task.submission.Submission;
 import com.example.FMIbook.domain.grade.Grade;
 import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
@@ -63,6 +64,9 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student")
     private List<Grade> grades;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
