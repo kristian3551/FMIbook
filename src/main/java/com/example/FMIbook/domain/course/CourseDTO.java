@@ -1,5 +1,7 @@
 package com.example.FMIbook.domain.course;
 
+import com.example.FMIbook.domain.course.achievement.AchievementDTO;
+import com.example.FMIbook.domain.course.posts.PostDTO;
 import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.task.TaskResponseDTO;
 import com.example.FMIbook.domain.department.DepartmentDTO;
@@ -64,45 +66,41 @@ public class CourseDTO {
                 '}';
     }
 
+    public static CourseDTO serializeLightweight(Course course) {
+        if (course == null) {
+            return null;
+        }
+        return CourseDTO
+                .builder()
+                .id(course.getId())
+                .name(course.getName())
+                .year(course.getYear())
+                .semester(course.getSemester())
+                .type(course.getType())
+                .description(course.getDescription())
+                .department(null)
+                .students(new ArrayList<>())
+                .teachers(new ArrayList<>())
+                .grades(new ArrayList<>())
+                .sections(new ArrayList<>())
+                .category(course.getCategory())
+                .tasks(new ArrayList<>())
+                .build();
+    }
+
     public static CourseDTO serializeFromEntity(Course course) {
         if (course == null) {
             return null;
         }
-        List<StudentDTO> students = course.getStudents() != null
-                ? course.getStudents().stream().map(student -> {
-                    student.setCourses(null);
-                    return StudentDTO.serializeFromEntity(student);
-        }).toList()
-                : new ArrayList<>();
-        List<TeacherDTO> teachers = course.getTeachers() != null
-                ? course.getTeachers().stream().map(teacher -> {
-            teacher.setCourses(null);
-            return TeacherDTO.serializeFromEntity(teacher);
-        }).toList()
-                : new ArrayList<>();
-        List<GradeDTO> grades = course.getGrades() != null
-                ? course.getGrades().stream().map(grade -> {
-                    grade.setCourse(null);
-                    return GradeDTO.serializeFromEntity(grade);
-        }).toList()
-                : new ArrayList<>();
+        List<StudentDTO> students = course.getStudents().stream().map(StudentDTO::serializeLightweight).toList();
+        List<TeacherDTO> teachers = course.getTeachers().stream().map(TeacherDTO::serializeLightweight).toList();
+        List<GradeDTO> grades = course.getGrades().stream().map(GradeDTO::serializeLightweight).toList();
+        List<SectionDTO> sections = course.getSections().stream().map(SectionDTO::serializeLightweight).toList();
 
-        List<SectionDTO> sections = course.getSections() != null
-                ? course.getSections().stream().map(section -> {
-            section.setCourse(null);
-            return SectionDTO.serializeFromEntity(section);
-        }).toList()
-                : new ArrayList<>();
+        DepartmentDTO departmentDTO = DepartmentDTO.serializeLightweight(course.getDepartment());
 
-        DepartmentDTO departmentDTO = null;
 
-        if (course.getDepartment() != null) {
-            departmentDTO = new DepartmentDTO(course.getDepartment().getId(), course.getDepartment().getName(), new ArrayList<>());
-        }
-
-        List<TaskResponseDTO> tasks = course.getTasks() != null
-                ? course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList()
-                : new ArrayList<>();
+        List<TaskResponseDTO> tasks = course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList();
 
         return CourseDTO
                 .builder()

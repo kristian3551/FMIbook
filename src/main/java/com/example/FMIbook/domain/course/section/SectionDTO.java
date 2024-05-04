@@ -37,27 +37,30 @@ public class SectionDTO {
                 '}';
     }
 
+    public static SectionDTO serializeLightweight(Section section) {
+        if (section == null) {
+            return null;
+        }
+        return SectionDTO.builder()
+                .id(section.getId())
+                .name(section.getName())
+                .priority(section.getPriority())
+                .course(CourseDTO.serializeLightweight(section.getCourse()))
+                .materials(section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList())
+                .build();
+    }
+
     public static SectionDTO serializeFromEntity(Section section) {
         if (section == null) {
             return null;
         }
-        if (section.getCourse() != null) {
-            section.getCourse().setTeachers(new ArrayList<>());
-            section.getCourse().setStudents(new ArrayList<>());
-            section.getCourse().setGrades(new ArrayList<>());
-            section.getCourse().setAchievements(new ArrayList<>());
-            section.getCourse().setPosts(new ArrayList<>());
-            section.getCourse().setSections(new ArrayList<>());
-            section.getCourse().setTasks(new ArrayList<>());
-            section.getCourse().setDepartment(null);
-        }
-        List<CourseMaterialDTO> materials = section.getCourseMaterials() != null
-                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeFromEntity).toList()
-                : new ArrayList<>();
+
+        List<CourseMaterialDTO> materials = section.getCourseMaterials()
+                .stream().map(CourseMaterialDTO::serializeFromEntity).toList();
         return new SectionDTO(section.getId(),
                 section.getName(),
                 section.getPriority(),
-                CourseDTO.serializeFromEntity(section.getCourse()),
+                CourseDTO.serializeLightweight(section.getCourse()),
                 materials);
     }
 }

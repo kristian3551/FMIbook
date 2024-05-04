@@ -38,7 +38,7 @@ public class CourseMaterial {
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    @ManyToMany(targetEntity = Material.class)
+    @ManyToMany(targetEntity = Material.class, fetch = FetchType.LAZY)
     private List<Material> materials;
 
     @Column(name = "createdAt")
