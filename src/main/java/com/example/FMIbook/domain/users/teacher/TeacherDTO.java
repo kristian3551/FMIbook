@@ -54,7 +54,16 @@ public class TeacherDTO extends UserDTO {
             return null;
         }
         List<CourseDTO> courses = teacher.getCourses() != null
-                ? teacher.getCourses().stream().map(CourseDTO::serializeFromEntity).toList()
+                ? teacher.getCourses().stream().map(course -> {
+                    course.setStudents(new ArrayList<>());
+                    course.setGrades(new ArrayList<>());
+                    course.setAchievements(new ArrayList<>());
+                    course.setTeachers(new ArrayList<>());
+                    course.setTasks(new ArrayList<>());
+                    course.setDepartment(null);
+                    course.setSections(new ArrayList<>());
+                    return CourseDTO.serializeFromEntity(course);
+        }).toList()
                 : new ArrayList<>();
         return new TeacherDTO(
                 teacher.getId(),

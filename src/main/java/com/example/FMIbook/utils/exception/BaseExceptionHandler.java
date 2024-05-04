@@ -2,6 +2,7 @@ package com.example.FMIbook.utils.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class BaseExceptionHandler {
     private final Logger logger;
 

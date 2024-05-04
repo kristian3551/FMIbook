@@ -2,6 +2,7 @@ package com.example.FMIbook.domain.policy;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.achievement.Achievement;
+import com.example.FMIbook.domain.course.course_material.CourseMaterial;
 import com.example.FMIbook.domain.course.posts.CoursePost;
 import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.task.Task;
@@ -50,5 +51,9 @@ public class CreatePolicy {
 
     public static boolean canCreateGrade(User user, Grade grade) {
         return UpdatePolicy.canModifyCourse(user, grade.getCourse());
+    }
+
+    public static boolean canCreateCourseMaterial(User user, CourseMaterial courseMaterial) {
+        return UpdatePolicy.canModifySection(user, courseMaterial.getSection());
     }
 }
