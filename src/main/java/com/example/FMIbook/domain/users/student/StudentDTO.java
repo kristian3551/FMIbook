@@ -141,6 +141,11 @@ public class StudentDTO extends UserDTO {
                 ? student.getCourses().stream().map(course -> {
             course.setStudents(new ArrayList<>());
             course.setGrades(new ArrayList<>());
+            course.setAchievements(new ArrayList<>());
+            course.setTeachers(new ArrayList<>());
+            course.setTasks(new ArrayList<>());
+            course.setDepartment(null);
+            course.setSections(new ArrayList<>());
             return CourseDTO.serializeFromEntity(course);
         }).toList()
                 : new ArrayList<>();
@@ -150,9 +155,16 @@ public class StudentDTO extends UserDTO {
                     if (grade.getStudent() != null) {
                         grade.getStudent().setCourses(new ArrayList<>());
                         grade.getStudent().setGrades(new ArrayList<>());
+                        grade.getStudent().setAchievements(new ArrayList<>());
                     }
                     if (grade.getCourse() != null) {
                         grade.getCourse().setStudents(new ArrayList<>());
+                        grade.getCourse().setGrades(new ArrayList<>());
+                        grade.getCourse().setAchievements(new ArrayList<>());
+                        grade.getCourse().setTeachers(new ArrayList<>());
+                        grade.getCourse().setTasks(new ArrayList<>());
+                        grade.getCourse().setDepartment(null);
+                        grade.getCourse().setSections(new ArrayList<>());
                     }
                     return GradeDTO.serializeFromEntity(grade);
         }).toList()

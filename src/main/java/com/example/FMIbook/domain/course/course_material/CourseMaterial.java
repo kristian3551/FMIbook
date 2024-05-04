@@ -1,24 +1,26 @@
-package com.example.FMIbook.domain.material;
+package com.example.FMIbook.domain.course.course_material;
 
-import com.example.FMIbook.domain.course.course_material.CourseMaterial;
+import com.example.FMIbook.domain.course.section.Section;
+import com.example.FMIbook.domain.material.Material;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "materials")
-public class Material {
+@Table(name = "course_materials")
+public class CourseMaterial {
     @Id
     @GeneratedValue(
             strategy = GenerationType.UUID
@@ -26,18 +28,18 @@ public class Material {
     private UUID id;
 
     @Column(nullable = false)
-    @NotEmpty(message = "original name is empty")
-    private String originalName;
-
-    @Column(nullable = false, unique = true)
     @NotEmpty(message = "name is empty")
     private String name;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String url;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-    @ManyToMany(mappedBy = "materials")
-    private List<CourseMaterial> sections;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id", nullable = false)
+    private Section section;
+
+    @ManyToMany(targetEntity = Material.class)
+    private List<Material> materials;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

@@ -1,15 +1,16 @@
 package com.example.FMIbook.domain.course.section;
 
 import com.example.FMIbook.domain.course.Course;
+import com.example.FMIbook.domain.course.course_material.CourseMaterial;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -35,6 +36,9 @@ public class Section {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private List<CourseMaterial> courseMaterials;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
