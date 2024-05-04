@@ -56,7 +56,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Kristian Todorov\",\n    \"email\": \"kristiyand@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"6MI0800076\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
+							"raw": "{\n    \"name\": \"Todor Dukov\",\n    \"email\": \"todord@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"5MI0800072\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -215,7 +215,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"name\": \"Seminars\",\n    \"priority\": 2\n}",
+									"raw": "{\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"name\": \"General\",\n    \"priority\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -255,7 +255,7 @@
 									"variable": [
 										{
 											"key": "sectionId",
-											"value": "9246dced-f96f-41a7-a617-e2c48065df6e"
+											"value": "a6ef2725-1701-42a1-98f2-160b65a90a47"
 										}
 									]
 								}
@@ -290,7 +290,7 @@
 									"variable": [
 										{
 											"key": "sectionId",
-											"value": "21376435-e37a-4088-9387-33a94f289fb5"
+											"value": "a6ef2725-1701-42a1-98f2-160b65a90a47"
 										}
 									]
 								}
@@ -467,7 +467,7 @@
 									"variable": [
 										{
 											"key": "courseId",
-											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+											"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
 										}
 									]
 								}
@@ -481,7 +481,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"90 percent on exam\",\n    \"description\": \"No comment\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"studentId\": \"2452cce1-e198-4337-ba87-0adcaad219be\"\n}",
+									"raw": "{\n    \"name\": \"90 percent on exam\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"studentId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -594,6 +594,125 @@
 				{
 					"name": "tasks",
 					"item": [
+						{
+							"name": "submissions",
+							"item": [
+								{
+									"name": "Add submission",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "description",
+													"value": "Nqkvo opisanie",
+													"type": "text"
+												},
+												{
+													"key": "taskId",
+													"value": "4dcba3dd-f588-4f9a-addd-c448e15d0149",
+													"type": "text"
+												},
+												{
+													"key": "studentId",
+													"value": "e36c637b-d38a-4612-b6d8-a4b07b161699",
+													"type": "text"
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": "/Users/appstreams/Downloads/cf.pdf"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/api/courses/tasks/submissions",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks",
+												"submissions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Submission",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "description",
+													"value": "Editnato opisanie",
+													"type": "text"
+												},
+												{
+													"key": "files",
+													"type": "file",
+													"src": "/Users/appstreams/Downloads/cf.pdf"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{url}}/api/courses/tasks/submissions/:submissionId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks",
+												"submissions",
+												":submissionId"
+											],
+											"variable": [
+												{
+													"key": "submissionId",
+													"value": "3a06d65a-6f5c-4063-b214-f5f0917c2669"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Submission",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/tasks/submissions/:submissionId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks",
+												"submissions",
+												":submissionId"
+											],
+											"variable": [
+												{
+													"key": "submissionId",
+													"value": "3a06d65a-6f5c-4063-b214-f5f0917c2669"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "Get Tasks By Course",
 							"request": {
@@ -716,7 +835,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Homework 2\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\"\n}",
+									"raw": "{\n    \"name\": \"Homework 1\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -735,7 +854,98 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Add task",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Homework 2\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/api/courses/tasks",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 03 May 2024 09:37:58 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"83ba5751-fd84-4bb3-ae6c-4f5bef5d4cd1\",\n    \"name\": \"Homework 2\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"description\": \"Sega vi precakahme\",\n    \"course\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"type\": \"homework\"\n}"
+								}
+							]
 						},
 						{
 							"name": "Update Tasks",
@@ -744,7 +954,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Homework\"\n}",
+									"raw": "{\n    \"name\": \"Exam\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -765,12 +975,110 @@
 									"variable": [
 										{
 											"key": "taskId",
-											"value": "07e0be69-f924-4ca6-a542-14141e131e3e"
+											"value": "4dcba3dd-f588-4f9a-addd-c448e15d0149"
 										}
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Update Tasks",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Homework\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/api/courses/tasks/:taskId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks",
+												":taskId"
+											],
+											"variable": [
+												{
+													"key": "taskId",
+													"value": "04485aac-e2ea-4f51-96bf-8ea854bc213f"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 03 May 2024 09:37:36 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"04485aac-e2ea-4f51-96bf-8ea854bc213f\",\n    \"name\": \"Homework\",\n    \"startDate\": \"2024-04-08T12:30:00\",\n    \"endDate\": \"2024-04-22T12:30:00\",\n    \"description\": \"Sega vi precakahme\",\n    \"course\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"type\": \"homework\"\n}"
+								}
+							]
 						},
 						{
 							"name": "Delete Task",
@@ -792,6 +1100,133 @@
 										{
 											"key": "taskId",
 											"value": "07e0be69-f924-4ca6-a542-14141e131e3e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Task Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/tasks/:taskId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"tasks",
+										":taskId"
+									],
+									"variable": [
+										{
+											"key": "taskId",
+											"value": "4dcba3dd-f588-4f9a-addd-c448e15d0149"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "materials",
+					"item": [
+						{
+							"name": "Add Course Material",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Program",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "It will be updated if needed",
+											"type": "text"
+										},
+										{
+											"key": "sectionId",
+											"value": "d8a96208-7bb3-4e17-97df-6b90dff1efef",
+											"type": "text"
+										},
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/appstreams/Downloads/cf.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/materials",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"materials"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Course Material Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/materials/:materialId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"materials",
+										":materialId"
+									],
+									"variable": [
+										{
+											"key": "materialId",
+											"value": "dd6a7530-0f41-44bb-b7ef-ae575412e6b9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Course Material",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/materials/:materialId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"materials",
+										":materialId"
+									],
+									"variable": [
+										{
+											"key": "materialId",
+											"value": "9763eaef-76a9-47d9-95de-e2356c68738f"
 										}
 									]
 								}
@@ -958,7 +1393,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "31c8909b-0d7e-42e0-b9d6-91a4af16ff87"
+									"value": "1caf244d-e734-4738-94d4-29edc378874d"
 								}
 							]
 						}
@@ -993,7 +1428,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "72d5c6ca-4e56-41ac-a718-e2d833c641f0"
+									"value": "e8bf4f56-f03d-4f54-8a5b-9596255f970a"
 								}
 							]
 						}
@@ -1007,7 +1442,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"PS\",\n    \"description\": \"Ako i tova raboti..\"\n}",
+							"raw": "{\n    \"students\": [\"e36c637b-d38a-4612-b6d8-a4b07b161699\"],\n    \"teachers\": [\"3b45f930-4c85-4c44-a97a-48ab28efc380\"],\n    \"department\": \"655cc490-1d11-4d86-a67e-2dc143c449ff\",\n    \"name\": \"Вероятности\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1027,7 +1462,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+									"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
 								}
 							]
 						}
@@ -1064,7 +1499,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Dexter\",\n    \"email\": \"dexter@fmi.uni-sofia.bg\",\n    \"password\": \"dexter123\",\n    \"degree\": \"professor\"\n}",
+							"raw": "{\n    \"name\": \"Minko\",\n    \"email\": \"minko@fmi.uni-sofia.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"professor\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1198,7 +1633,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"studentId\": \"2452cce1-e198-4337-ba87-0adcaad219be\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"percentage\": 70,\n    \"grade\": 5\n}",
+							"raw": "{\n    \"studentId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"percentage\": 70,\n    \"grade\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1250,7 +1685,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"studentId\": \"9b2784f3-996b-49de-a7c3-b19594195fea\"\n}",
+							"raw": "{\n    \"percentage\": 60\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1270,7 +1705,7 @@
 							"variable": [
 								{
 									"key": "gradeId",
-									"value": "24f15fcd-747e-4d29-b634-8da2ba34817a"
+									"value": "54b5150f-30de-4236-9c76-1d44b4cfe10d"
 								}
 							]
 						}
@@ -1441,7 +1876,7 @@
 							"variable": [
 								{
 									"key": "departmentId",
-									"value": "1b2f32a8-31e0-46de-9d08-25741c0945f8"
+									"value": "655cc490-1d11-4d86-a67e-2dc143c449ff"
 								}
 							]
 						}
@@ -1550,7 +1985,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"student\",\n    \"name\": \"admin\",\n    \"email\": \"admin@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI08000\",\n    \"semester\": 6,\n    \"group\": 6\n}",
+							"raw": "{\n    \"type\": \"admin\",\n    \"name\": \"admin\",\n    \"email\": \"admin@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI08000\",\n    \"semester\": 6,\n    \"group\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
