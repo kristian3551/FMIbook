@@ -21,31 +21,31 @@ public class AchievementDTO {
     private StudentDTO student;
     private CourseDTO course;
 
-    public static AchievementDTO serializeFromEntity(Achievement achievement) {
+    public static AchievementDTO serializeLightweight(Achievement achievement) {
         if (achievement == null) {
             return null;
         }
 
-        if (achievement.getStudent() != null) {
-            achievement.getStudent().setAchievements(new ArrayList<>());
-            achievement.getStudent().setCourses(new ArrayList<>());
-            achievement.getStudent().setGrades(new ArrayList<>());
-        }
+        return AchievementDTO.builder()
+                .id(achievement.getId())
+                .name(achievement.getName())
+                .description(achievement.getDescription())
+                .student(StudentDTO.serializeLightweight(achievement.getStudent()))
+                .course(CourseDTO.serializeLightweight(achievement.getCourse()))
+                .build();
+    }
 
-        if (achievement.getCourse() != null) {
-            achievement.getCourse().setStudents(new ArrayList<>());
-            achievement.getCourse().setGrades(new ArrayList<>());
-            achievement.getCourse().setTeachers(new ArrayList<>());
-            achievement.getCourse().setSections(new ArrayList<>());
-            achievement.getCourse().setDepartment(null);
+    public static AchievementDTO serializeFromEntity(Achievement achievement) {
+        if (achievement == null) {
+            return null;
         }
 
         return new AchievementDTO(
                 achievement.getId(),
                 achievement.getName(),
                 achievement.getDescription(),
-                StudentDTO.serializeFromEntity(achievement.getStudent()),
-                CourseDTO.serializeFromEntity(achievement.getCourse())
+                StudentDTO.serializeLightweight(achievement.getStudent()),
+                CourseDTO.serializeLightweight(achievement.getCourse())
         );
     }
 }

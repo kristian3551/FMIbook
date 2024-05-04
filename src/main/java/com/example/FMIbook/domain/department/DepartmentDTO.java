@@ -30,22 +30,26 @@ public class DepartmentDTO {
         this.name = name;
     }
 
+    public static DepartmentDTO serializeLightweight(Department department) {
+        if (department == null) {
+            return null;
+        }
+        return DepartmentDTO.builder()
+                .id(department.getId())
+                .name(department.getName())
+                .courses(new ArrayList<>())
+                .build();
+    }
+
     public static DepartmentDTO serializeFromEntity(Department department) {
         if (department == null) {
             return null;
         }
 
-        List<CourseDTO> courses = department.getCourses() != null
-                ? department.getCourses().stream().map(course -> {
-                    course.setDepartment(null);
-                    return CourseDTO.serializeFromEntity(course);
-        }).toList()
-                : new ArrayList<>();
-
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),
-                courses
+                department.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
         );
     }
 }

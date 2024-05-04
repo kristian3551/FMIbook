@@ -1,7 +1,6 @@
 package com.example.FMIbook.domain.users.student;
 
 import com.example.FMIbook.domain.course.CourseDTO;
-import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.course.achievement.AchievementDTO;
 import com.example.FMIbook.domain.grade.GradeDTO;
 import com.example.FMIbook.domain.users.user.UserDTO;
@@ -18,25 +17,21 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class StudentDTO extends UserDTO {
     @Pattern(regexp = ".{3,}", message = "name is invalid")
     private String name;
 
     @Pattern(regexp = "\\dMI(0800|0900|0700|0600)\\d{3}", message = "faculty number is invalid")
     private String facultyNumber;
-
     private Integer semester;
-
     private Integer group;
-
+    private Integer year;
+    private String specialty;
     private String description;
-
     private String degree;
-
     private List<CourseDTO> courses;
-
     private List<GradeDTO> grades;
-
     private List<AchievementDTO> achievements;
 
     @Override
@@ -53,43 +48,6 @@ public class StudentDTO extends UserDTO {
                 ", description='" + description + '\'' +
                 ", degree='" + degree + '\'' +
                 '}';
-    }
-
-    public StudentDTO(UUID id,
-                      String name,
-                      String facultyNumber,
-                      String email,
-                      Integer semester,
-                      Integer group,
-                      String description,
-                      String degree,
-                      List<CourseDTO> courses) {
-        super(id, email);
-        this.name = name;
-        this.facultyNumber = facultyNumber;
-        this.semester = semester;
-        this.group = group;
-        this.description = description;
-        this.degree = degree;
-        this.courses = courses;
-    }
-
-    public StudentDTO(String name,
-                      String facultyNumber,
-                      String email,
-                      Integer semester,
-                      Integer group,
-                      String description,
-                      String degree,
-                      List<CourseDTO> courses) {
-        super(email);
-        this.name = name;
-        this.facultyNumber = facultyNumber;
-        this.semester = semester;
-        this.group = group;
-        this.description = description;
-        this.degree = degree;
-        this.courses = courses;
     }
 
     public StudentDTO(UUID id,
@@ -133,53 +91,39 @@ public class StudentDTO extends UserDTO {
         return this.semester / 2;
     }
 
+    public static StudentDTO serializeLightweight(Student student) {
+        if (student == null) {
+            return null;
+        }
+
+        StudentDTO result = StudentDTO.builder()
+                .name(student.getName())
+                .facultyNumber(student.getFacultyNumber())
+                .specialty(student.getSpecialty())
+                .semester(student.getSemester())
+                .year(student.getYear())
+                .group(student.getGroup())
+                .description(student.getDescription())
+                .degree(student.getDegree())
+                .achievements(new ArrayList<>())
+                .courses(new ArrayList<>())
+                .grades(new ArrayList<>())
+                .build();
+        result.setId(student.getId());
+        result.setEmail(student.getEmail());
+        return result;
+    }
+
     public static StudentDTO serializeFromEntity(Student student) {
         if (student == null) {
             return null;
         }
-        List<CourseDTO> courses = student.getCourses() != null
-                ? student.getCourses().stream().map(course -> {
-            course.setStudents(new ArrayList<>());
-            course.setGrades(new ArrayList<>());
-            course.setAchievements(new ArrayList<>());
-            course.setTeachers(new ArrayList<>());
-            course.setTasks(new ArrayList<>());
-            course.setDepartment(null);
-            course.setSections(new ArrayList<>());
-            return CourseDTO.serializeFromEntity(course);
-        }).toList()
-                : new ArrayList<>();
 
-        List<GradeDTO> grades = student.getGrades() != null
-                ? student.getGrades().stream().map(grade -> {
-                    if (grade.getStudent() != null) {
-                        grade.getStudent().setCourses(new ArrayList<>());
-                        grade.getStudent().setGrades(new ArrayList<>());
-                        grade.getStudent().setAchievements(new ArrayList<>());
-                    }
-                    if (grade.getCourse() != null) {
-                        grade.getCourse().setStudents(new ArrayList<>());
-                        grade.getCourse().setGrades(new ArrayList<>());
-                        grade.getCourse().setAchievements(new ArrayList<>());
-                        grade.getCourse().setTeachers(new ArrayList<>());
-                        grade.getCourse().setTasks(new ArrayList<>());
-                        grade.getCourse().setDepartment(null);
-                        grade.getCourse().setSections(new ArrayList<>());
-                    }
-                    return GradeDTO.serializeFromEntity(grade);
-        }).toList()
-                : new ArrayList<>();
+        List<CourseDTO> courses = student.getCourses().stream().map(CourseDTO::serializeLightweight).toList();
+        List<GradeDTO> grades = student.getGrades().stream().map(GradeDTO::serializeLightweight).toList();
+        List<AchievementDTO> achievements = student.getAchievements()
+                .stream().map(AchievementDTO::serializeLightweight).toList();
 
-        List<AchievementDTO> achievementDtos = new ArrayList<>();
-
-        if (student.getAchievements() != null) {
-            List<Achievement> achievements = student.getAchievements();
-            achievements.forEach(achievement -> {
-                achievement.setStudent(null);
-                achievement.setCourse(null);
-            });
-            achievementDtos = achievements.stream().map(AchievementDTO::serializeFromEntity).toList();
-        }
         return new StudentDTO(
                 student.getId(),
                 student.getName(),
@@ -191,7 +135,7 @@ public class StudentDTO extends UserDTO {
                 student.getDegree(),
                 courses,
                 grades,
-                achievementDtos
+                achievements
         );
     }
 }

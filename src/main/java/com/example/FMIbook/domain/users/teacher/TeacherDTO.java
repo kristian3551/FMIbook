@@ -15,6 +15,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TeacherDTO extends UserDTO {
     @Pattern(regexp = ".+", message = "name is empty")
     private String name;
@@ -49,28 +50,30 @@ public class TeacherDTO extends UserDTO {
         this.courses = courses;
     }
 
+    public static TeacherDTO serializeLightweight(Teacher teacher) {
+        if (teacher == null) {
+            return null;
+        }
+        TeacherDTO result = TeacherDTO.builder()
+                .degree(teacher.getDegree())
+                .name(teacher.getName())
+                .courses(new ArrayList<>())
+                .build();
+        result.setId(teacher.getId());
+        result.setEmail(teacher.getEmail());
+        return result;
+    }
+
     public static TeacherDTO serializeFromEntity(Teacher teacher) {
         if (teacher == null) {
             return null;
         }
-        List<CourseDTO> courses = teacher.getCourses() != null
-                ? teacher.getCourses().stream().map(course -> {
-                    course.setStudents(new ArrayList<>());
-                    course.setGrades(new ArrayList<>());
-                    course.setAchievements(new ArrayList<>());
-                    course.setTeachers(new ArrayList<>());
-                    course.setTasks(new ArrayList<>());
-                    course.setDepartment(null);
-                    course.setSections(new ArrayList<>());
-                    return CourseDTO.serializeFromEntity(course);
-        }).toList()
-                : new ArrayList<>();
         return new TeacherDTO(
                 teacher.getId(),
                 teacher.getName(),
                 teacher.getEmail(),
                 teacher.getDegree(),
-                courses
+                teacher.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
         );
     }
 }

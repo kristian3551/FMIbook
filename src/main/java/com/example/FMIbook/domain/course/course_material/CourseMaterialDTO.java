@@ -22,24 +22,32 @@ public class CourseMaterialDTO {
     private SectionDTO section;
     private List<MaterialDTO> materials;
 
-    public static CourseMaterialDTO serializeFromEntity(CourseMaterial courseMaterial) {
-        SectionDTO section = null;
-        if (courseMaterial.getSection() != null) {
-            courseMaterial.getSection().setCourseMaterials(new ArrayList<>());
-            section = SectionDTO.serializeFromEntity(courseMaterial.getSection());
+    public static CourseMaterialDTO serializeLightweight(CourseMaterial courseMaterial) {
+        if (courseMaterial == null) {
+            return null;
         }
+        return CourseMaterialDTO.builder()
+                .id(courseMaterial.getId())
+                .name(courseMaterial.getName())
+                .description(courseMaterial.getDescription())
+                .section(null)
+                .materials(courseMaterial.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList())
+                .build();
+    }
 
-        List<MaterialDTO> materials = courseMaterial.getMaterials() != null
-                ? courseMaterial.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList()
-                : new ArrayList<>();
+    public static CourseMaterialDTO serializeFromEntity(CourseMaterial courseMaterial) {
+        if (courseMaterial == null) {
+            return null;
+        }
 
         return CourseMaterialDTO
                 .builder()
                 .id(courseMaterial.getId())
                 .name(courseMaterial.getName())
                 .description(courseMaterial.getDescription())
-                .section(section)
-                .materials(materials)
+                .section(SectionDTO.serializeLightweight(courseMaterial.getSection()))
+                .materials(courseMaterial.getMaterials()
+                        .stream().map(MaterialDTO::serializeFromEntity).toList())
                 .build();
     }
 }

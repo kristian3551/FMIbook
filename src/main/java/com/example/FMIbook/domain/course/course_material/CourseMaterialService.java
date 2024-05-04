@@ -13,6 +13,7 @@ import com.example.FMIbook.domain.policy.exception.CannotCreateException;
 import com.example.FMIbook.domain.policy.exception.CannotDeleteException;
 import com.example.FMIbook.domain.policy.exception.CannotReadException;
 import com.example.FMIbook.domain.users.user.User;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class CourseMaterialService {
     @Autowired
     private final MaterialService materialService;
 
+    @Transactional
     public CourseMaterialDTO addOne(CourseMaterialRequest requestDto, User user) throws IOException {
         Optional<Section> sectionOpt = sectionRepository.findById(requestDto.getSectionId());
 
@@ -78,6 +80,7 @@ public class CourseMaterialService {
         return CourseMaterialDTO.serializeFromEntity(courseMaterial.get());
     }
 
+    @Transactional
     public void delete(UUID id, User user) throws IOException {
         Optional<CourseMaterial> courseMaterial = courseMaterialRepository.findById(id);
 
