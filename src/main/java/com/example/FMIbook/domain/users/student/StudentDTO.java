@@ -119,10 +119,15 @@ public class StudentDTO extends UserDTO {
             return null;
         }
 
-        List<CourseDTO> courses = student.getCourses().stream().map(CourseDTO::serializeLightweight).toList();
-        List<GradeDTO> grades = student.getGrades().stream().map(GradeDTO::serializeLightweight).toList();
-        List<AchievementDTO> achievements = student.getAchievements()
-                .stream().map(AchievementDTO::serializeLightweight).toList();
+        List<CourseDTO> courses = student.getCourses() != null
+                ? student.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+        List<GradeDTO> grades = student.getGrades() != null
+                ? student.getGrades().stream().map(GradeDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+        List<AchievementDTO> achievements = student.getAchievements() != null
+                ? student.getAchievements().stream().map(AchievementDTO::serializeLightweight).toList()
+                : new ArrayList<>();
 
         return new StudentDTO(
                 student.getId(),

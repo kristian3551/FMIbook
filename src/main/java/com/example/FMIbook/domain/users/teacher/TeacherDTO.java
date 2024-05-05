@@ -73,7 +73,9 @@ public class TeacherDTO extends UserDTO {
                 teacher.getName(),
                 teacher.getEmail(),
                 teacher.getDegree(),
-                teacher.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
+                teacher.getCourses() != null
+                ? teacher.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
+                        : new ArrayList<>()
         );
     }
 }

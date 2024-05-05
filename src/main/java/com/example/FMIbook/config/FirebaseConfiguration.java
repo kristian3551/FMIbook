@@ -8,18 +8,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FirebaseConfiguration {
     @Value("${firebase.storage-bucket}")
     private String bucketName;
+    @Value("${firebase.config}")
+    private String firebaseConfig;
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        ClassPathResource serviceAccount = new ClassPathResource("fmibook-firebase-config.json");
+        byte[] byteArray = firebaseConfig.getBytes();
+        InputStream inputStream = new ByteArrayInputStream(byteArray);
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream()))
+                .setCredentials(GoogleCredentials.fromStream(inputStream))
                 .setStorageBucket(bucketName)
                 .build();
 

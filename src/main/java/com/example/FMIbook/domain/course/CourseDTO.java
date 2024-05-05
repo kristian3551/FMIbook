@@ -46,8 +46,6 @@ public class CourseDTO {
 
     private DepartmentDTO department;
 
-    private List<GradeDTO> grades;
-
     private List<TaskResponseDTO> tasks;
 
     @Override
@@ -60,9 +58,6 @@ public class CourseDTO {
                 ", category='" + category + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", students=" + students +
-                ", teachers=" + teachers +
-                ", grades=" + grades +
                 '}';
     }
 
@@ -81,7 +76,6 @@ public class CourseDTO {
                 .department(null)
                 .students(new ArrayList<>())
                 .teachers(new ArrayList<>())
-                .grades(new ArrayList<>())
                 .sections(new ArrayList<>())
                 .category(course.getCategory())
                 .tasks(new ArrayList<>())
@@ -92,15 +86,22 @@ public class CourseDTO {
         if (course == null) {
             return null;
         }
-        List<StudentDTO> students = course.getStudents().stream().map(StudentDTO::serializeLightweight).toList();
-        List<TeacherDTO> teachers = course.getTeachers().stream().map(TeacherDTO::serializeLightweight).toList();
-        List<GradeDTO> grades = course.getGrades().stream().map(GradeDTO::serializeLightweight).toList();
-        List<SectionDTO> sections = course.getSections().stream().map(SectionDTO::serializeLightweight).toList();
+        List<StudentDTO> students = course.getStudents() != null
+                ? course.getStudents().stream().map(StudentDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+        List<TeacherDTO> teachers = course.getTeachers() != null
+                ? course.getTeachers().stream().map(TeacherDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+        List<SectionDTO> sections = course.getSections() != null
+            ? course.getSections().stream().map(SectionDTO::serializeLightweight).toList()
+                : new ArrayList<>();
 
         DepartmentDTO departmentDTO = DepartmentDTO.serializeLightweight(course.getDepartment());
 
 
-        List<TaskResponseDTO> tasks = course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList();
+        List<TaskResponseDTO> tasks = course.getTasks() != null
+                ? course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList()
+                : new ArrayList<>();
 
         return CourseDTO
                 .builder()
@@ -115,7 +116,6 @@ public class CourseDTO {
                 .teachers(teachers)
                 .department(departmentDTO)
                 .tasks(tasks)
-                .grades(grades)
                 .sections(sections)
                         .build();
     }

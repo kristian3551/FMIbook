@@ -49,7 +49,9 @@ public class DepartmentDTO {
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),
-                department.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
+                department.getCourses() != null
+                ? department.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
+                        : new ArrayList<>()
         );
     }
 }
