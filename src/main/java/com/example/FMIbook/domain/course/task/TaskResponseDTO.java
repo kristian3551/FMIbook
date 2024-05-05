@@ -63,7 +63,9 @@ public class TaskResponseDTO {
                 task.getDescription(),
                 task.getCourse().getId(),
                 task.getType(),
-                task.getSubmissions().stream().map(SubmissionDTO::serializeFromEntity).toList()
+                task.getSubmissions() != null
+                ? task.getSubmissions().stream().map(SubmissionDTO::serializeFromEntity).toList()
+                        : new ArrayList<>()
         );
     }
 }

@@ -6,6 +6,7 @@ import com.example.FMIbook.domain.users.student.StudentRepository;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.users.teacher.TeacherDTO;
 import com.example.FMIbook.domain.users.teacher.TeacherRepository;
+import com.example.FMIbook.utils.exception.ForbiddenException;
 import com.example.FMIbook.utils.jwt.JwtService;
 import com.example.FMIbook.domain.users.user.User;
 import com.example.FMIbook.domain.users.user.UserDTO;
@@ -106,13 +107,9 @@ public class AuthService {
             teacherRepository.save((Teacher) user);
             jwtToken = jwtService.generateToken(user);
         }
-        else if (request.getType().equals("admin")) {
-            user = new User(
-                    request.getEmail(),
-                    passwordEncoder.encode(request.getPassword())
-            );
-            userRepository.save(user);
-            jwtToken = jwtService.generateToken(user);
+
+        if (jwtToken == null) {
+            throw new ForbiddenException("Unauthorized!", 101);
         }
 
         return new AuthenticationResponse(

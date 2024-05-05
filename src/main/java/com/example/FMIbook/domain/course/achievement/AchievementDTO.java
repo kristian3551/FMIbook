@@ -30,8 +30,8 @@ public class AchievementDTO {
                 .id(achievement.getId())
                 .name(achievement.getName())
                 .description(achievement.getDescription())
-                .student(StudentDTO.serializeLightweight(achievement.getStudent()))
-                .course(CourseDTO.serializeLightweight(achievement.getCourse()))
+                .student(null)
+                .course(null)
                 .build();
     }
 

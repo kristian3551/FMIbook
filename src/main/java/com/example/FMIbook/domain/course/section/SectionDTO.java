@@ -46,7 +46,9 @@ public class SectionDTO {
                 .name(section.getName())
                 .priority(section.getPriority())
                 .course(CourseDTO.serializeLightweight(section.getCourse()))
-                .courseMaterials(section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList())
+                .courseMaterials(section.getCourseMaterials() != null
+                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList()
+                        : new ArrayList<>())
                 .build();
     }
 
@@ -55,8 +57,9 @@ public class SectionDTO {
             return null;
         }
 
-        List<CourseMaterialDTO> materials = section.getCourseMaterials()
-                .stream().map(CourseMaterialDTO::serializeFromEntity).toList();
+        List<CourseMaterialDTO> materials = section.getCourseMaterials() != null
+                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeFromEntity).toList()
+                : new ArrayList<>();
         return new SectionDTO(section.getId(),
                 section.getName(),
                 section.getPriority(),
