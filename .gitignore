@@ -34,3 +34,4 @@ build/
 .env
 
 src/main/resources/fmibook-firebase-config.json
+src/main/resources/application.properties
