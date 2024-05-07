@@ -32,7 +32,7 @@ PG_PASSWORD={your database password}
 PORT={your server port}
 SECRET_KEY={your secret key for JWT token}
 FIREBASE_BUCKET_NAME={your Firebase storage bucket name}
-FIREBASE_CLIENT_ID=109388434257282247844
+FIREBASE_CLIENT_ID={your Firebase client id}
 FIREBASE_CLIENT_EMAIL={firebase client email}
 FIREBASE_CERT_URL={firebase cert url}
 FIREBASE_KEY_ID={firebase private key id}
@@ -40,7 +40,6 @@ FIREBASE_PRIVATE_KEY={your private key to Firebase storage}
 ```
 *Before running make sure you have configured database properly and
 there is an existing database with this name.*
-4. You are all set!
 
 
 ## Technologies
