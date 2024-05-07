@@ -25,7 +25,7 @@ you are running Spring boot with environment variables listed there
 **Make sure you replace "{...}" on each row with your personal data!**
 ```
 PG_DATABASE={name of database, e.g. fmibook}
-PG_HOST=dpg-cor884fsc6pc73dl0620-a.frankfurt-postgres.render.com
+PG_HOST={database host name}
 PG_PORT={your PostgreSQL server port}
 PG_USERNAME={your database username}
 PG_PASSWORD={your database password}
