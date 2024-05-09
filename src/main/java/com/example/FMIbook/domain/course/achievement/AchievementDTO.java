@@ -21,7 +21,7 @@ public class AchievementDTO {
     private StudentDTO student;
     private CourseDTO course;
 
-    public static AchievementDTO serializeLightweight(Achievement achievement) {
+    public static AchievementDTO serializeLightweight(Achievement achievement, boolean withStudent, boolean withCourse) {
         if (achievement == null) {
             return null;
         }
@@ -30,8 +30,8 @@ public class AchievementDTO {
                 .id(achievement.getId())
                 .name(achievement.getName())
                 .description(achievement.getDescription())
-                .student(null)
-                .course(null)
+                .student(withStudent ? StudentDTO.serializeLightweight(achievement.getStudent()) : null)
+                .course(withCourse ? CourseDTO.serializeLightweight(achievement.getCourse()) : null)
                 .build();
     }
 

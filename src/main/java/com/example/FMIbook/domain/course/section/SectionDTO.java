@@ -45,7 +45,7 @@ public class SectionDTO {
                 .id(section.getId())
                 .name(section.getName())
                 .priority(section.getPriority())
-                .course(CourseDTO.serializeLightweight(section.getCourse()))
+                .course(null)
                 .courseMaterials(section.getCourseMaterials() != null
                 ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList()
                         : new ArrayList<>())

@@ -1,5 +1,6 @@
 package com.example.FMIbook.domain.course.task.submission;
 
+import com.example.FMIbook.domain.grade.GradeDTO;
 import com.example.FMIbook.domain.material.MaterialDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class SubmissionDTO {
     private String description;
     private StudentDTO student;
     private List<MaterialDTO> materials;
+    private GradeDTO grade;
 
     public static SubmissionDTO serializeLightweight(Submission submission) {
         if (submission == null) {
@@ -29,6 +31,7 @@ public class SubmissionDTO {
                 .description(submission.getDescription())
                 .student(null)
                 .materials(submission.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList())
+                .grade(null)
                 .build();
     }
 
@@ -42,6 +45,7 @@ public class SubmissionDTO {
                 .description(submission.getDescription())
                 .student(StudentDTO.serializeLightweight(submission.getStudent()))
                 .materials(submission.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList())
+                .grade(GradeDTO.serializeLightweight(submission.getGrade()))
                 .build();
     }
 }

@@ -100,7 +100,7 @@ public class CourseDTO {
 
 
         List<TaskResponseDTO> tasks = course.getTasks() != null
-                ? course.getTasks().stream().map(TaskResponseDTO::serializeFromEntity).toList()
+                ? course.getTasks().stream().map(TaskResponseDTO::serializeLightweight).toList()
                 : new ArrayList<>();
 
         return CourseDTO

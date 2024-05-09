@@ -126,7 +126,9 @@ public class StudentDTO extends UserDTO {
                 ? student.getGrades().stream().map(GradeDTO::serializeLightweight).toList()
                 : new ArrayList<>();
         List<AchievementDTO> achievements = student.getAchievements() != null
-                ? student.getAchievements().stream().map(AchievementDTO::serializeLightweight).toList()
+                ? student.getAchievements().stream().map(
+                        achievement -> AchievementDTO.serializeLightweight(achievement, false, true)
+        ).toList()
                 : new ArrayList<>();
 
         return new StudentDTO(

@@ -5,7 +5,7 @@ import com.example.FMIbook.utils.exception.NotFoundException;
 public class CourseMaterialNotFoundException extends NotFoundException {
     public static final int CODE = 2001;
     public CourseMaterialNotFoundException() {
-        super(CODE);
+        super("course material not found", CODE);
     }
 
     public CourseMaterialNotFoundException(String message) {
