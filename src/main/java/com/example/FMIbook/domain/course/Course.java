@@ -4,7 +4,7 @@ import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.course.task.Task;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.users.student.Student;
-import com.example.FMIbook.domain.grade.Grade;
+import com.example.FMIbook.domain.course.grade.Grade;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.posts.CoursePost;

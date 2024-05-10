@@ -34,6 +34,22 @@ public class PostDTO {
 
     private List<PostDTO> childrenPosts;
 
+    public static PostDTO serializeLightweight(CoursePost post) {
+        if (post == null) {
+            return null;
+        }
+
+        return PostDTO
+                .builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .rate(post.getRate())
+                .user(UserDTO.serializeFromEntity(post.getUser()))
+                .childrenPosts(new ArrayList<>())
+                .build();
+    }
+
     public static PostDTO serializeFromEntity(CoursePost post) {
         if (post == null) {
             return null;

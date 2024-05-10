@@ -1,31 +1,22 @@
-package com.example.FMIbook.server.grade;
+package com.example.FMIbook.server.course.grade;
 
-import com.example.FMIbook.domain.grade.GradeDTO;
-import com.example.FMIbook.domain.grade.GradeRequestDTO;
-import com.example.FMIbook.domain.grade.GradeService;
+import com.example.FMIbook.domain.course.grade.GradeDTO;
+import com.example.FMIbook.domain.course.grade.GradeRequestDTO;
+import com.example.FMIbook.domain.course.grade.GradeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/grades")
+@RequestMapping(path = "api/courses/grades")
 public class GradeController {
     private final GradeService gradeService;
 
     @Autowired
     public GradeController(GradeService gradeService) {
         this.gradeService = gradeService;
-    }
-
-    @GetMapping
-    public List<GradeDTO> findAll(
-            @RequestParam(required = false) Integer limit,
-            @RequestParam(required = false) Integer offset,
-            @RequestParam(required = false) String sort) {
-        return gradeService.findAll(limit, offset, sort);
     }
 
     @GetMapping("{gradeId}")

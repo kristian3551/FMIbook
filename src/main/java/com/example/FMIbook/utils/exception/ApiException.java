@@ -1,5 +1,8 @@
 package com.example.FMIbook.utils.exception;
 
+import lombok.Data;
+
+@Data
 public class ApiException extends RuntimeException{
     private int code;
 
@@ -24,14 +27,6 @@ public class ApiException extends RuntimeException{
 
     public ApiException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, int code) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.code = code;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
         this.code = code;
     }
 }

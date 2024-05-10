@@ -1,12 +1,9 @@
 package com.example.FMIbook.domain.course;
 
-import com.example.FMIbook.domain.course.achievement.AchievementDTO;
-import com.example.FMIbook.domain.course.posts.PostDTO;
 import com.example.FMIbook.domain.course.section.SectionDTO;
 import com.example.FMIbook.domain.course.task.TaskResponseDTO;
 import com.example.FMIbook.domain.department.DepartmentDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;
-import com.example.FMIbook.domain.grade.GradeDTO;
 import com.example.FMIbook.domain.users.teacher.TeacherDTO;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -93,7 +90,7 @@ public class CourseDTO {
                 ? course.getTeachers().stream().map(TeacherDTO::serializeLightweight).toList()
                 : new ArrayList<>();
         List<SectionDTO> sections = course.getSections() != null
-            ? course.getSections().stream().map(SectionDTO::serializeLightweight).toList()
+            ? course.getSections().stream().map(SectionDTO::serializeFromEntity).toList()
                 : new ArrayList<>();
 
         DepartmentDTO departmentDTO = DepartmentDTO.serializeLightweight(course.getDepartment());

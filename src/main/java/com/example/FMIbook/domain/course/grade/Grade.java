@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.grade;
+package com.example.FMIbook.domain.course.grade;
 
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.task.submission.Submission;

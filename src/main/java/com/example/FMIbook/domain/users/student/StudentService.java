@@ -34,7 +34,7 @@ public class StudentService {
     public List<StudentDTO> findAll(Integer limit, Integer offset, String sort) {
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Student> students = studentRepository.findAll(page);
-        return students.getContent().stream().map(StudentDTO::serializeFromEntity).toList();
+        return students.getContent().stream().map(StudentDTO::serializeLightweight).toList();
     }
 
     public StudentDTO getOne(UUID id) {

@@ -28,7 +28,7 @@ public class DepartmentService {
     ) {
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Department> departments = departmentRepository.findAll(page);
-        return departments.getContent().stream().map(DepartmentDTO::serializeFromEntity).toList();
+        return departments.getContent().stream().map(DepartmentDTO::serializeLightweight).toList();
     }
 
     public DepartmentDTO getOne(UUID id) {

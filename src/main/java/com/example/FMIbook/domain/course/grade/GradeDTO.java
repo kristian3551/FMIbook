@@ -1,4 +1,4 @@
-package com.example.FMIbook.domain.grade;
+package com.example.FMIbook.domain.course.grade;
 
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.users.student.StudentDTO;
@@ -42,7 +42,7 @@ public class GradeDTO {
         this.grade = grade;
     }
 
-    public static GradeDTO serializeLightweight(Grade grade) {
+    public static GradeDTO serializeLightweight(Grade grade, boolean withStudent, boolean withCourse) {
         if (grade == null) {
             return null;
         }
@@ -50,8 +50,8 @@ public class GradeDTO {
                 .id(grade.getId())
                 .grade(grade.getGrade())
                 .percentage(grade.getPercentage())
-                .course(null)
-                .student(null)
+                .course(withCourse ? CourseDTO.serializeLightweight(grade.getCourse()) : null)
+                .student(withStudent ? StudentDTO.serializeLightweight(grade.getStudent()) : null)
                 .build();
     }
 

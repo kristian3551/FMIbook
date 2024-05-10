@@ -1,7 +1,7 @@
 package com.example.FMIbook.domain.course.task.submission;
 
 import com.example.FMIbook.domain.course.task.Task;
-import com.example.FMIbook.domain.grade.Grade;
+import com.example.FMIbook.domain.course.grade.Grade;
 import com.example.FMIbook.domain.material.Material;
 import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;

@@ -90,7 +90,7 @@ public class CourseService {
     public List<CourseDTO> findAll(Integer limit, Integer offset, String sort) {
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Course> courses = courseRepository.findAll(page);
-        return courses.getContent().stream().map(CourseDTO::serializeFromEntity).toList();
+        return courses.getContent().stream().map(CourseDTO::serializeLightweight).toList();
     }
 
     public CourseDTO getOne(UUID id, User user) {
@@ -284,7 +284,7 @@ public class CourseService {
 
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
         Page<CoursePost> posts = coursePostRepository.findAllByCourse(id, page);
-        return posts.getContent().stream().map(PostDTO::serializeFromEntity).toList();
+        return posts.getContent().stream().map(PostDTO::serializeLightweight).toList();
     }
 
     public PostDTO getOnePost(UUID id, User user) {
@@ -485,7 +485,7 @@ public class CourseService {
 
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
         Page<Task> tasks = taskRepository.findAllByCourse(courseId, page);
-        return tasks.getContent().stream().map(TaskResponseDTO::serializeFromEntity).toList();
+        return tasks.getContent().stream().map(TaskResponseDTO::serializeLightweight).toList();
     }
 
     public TaskResponseDTO findOneTask(UUID id, User user) {

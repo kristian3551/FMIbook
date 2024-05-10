@@ -3,7 +3,7 @@ package com.example.FMIbook.domain.users.student;
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.achievement.Achievement;
 import com.example.FMIbook.domain.course.task.submission.Submission;
-import com.example.FMIbook.domain.grade.Grade;
+import com.example.FMIbook.domain.course.grade.Grade;
 import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;

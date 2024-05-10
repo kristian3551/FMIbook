@@ -2,7 +2,7 @@ package com.example.FMIbook.domain.users.student;
 
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.achievement.AchievementDTO;
-import com.example.FMIbook.domain.grade.GradeDTO;
+import com.example.FMIbook.domain.course.grade.GradeDTO;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -123,7 +123,7 @@ public class StudentDTO extends UserDTO {
                 ? student.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
                 : new ArrayList<>();
         List<GradeDTO> grades = student.getGrades() != null
-                ? student.getGrades().stream().map(GradeDTO::serializeLightweight).toList()
+                ? student.getGrades().stream().map(grade -> GradeDTO.serializeLightweight(grade, false, true)).toList()
                 : new ArrayList<>();
         List<AchievementDTO> achievements = student.getAchievements() != null
                 ? student.getAchievements().stream().map(
