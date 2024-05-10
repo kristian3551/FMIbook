@@ -3,7 +3,8 @@
 		"_postman_id": "f868fde0-2e99-40f8-9ff3-2c8ddf5c0043",
 		"name": "FMIbook",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "29473314"
+		"_exporter_id": "29473314",
+		"_collection_link": "https://www.postman.com/solar-star-822370/workspace/fmibook/collection/29473314-f868fde0-2e99-40f8-9ff3-2c8ddf5c0043?action=share&source=collection_link&creator=29473314"
 	},
 	"item": [
 		{
@@ -15,7 +16,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/students",
+							"raw": "{{url}}/api/students?sort=name",
 							"host": [
 								"{{url}}"
 							],
@@ -36,8 +37,7 @@
 								},
 								{
 									"key": "sort",
-									"value": "name",
-									"disabled": true
+									"value": "name"
 								},
 								{
 									"key": "specialty",
@@ -47,7 +47,110 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/students",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "name",
+											"disabled": true
+										},
+										{
+											"key": "specialty",
+											"value": "0800",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:13:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"6706ac88-b45f-4428-8d9a-16c1729f70a6\",\n        \"email\": \"denitsab@fmi.uni-sofia.bg\",\n        \"name\": \"Denitsa Belicheva\",\n        \"facultyNumber\": \"7MI0800072\",\n        \"semester\": 6,\n        \"group\": 6,\n        \"year\": 3,\n        \"specialty\": \"Computer Science\",\n        \"description\": \"Ako tova bachka se pensioniram!\",\n        \"degree\": \"bachelor\",\n        \"courses\": [],\n        \"grades\": [],\n        \"achievements\": []\n    },\n    {\n        \"id\": \"ea5c3baf-19fc-42ce-b546-fd6be17a0132\",\n        \"email\": \"krstiyant@fmi.uni-sofia.bg\",\n        \"name\": \"Kristiyan Todorov\",\n        \"facultyNumber\": \"6MI0800076\",\n        \"semester\": 6,\n        \"group\": 6,\n        \"year\": 3,\n        \"specialty\": \"Computer Science\",\n        \"description\": \"Krischo\",\n        \"degree\": \"bachelor\",\n        \"courses\": [],\n        \"grades\": [],\n        \"achievements\": []\n    },\n    {\n        \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n        \"email\": \"todord@fmi.uni-sofia.bg\",\n        \"name\": \"Todor Dukov\",\n        \"facultyNumber\": \"5MI0800072\",\n        \"semester\": 6,\n        \"group\": 6,\n        \"year\": 3,\n        \"specialty\": \"Computer Science\",\n        \"description\": \"Krischo\",\n        \"degree\": \"bachelor\",\n        \"courses\": [],\n        \"grades\": [],\n        \"achievements\": []\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Add Student",
@@ -56,7 +159,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Todor Dukov\",\n    \"email\": \"todord@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"5MI0800072\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\"\n\n}",
+							"raw": "{\n    \"name\": \"Denitsa Belicheva\",\n    \"email\": \"denitsab@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"7MI0800072\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Denito\",\n    \"degree\": \"bachelor\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,7 +177,97 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Denitsa Belicheva\",\n    \"email\": \"denitsab@fmi.uni-sofia.bg\",\n    \"facultyNumber\": \"7MI0800072\",\n    \"password\": \"test123\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"description\": \"Denito\",\n    \"degree\": \"bachelor\"\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/students",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:08:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6706ac88-b45f-4428-8d9a-16c1729f70a6\",\n    \"email\": \"denitsab@fmi.uni-sofia.bg\",\n    \"name\": \"Denitsa Belicheva\",\n    \"facultyNumber\": \"7MI0800072\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"year\": 3,\n    \"specialty\": \"Computer Science\",\n    \"description\": \"Denito\",\n    \"degree\": \"bachelor\",\n    \"courses\": [],\n    \"grades\": [],\n    \"achievements\": []\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Student",
@@ -104,12 +297,183 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "357b2419-c377-4352-b9b5-305fe3061fd9"
+									"value": "ea5c3baf-19fc-42ce-b546-fd6be17a0132"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/students/:studentId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "f9e820bf-18cf-4b2f-9007-3a1ccbebf305"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:09:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1001,\n    \"message\": \"student not found\",\n    \"status\": 404\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/students/:studentId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "ea5c3baf-19fc-42ce-b546-fd6be17a0132"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:14:48 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Update student",
@@ -148,12 +512,207 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "2452cce1-e198-4337-ba87-0adcaad219be"
+									"value": "6706ac88-b45f-4428-8d9a-16c1729f70a7"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"Ako tova bachka se pensioniram!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/api/students/:studentId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "6706ac88-b45f-4428-8d9a-16c1729f70a6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:09:47 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6706ac88-b45f-4428-8d9a-16c1729f70a6\",\n    \"email\": \"denitsab@fmi.uni-sofia.bg\",\n    \"name\": \"Denitsa Belicheva\",\n    \"facultyNumber\": \"7MI0800072\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"year\": 3,\n    \"specialty\": \"Computer Science\",\n    \"description\": \"Ako tova bachka se pensioniram!\",\n    \"degree\": \"bachelor\",\n    \"courses\": [],\n    \"grades\": [],\n    \"achievements\": []\n}"
+						},
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"Ako tova bachka se pensioniram!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/students/:studentId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "6706ac88-b45f-4428-8d9a-16c1729f70a7"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:10:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1001,\n    \"message\": \"student not found\",\n    \"status\": 404\n}"
+						}
+					]
 				},
 				{
 					"name": "Get Student Details",
@@ -183,12 +742,187 @@
 							"variable": [
 								{
 									"key": "studentId",
-									"value": "59cdba27-7a53-47ec-93fc-f84ccf8fd9fe"
+									"value": "e36c637b-d38a-4612-b6d8-a4b07b161699"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/students/:studentId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "e36c637b-d38a-4612-b6d8-a4b07b161699"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:12:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"email\": \"todord@fmi.uni-sofia.bg\",\n    \"name\": \"Todor Dukov\",\n    \"facultyNumber\": \"5MI0800072\",\n    \"semester\": 6,\n    \"group\": 6,\n    \"year\": 3,\n    \"specialty\": \"Computer Science\",\n    \"description\": \"Krischo\",\n    \"degree\": \"bachelor\",\n    \"courses\": [\n        {\n            \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n            \"name\": \"Вероятности\",\n            \"year\": 2024,\n            \"semester\": \"summer\",\n            \"category\": \"Applied mathematics\",\n            \"type\": \"compulsory\",\n            \"description\": \"Dexter rules!\",\n            \"students\": [],\n            \"teachers\": [],\n            \"sections\": [],\n            \"department\": null,\n            \"tasks\": []\n        }\n    ],\n    \"grades\": [\n        {\n            \"id\": \"28314a5b-597e-49ae-9abd-62a4885214cc\",\n            \"student\": null,\n            \"course\": {\n                \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n                \"name\": \"Вероятности\",\n                \"year\": 2024,\n                \"semester\": \"summer\",\n                \"category\": \"Applied mathematics\",\n                \"type\": \"compulsory\",\n                \"description\": \"Dexter rules!\",\n                \"students\": [],\n                \"teachers\": [],\n                \"sections\": [],\n                \"department\": null,\n                \"tasks\": []\n            },\n            \"percentage\": 70,\n            \"grade\": 5\n        },\n        {\n            \"id\": \"e2cc73e2-3286-4971-bc08-f5c8142cd4cb\",\n            \"student\": null,\n            \"course\": {\n                \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n                \"name\": \"Вероятности\",\n                \"year\": 2024,\n                \"semester\": \"summer\",\n                \"category\": \"Applied mathematics\",\n                \"type\": \"compulsory\",\n                \"description\": \"Dexter rules!\",\n                \"students\": [],\n                \"teachers\": [],\n                \"sections\": [],\n                \"department\": null,\n                \"tasks\": []\n            },\n            \"percentage\": 70,\n            \"grade\": 5\n        },\n        {\n            \"id\": \"4fe20325-7011-47c3-8f4c-ea25b8357490\",\n            \"student\": null,\n            \"course\": {\n                \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n                \"name\": \"Вероятности\",\n                \"year\": 2024,\n                \"semester\": \"summer\",\n                \"category\": \"Applied mathematics\",\n                \"type\": \"compulsory\",\n                \"description\": \"Dexter rules!\",\n                \"students\": [],\n                \"teachers\": [],\n                \"sections\": [],\n                \"department\": null,\n                \"tasks\": []\n            },\n            \"percentage\": 70,\n            \"grade\": 5\n        }\n    ],\n    \"achievements\": [\n        {\n            \"id\": \"23eda17e-67f1-4f8c-bdde-14aa64eecef6\",\n            \"name\": \"90 percent on exam\",\n            \"description\": null,\n            \"student\": null,\n            \"course\": {\n                \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n                \"name\": \"Вероятности\",\n                \"year\": 2024,\n                \"semester\": \"summer\",\n                \"category\": \"Applied mathematics\",\n                \"type\": \"compulsory\",\n                \"description\": \"Dexter rules!\",\n                \"students\": [],\n                \"teachers\": [],\n                \"sections\": [],\n                \"department\": null,\n                \"tasks\": []\n            }\n        }\n    ]\n}"
+						},
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/students/:studentId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"students",
+										":studentId"
+									],
+									"variable": [
+										{
+											"key": "studentId",
+											"value": "e36c637b-d38a-4612-b6d8-a4b07b161690"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:13:02 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1001,\n    \"message\": \"student not found\",\n    \"status\": 404\n}"
+						}
+					]
 				}
 			]
 		},
@@ -215,7 +949,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"name\": \"General\",\n    \"priority\": 1\n}",
+									"raw": "{\n    \"courseId\": \"0362483a-a97f-41e4-bd2f-06c9eb073d16\",\n    \"name\": \"Practicum\",\n    \"priority\": 3\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -321,7 +1055,7 @@
 									"variable": [
 										{
 											"key": "courseId",
-											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+											"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
 										}
 									]
 								}
@@ -335,7 +1069,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"title\": \"Re: Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"userId\": \"2452cce1-e198-4337-ba87-0adcaad219be\",\n    \"courseId\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n    \"parentId\": \"79bbed15-6532-4008-8b0d-a2be79aab693\"\n}",
+									"raw": "{\n    \"title\": \"Ре: Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"userId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"parentId\": \"d93d7ec2-17bb-4f2c-b771-da76a054d940\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -354,7 +1088,98 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"title\": \"Ре: Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"userId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"parentId\": \"d93d7ec2-17bb-4f2c-b771-da76a054d940\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/api/courses/posts",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"posts"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 May 2024 16:17:03 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"9091850b-da37-4560-83ea-d7fe69e01f05\",\n    \"title\": \"Ре: Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"rate\": 0,\n    \"course\": null,\n    \"user\": {\n        \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n        \"email\": \"todord@fmi.uni-sofia.bg\"\n    },\n    \"childrenPosts\": []\n}"
+								}
+							]
 						},
 						{
 							"name": "Delete Post",
@@ -436,12 +1261,101 @@
 									"variable": [
 										{
 											"key": "postId",
-											"value": "ee5d9fe5-e840-47f7-964c-b3144844578b"
+											"value": "d93d7ec2-17bb-4f2c-b771-da76a054d940"
 										}
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/posts/:postId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"posts",
+												":postId"
+											],
+											"variable": [
+												{
+													"key": "postId",
+													"value": "d93d7ec2-17bb-4f2c-b771-da76a054d940"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 May 2024 16:17:14 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"d93d7ec2-17bb-4f2c-b771-da76a054d940\",\n    \"title\": \"Добре дошли!\",\n    \"description\": \"Ще говоря каквото си искам!\",\n    \"rate\": 0,\n    \"course\": null,\n    \"user\": {\n        \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n        \"email\": \"todord@fmi.uni-sofia.bg\"\n    },\n    \"childrenPosts\": [\n        {\n            \"id\": \"9091850b-da37-4560-83ea-d7fe69e01f05\",\n            \"title\": \"Ре: Добре дошли!\",\n            \"description\": \"Ще говоря каквото си искам!\",\n            \"rate\": 0,\n            \"course\": null,\n            \"user\": {\n                \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n                \"email\": \"todord@fmi.uni-sofia.bg\"\n            },\n            \"childrenPosts\": []\n        }\n    ]\n}"
+								}
+							]
 						}
 					]
 				},
@@ -472,7 +1386,96 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/:courseId/achievements",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												":courseId",
+												"achievements"
+											],
+											"variable": [
+												{
+													"key": "courseId",
+													"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 May 2024 16:18:13 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"23eda17e-67f1-4f8c-bdde-14aa64eecef6\",\n        \"name\": \"90 percent on exam\",\n        \"description\": null,\n        \"student\": {\n            \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n            \"email\": \"todord@fmi.uni-sofia.bg\",\n            \"name\": \"Todor Dukov\",\n            \"facultyNumber\": \"5MI0800072\",\n            \"semester\": 6,\n            \"group\": 6,\n            \"year\": 3,\n            \"specialty\": \"Computer Science\",\n            \"description\": \"Krischo\",\n            \"degree\": \"bachelor\",\n            \"courses\": [],\n            \"grades\": [],\n            \"achievements\": []\n        },\n        \"course\": {\n            \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n            \"name\": \"Вероятности\",\n            \"year\": 2024,\n            \"semester\": \"summer\",\n            \"category\": \"Applied mathematics\",\n            \"type\": \"compulsory\",\n            \"description\": \"Dexter rules!\",\n            \"students\": [],\n            \"teachers\": [],\n            \"sections\": [],\n            \"department\": null,\n            \"tasks\": []\n        }\n    }\n]"
+								}
+							]
 						},
 						{
 							"name": "Add achievement",
@@ -623,7 +1626,7 @@
 												{
 													"key": "files",
 													"type": "file",
-													"src": "/Users/appstreams/Downloads/cf.pdf"
+													"src": "/Users/appstreams/Downloads/vs_pr_notes_20240331.pdf"
 												}
 											]
 										},
@@ -640,7 +1643,115 @@
 											]
 										}
 									},
-									"response": []
+									"response": [
+										{
+											"name": "success",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "description",
+															"value": "Nqkvo opisanie",
+															"type": "text"
+														},
+														{
+															"key": "taskId",
+															"value": "4dcba3dd-f588-4f9a-addd-c448e15d0149",
+															"type": "text"
+														},
+														{
+															"key": "studentId",
+															"value": "e36c637b-d38a-4612-b6d8-a4b07b161699",
+															"type": "text"
+														},
+														{
+															"key": "files",
+															"type": "file",
+															"src": "/Users/appstreams/Downloads/vs_pr_notes_20240331.pdf"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{url}}/api/courses/tasks/submissions",
+													"host": [
+														"{{url}}"
+													],
+													"path": [
+														"api",
+														"courses",
+														"tasks",
+														"submissions"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Vary",
+													"value": "Origin"
+												},
+												{
+													"key": "Vary",
+													"value": "Access-Control-Request-Method"
+												},
+												{
+													"key": "Vary",
+													"value": "Access-Control-Request-Headers"
+												},
+												{
+													"key": "X-Content-Type-Options",
+													"value": "nosniff"
+												},
+												{
+													"key": "X-XSS-Protection",
+													"value": "0"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Expires",
+													"value": "0"
+												},
+												{
+													"key": "X-Frame-Options",
+													"value": "DENY"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 09 May 2024 15:58:26 GMT"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=60"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"d7b45f16-b5e2-44c6-b108-572624ef5f25\",\n    \"description\": \"Nqkvo opisanie\",\n    \"student\": {\n        \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n        \"email\": \"todord@fmi.uni-sofia.bg\",\n        \"name\": \"Todor Dukov\",\n        \"facultyNumber\": \"5MI0800072\",\n        \"semester\": 6,\n        \"group\": 6,\n        \"year\": 3,\n        \"specialty\": \"Computer Science\",\n        \"description\": \"Krischo\",\n        \"degree\": \"bachelor\",\n        \"courses\": [],\n        \"grades\": [],\n        \"achievements\": []\n    },\n    \"materials\": [\n        {\n            \"id\": \"e5adb8da-f98d-4185-8429-d41e7a8a4e05\",\n            \"name\": \"vs_pr_notes_20240331.pdf\",\n            \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/64fb482a-b199-42e0-95cd-91853e745804.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3292070306&Signature=EKZj3pAEudOaMLIgJKNc2yyosoeN3Pg4JmG2dE%2FgEEB3l%2FNLFMDSHM%2FQv%2BvthG8vBxdNLFNv9SgH%2BXXZMbdnRENSU6%2FZgD3MToQ3MBU9%2BcqKNlxWvXV2FJCmjSuxXURJjC%2BDX8wqNber3aqwS67joM7AQqYqzW%2FNLQVmvXow5lcjY16iShYrnKv5%2Ftm6ThFGfCr0s2yIwKfbrwL0w3nMDZTqL1sV%2Fv7hEtd27JCW%2F7fkfHc7jItGuS6hdpb5WqeGss%2Fhh%2BTFWS2wAJXYQA1vquKwAHB%2FzGp2Caj5%2B5oXFxOOrVP7uQE7qa5wEgCR02xETfESMU%2FP2HCytIRJTz0f3Q%3D%3D\",\n            \"createdAt\": \"2024-05-09T18:58:26.567318\"\n        }\n    ],\n    \"grade\": null\n}"
+										}
+									]
 								},
 								{
 									"name": "Update Submission",
@@ -652,13 +1763,18 @@
 											"formdata": [
 												{
 													"key": "description",
-													"value": "Editnato opisanie",
+													"value": "Editnato opisanie 2",
 													"type": "text"
 												},
 												{
 													"key": "files",
 													"type": "file",
 													"src": "/Users/appstreams/Downloads/cf.pdf"
+												},
+												{
+													"key": "gradeId",
+													"value": "4fe20325-7011-47c3-8f4c-ea25b8357490",
+													"type": "text"
 												}
 											]
 										},
@@ -677,12 +1793,122 @@
 											"variable": [
 												{
 													"key": "submissionId",
-													"value": "3a06d65a-6f5c-4063-b214-f5f0917c2669"
+													"value": "a1465bc6-0f27-4ea9-9dfc-0c5c693a1a81"
 												}
 											]
 										}
 									},
-									"response": []
+									"response": [
+										{
+											"name": "success",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "formdata",
+													"formdata": [
+														{
+															"key": "description",
+															"value": "Editnato opisanie 2",
+															"type": "text"
+														},
+														{
+															"key": "files",
+															"type": "file",
+															"src": "/Users/appstreams/Downloads/cf.pdf"
+														},
+														{
+															"key": "gradeId",
+															"value": "4fe20325-7011-47c3-8f4c-ea25b8357490",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{url}}/api/courses/tasks/submissions/:submissionId",
+													"host": [
+														"{{url}}"
+													],
+													"path": [
+														"api",
+														"courses",
+														"tasks",
+														"submissions",
+														":submissionId"
+													],
+													"variable": [
+														{
+															"key": "submissionId",
+															"value": "a1465bc6-0f27-4ea9-9dfc-0c5c693a1a81"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Vary",
+													"value": "Origin"
+												},
+												{
+													"key": "Vary",
+													"value": "Access-Control-Request-Method"
+												},
+												{
+													"key": "Vary",
+													"value": "Access-Control-Request-Headers"
+												},
+												{
+													"key": "X-Content-Type-Options",
+													"value": "nosniff"
+												},
+												{
+													"key": "X-XSS-Protection",
+													"value": "0"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Expires",
+													"value": "0"
+												},
+												{
+													"key": "X-Frame-Options",
+													"value": "DENY"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 09 May 2024 16:06:50 GMT"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=60"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"a1465bc6-0f27-4ea9-9dfc-0c5c693a1a81\",\n    \"description\": \"Editnato opisanie 2\",\n    \"student\": {\n        \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n        \"email\": \"todord@fmi.uni-sofia.bg\",\n        \"name\": \"Todor Dukov\",\n        \"facultyNumber\": \"5MI0800072\",\n        \"semester\": 6,\n        \"group\": 6,\n        \"year\": 3,\n        \"specialty\": \"Computer Science\",\n        \"description\": \"Krischo\",\n        \"degree\": \"bachelor\",\n        \"courses\": [],\n        \"grades\": [],\n        \"achievements\": []\n    },\n    \"materials\": [\n        {\n            \"id\": \"50917adc-3522-461d-8571-fd6afa7f3934\",\n            \"name\": \"vs_pr_notes_20240331.pdf\",\n            \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/27dceb1e-6f5d-4a86-a502-edbfbbcbf1fb.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3292070250&Signature=EboHvgboEsGNIpPin%2BZkkxdtNOto4LkDvrYpUaojf90gbvId5vHOQUtdRAh%2FKGvlwCPsZ6C5lVqKaXSI0lxpCVzAYWWck3eHLCcXXbl3q4Sd%2BhZu2OtTivf3A5hWGZN21iLU%2FEgVEj%2FZ3YzGWk9n0AN0JVwpwpIY1%2B%2FtgfErvNakoTtXat%2Fz%2FitPnNcBdOB94ixkfPmJhDOumq74S3aaU%2BXdkKXw0RmZ8K1U44%2BHWFjWgR32WsfYjJnyaXSEvB5klmtCqTVd4kbA8L2JlLK4zxJg9BHq1cAvf3TGHOahEkwXezahDo0%2B%2BcjR4CBbOFBXmNyat9bLEnMu%2F7UGvOavdQ%3D%3D\",\n            \"createdAt\": \"2024-05-09T18:57:30.452953\"\n        }\n    ],\n    \"grade\": {\n        \"id\": \"4fe20325-7011-47c3-8f4c-ea25b8357490\",\n        \"student\": null,\n        \"course\": null,\n        \"percentage\": 70,\n        \"grade\": 5\n    }\n}"
+										}
+									]
 								},
 								{
 									"name": "Delete Submission",
@@ -732,7 +1958,7 @@
 									"variable": [
 										{
 											"key": "courseId",
-											"value": "46d27263-1dba-423c-8b8d-836bbf924369"
+											"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
 										}
 									]
 								}
@@ -744,10 +1970,12 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{url}}/api/courses/:courseId/tasks",
+											"raw": "http://localhost:4000/api/courses/:courseId/tasks",
+											"protocol": "http",
 											"host": [
-												"{{url}}"
+												"localhost"
 											],
+											"port": "4000",
 											"path": [
 												"api",
 												"courses",
@@ -825,6 +2053,94 @@
 									],
 									"cookie": [],
 									"body": "[\n    {\n        \"id\": \"04485aac-e2ea-4f51-96bf-8ea854bc213f\",\n        \"name\": \"Homework 1\",\n        \"startDate\": \"2024-04-08T12:30:00\",\n        \"endDate\": \"2024-04-22T12:30:00\",\n        \"description\": \"Sega vi precakahme\",\n        \"course\": \"46d27263-1dba-423c-8b8d-836bbf924369\",\n        \"type\": \"homework\"\n    }\n]"
+								},
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/:courseId/tasks",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												":courseId",
+												"tasks"
+											],
+											"variable": [
+												{
+													"key": "courseId",
+													"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 May 2024 05:11:37 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"99c4588d-95c0-4679-89ad-597a0801da08\",\n        \"name\": \"Homework\",\n        \"startDate\": \"2024-05-08T12:30:00\",\n        \"endDate\": \"2024-05-22T12:30:00\",\n        \"description\": \"Sega vi precakahme\",\n        \"course\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n        \"type\": \"homework\",\n        \"submissions\": []\n    },\n    {\n        \"id\": \"4dcba3dd-f588-4f9a-addd-c448e15d0149\",\n        \"name\": \"Exam\",\n        \"startDate\": \"2024-05-08T12:30:00\",\n        \"endDate\": \"2024-05-22T12:30:00\",\n        \"description\": \"Sega vi precakahme\",\n        \"course\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n        \"type\": \"homework\",\n        \"submissions\": []\n    }\n]"
 								}
 							]
 						},
@@ -835,7 +2151,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Homework 1\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\"\n}",
+									"raw": "{\n    \"name\": \"Homework 1\",\n    \"description\": \"Sega vi precakahme\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"type\": \"homework\",\n    \"courseId\": \"0362483a-a97f-41e4-bd2f-06c9eb073d16\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1130,7 +2446,96 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/tasks/:taskId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"tasks",
+												":taskId"
+											],
+											"variable": [
+												{
+													"key": "taskId",
+													"value": "4dcba3dd-f588-4f9a-addd-c448e15d0149"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 09 May 2024 16:07:03 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"4dcba3dd-f588-4f9a-addd-c448e15d0149\",\n    \"name\": \"Exam\",\n    \"startDate\": \"2024-05-08T12:30:00\",\n    \"endDate\": \"2024-05-22T12:30:00\",\n    \"description\": \"Sega vi precakahme\",\n    \"course\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"type\": \"homework\",\n    \"submissions\": [\n        {\n            \"id\": \"d7b45f16-b5e2-44c6-b108-572624ef5f25\",\n            \"description\": \"Nqkvo opisanie\",\n            \"student\": {\n                \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n                \"email\": \"todord@fmi.uni-sofia.bg\",\n                \"name\": \"Todor Dukov\",\n                \"facultyNumber\": \"5MI0800072\",\n                \"semester\": 6,\n                \"group\": 6,\n                \"year\": 3,\n                \"specialty\": \"Computer Science\",\n                \"description\": \"Krischo\",\n                \"degree\": \"bachelor\",\n                \"courses\": [],\n                \"grades\": [],\n                \"achievements\": []\n            },\n            \"materials\": [\n                {\n                    \"id\": \"e5adb8da-f98d-4185-8429-d41e7a8a4e05\",\n                    \"name\": \"vs_pr_notes_20240331.pdf\",\n                    \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/64fb482a-b199-42e0-95cd-91853e745804.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3292070306&Signature=EKZj3pAEudOaMLIgJKNc2yyosoeN3Pg4JmG2dE%2FgEEB3l%2FNLFMDSHM%2FQv%2BvthG8vBxdNLFNv9SgH%2BXXZMbdnRENSU6%2FZgD3MToQ3MBU9%2BcqKNlxWvXV2FJCmjSuxXURJjC%2BDX8wqNber3aqwS67joM7AQqYqzW%2FNLQVmvXow5lcjY16iShYrnKv5%2Ftm6ThFGfCr0s2yIwKfbrwL0w3nMDZTqL1sV%2Fv7hEtd27JCW%2F7fkfHc7jItGuS6hdpb5WqeGss%2Fhh%2BTFWS2wAJXYQA1vquKwAHB%2FzGp2Caj5%2B5oXFxOOrVP7uQE7qa5wEgCR02xETfESMU%2FP2HCytIRJTz0f3Q%3D%3D\",\n                    \"createdAt\": \"2024-05-09T18:58:26.567318\"\n                }\n            ],\n            \"grade\": null\n        },\n        {\n            \"id\": \"a1465bc6-0f27-4ea9-9dfc-0c5c693a1a81\",\n            \"description\": \"Editnato opisanie 2\",\n            \"student\": {\n                \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n                \"email\": \"todord@fmi.uni-sofia.bg\",\n                \"name\": \"Todor Dukov\",\n                \"facultyNumber\": \"5MI0800072\",\n                \"semester\": 6,\n                \"group\": 6,\n                \"year\": 3,\n                \"specialty\": \"Computer Science\",\n                \"description\": \"Krischo\",\n                \"degree\": \"bachelor\",\n                \"courses\": [],\n                \"grades\": [],\n                \"achievements\": []\n            },\n            \"materials\": [\n                {\n                    \"id\": \"50917adc-3522-461d-8571-fd6afa7f3934\",\n                    \"name\": \"vs_pr_notes_20240331.pdf\",\n                    \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/27dceb1e-6f5d-4a86-a502-edbfbbcbf1fb.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3292070250&Signature=EboHvgboEsGNIpPin%2BZkkxdtNOto4LkDvrYpUaojf90gbvId5vHOQUtdRAh%2FKGvlwCPsZ6C5lVqKaXSI0lxpCVzAYWWck3eHLCcXXbl3q4Sd%2BhZu2OtTivf3A5hWGZN21iLU%2FEgVEj%2FZ3YzGWk9n0AN0JVwpwpIY1%2B%2FtgfErvNakoTtXat%2Fz%2FitPnNcBdOB94ixkfPmJhDOumq74S3aaU%2BXdkKXw0RmZ8K1U44%2BHWFjWgR32WsfYjJnyaXSEvB5klmtCqTVd4kbA8L2JlLK4zxJg9BHq1cAvf3TGHOahEkwXezahDo0%2B%2BcjR4CBbOFBXmNyat9bLEnMu%2F7UGvOavdQ%3D%3D\",\n                    \"createdAt\": \"2024-05-09T18:57:30.452953\"\n                }\n            ],\n            \"grade\": {\n                \"id\": \"4fe20325-7011-47c3-8f4c-ea25b8357490\",\n                \"student\": null,\n                \"course\": null,\n                \"percentage\": 70,\n                \"grade\": 5\n            }\n        }\n    ]\n}"
+								}
+							]
 						}
 					]
 				},
@@ -1147,23 +2552,29 @@
 									"formdata": [
 										{
 											"key": "name",
-											"value": "Program",
+											"value": "Програма",
 											"type": "text"
 										},
 										{
 											"key": "description",
-											"value": "It will be updated if needed",
+											"value": "Ще бъде мъкааа",
 											"type": "text"
 										},
 										{
 											"key": "sectionId",
-											"value": "d8a96208-7bb3-4e17-97df-6b90dff1efef",
+											"value": "e85fbf52-f176-499c-b669-5b629fac0dff",
 											"type": "text"
 										},
 										{
 											"key": "files",
 											"type": "file",
-											"src": "/Users/appstreams/Downloads/cf.pdf"
+											"src": "/Users/appstreams/Downloads/exam.pdf"
+										},
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/appstreams/Downloads/cf.pdf",
+											"disabled": true
 										}
 									]
 								},
@@ -1200,12 +2611,101 @@
 									"variable": [
 										{
 											"key": "materialId",
-											"value": "dd6a7530-0f41-44bb-b7ef-ae575412e6b9"
+											"value": "88e9a012-d401-4820-b2bb-90bb1316230b"
 										}
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}/api/courses/materials/:materialId",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"api",
+												"courses",
+												"materials",
+												":materialId"
+											],
+											"variable": [
+												{
+													"key": "materialId",
+													"value": "88e9a012-d401-4820-b2bb-90bb1316230b"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 10 May 2024 05:17:59 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"88e9a012-d401-4820-b2bb-90bb1316230b\",\n    \"name\": \"Program\",\n    \"description\": \"It will be updated if needed\",\n    \"section\": {\n        \"id\": \"d8a96208-7bb3-4e17-97df-6b90dff1efef\",\n        \"name\": \"General\",\n        \"priority\": 1,\n        \"course\": null,\n        \"courseMaterials\": []\n    },\n    \"materials\": [\n        {\n            \"id\": \"5eb4d2e1-9d81-4a02-b090-bb7830adad23\",\n            \"name\": \"cf.pdf\",\n            \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/cc6e45d9-cdee-4162-a590-d10694c8fcad.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3291640512&Signature=vbzkj2ztPKjusqmOl57fB7LxjZp31A7cCIeShq%2BhJKgIE541t7i2lPzyOMcl4c6rTDJI2ikHy3apjRCeQBD6o4U%2Fm3oxddPlwOtS0Y9opOPOHBo%2FcRPnx3A0JMifaSWPB0K35rNQ1CxrfbMmG2mDeCWJPlqzwRbsya01rPYSnboMsHeqCMzoRuS6cbZsFPl%2F44esWqmcEZUjP1eAuEv8lCqkD89j%2FxfBKgI6uQoA29ZzkzBK6uKB9e0UI9GiRhDMnJpDiF1XbVj1ywLQozm%2F7JDqsONJmr3Cj3L0ElOMCMUkbvk1Si%2FW%2BZa%2BKvwlJS1niT9O7PJF6jfNlFeYfErCOA%3D%3D\",\n            \"createdAt\": \"2024-05-04T19:35:12.64695\"\n        }\n    ]\n}"
+								}
+							]
 						},
 						{
 							"name": "Delete Course Material",
@@ -1227,6 +2727,126 @@
 										{
 											"key": "materialId",
 											"value": "9763eaef-76a9-47d9-95de-e2356c68738f"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "grades",
+					"item": [
+						{
+							"name": "Add Grade",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"studentId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"percentage\": 70,\n    \"grade\": 5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/grades",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"grades"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Grade",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/grades/:gradeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"grades",
+										":gradeId"
+									],
+									"variable": [
+										{
+											"key": "gradeId",
+											"value": "ce125cfd-af8d-4c9f-8de7-e35256a04818"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update grade",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"percentage\": 60\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/courses/grades/:gradeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"grades",
+										":gradeId"
+									],
+									"variable": [
+										{
+											"key": "gradeId",
+											"value": "54b5150f-30de-4236-9c76-1d44b4cfe10d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Grade Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/grades/:gradeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										"grades",
+										":gradeId"
+									],
+									"variable": [
+										{
+											"key": "gradeId",
+											"value": "4b83a70c-2299-44bc-8d2c-9659706757f9"
 										}
 									]
 								}
@@ -1393,7 +3013,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "1caf244d-e734-4738-94d4-29edc378874d"
+									"value": "1c5d31a6-fef1-4ef3-b3e6-e816d91ea255"
 								}
 							]
 						}
@@ -1428,12 +3048,100 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "e8bf4f56-f03d-4f54-8a5b-9596255f970a"
+									"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/courses/:courseId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"courses",
+										":courseId"
+									],
+									"variable": [
+										{
+											"key": "courseId",
+											"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 09 May 2024 16:17:37 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"name\": \"Вероятности\",\n    \"year\": 2024,\n    \"semester\": \"summer\",\n    \"category\": \"Applied mathematics\",\n    \"type\": \"compulsory\",\n    \"description\": \"Dexter rules!\",\n    \"students\": [\n        {\n            \"id\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n            \"email\": \"todord@fmi.uni-sofia.bg\",\n            \"name\": \"Todor Dukov\",\n            \"facultyNumber\": \"5MI0800072\",\n            \"semester\": 6,\n            \"group\": 6,\n            \"year\": 3,\n            \"specialty\": \"Computer Science\",\n            \"description\": \"Krischo\",\n            \"degree\": \"bachelor\",\n            \"courses\": [],\n            \"grades\": [],\n            \"achievements\": []\n        }\n    ],\n    \"teachers\": [\n        {\n            \"id\": \"3b45f930-4c85-4c44-a97a-48ab28efc380\",\n            \"email\": \"minko@fmi.uni-sofia.bg\",\n            \"name\": \"Minko\",\n            \"degree\": \"professor\",\n            \"courses\": []\n        }\n    ],\n    \"sections\": [\n        {\n            \"id\": \"d3610a8b-86f9-405c-af06-675d04c38c32\",\n            \"name\": \"General\",\n            \"priority\": 1,\n            \"course\": null,\n            \"courseMaterials\": []\n        },\n        {\n            \"id\": \"d8a96208-7bb3-4e17-97df-6b90dff1efef\",\n            \"name\": \"General\",\n            \"priority\": 1,\n            \"course\": null,\n            \"courseMaterials\": [\n                {\n                    \"id\": \"88e9a012-d401-4820-b2bb-90bb1316230b\",\n                    \"name\": \"Program\",\n                    \"description\": \"It will be updated if needed\",\n                    \"section\": null,\n                    \"materials\": [\n                        {\n                            \"id\": \"5eb4d2e1-9d81-4a02-b090-bb7830adad23\",\n                            \"name\": \"cf.pdf\",\n                            \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/cc6e45d9-cdee-4162-a590-d10694c8fcad.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3291640512&Signature=vbzkj2ztPKjusqmOl57fB7LxjZp31A7cCIeShq%2BhJKgIE541t7i2lPzyOMcl4c6rTDJI2ikHy3apjRCeQBD6o4U%2Fm3oxddPlwOtS0Y9opOPOHBo%2FcRPnx3A0JMifaSWPB0K35rNQ1CxrfbMmG2mDeCWJPlqzwRbsya01rPYSnboMsHeqCMzoRuS6cbZsFPl%2F44esWqmcEZUjP1eAuEv8lCqkD89j%2FxfBKgI6uQoA29ZzkzBK6uKB9e0UI9GiRhDMnJpDiF1XbVj1ywLQozm%2F7JDqsONJmr3Cj3L0ElOMCMUkbvk1Si%2FW%2BZa%2BKvwlJS1niT9O7PJF6jfNlFeYfErCOA%3D%3D\",\n                            \"createdAt\": \"2024-05-04T19:35:12.64695\"\n                        }\n                    ]\n                },\n                {\n                    \"id\": \"d95b8eaa-96c2-49bb-ad40-001374317fb4\",\n                    \"name\": \"Оценяване\",\n                    \"description\": \"Ще бъде мъкааа\",\n                    \"section\": null,\n                    \"materials\": [\n                        {\n                            \"id\": \"0e63adfc-07e2-4dca-84e0-b5fd0478f64b\",\n                            \"name\": \"exam.pdf\",\n                            \"url\": \"https://storage.googleapis.com/fmibook.appspot.com/553c0c28-a566-4afc-87e4-76934e75c08f.pdf?GoogleAccessId=firebase-adminsdk-u6qxv@fmibook.iam.gserviceaccount.com&Expires=3291722414&Signature=WwXBKMMG%2FyyXsiVq7%2BazvJTxyTrdcbskI5cxkqorr6C7GRYiNdDumrWz12UmAgKKt%2BjM%2FJPsE91hcL7UKeL95xtk6dgeeaEyFCtGw8qEuWByEUni2z013qj3vMPcAuNhIi85RxQoV2o6vLAVAt%2BB%2FYbL1It6eYIKOek64WozcGgipnq%2BajNFxKIeVd2JEuBA69JP9KSLy84nepmRTPSUaQLmoe2F7Z4RKPFHcXCW%2BYKwulA3HXhNmdckV9Zgu30WRxbQnxEXUmxb276iqmETvy%2B4MxbcgVXkW60Pvb3vFbNanMAzg1ogOi%2FPp2X62%2Fm7%2FZFJQQuK5xucflVc0YOdQQ%3D%3D\",\n                            \"createdAt\": \"2024-05-05T18:20:14.621877\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"department\": {\n        \"id\": \"655cc490-1d11-4d86-a67e-2dc143c449ff\",\n        \"name\": \"PS\",\n        \"courses\": []\n    },\n    \"tasks\": [\n        {\n            \"id\": \"99c4588d-95c0-4679-89ad-597a0801da08\",\n            \"name\": \"Homework\",\n            \"startDate\": \"2024-05-08T12:30:00\",\n            \"endDate\": \"2024-05-22T12:30:00\",\n            \"description\": \"Sega vi precakahme\",\n            \"course\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n            \"type\": \"homework\",\n            \"submissions\": []\n        },\n        {\n            \"id\": \"4dcba3dd-f588-4f9a-addd-c448e15d0149\",\n            \"name\": \"Exam\",\n            \"startDate\": \"2024-05-08T12:30:00\",\n            \"endDate\": \"2024-05-22T12:30:00\",\n            \"description\": \"Sega vi precakahme\",\n            \"course\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n            \"type\": \"homework\",\n            \"submissions\": []\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Course",
@@ -1442,7 +3150,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"students\": [\"e36c637b-d38a-4612-b6d8-a4b07b161699\"],\n    \"teachers\": [\"3b45f930-4c85-4c44-a97a-48ab28efc380\"],\n    \"department\": \"655cc490-1d11-4d86-a67e-2dc143c449ff\",\n    \"name\": \"Вероятности\"\n}",
+							"raw": "{\n    // \"students\": [\"69f5f321-2506-4afb-a390-276a4adfd2dd\"],\n    // \"teachers\": [\"11c52992-0d04-441d-b738-ac27e0f7e003\"],\n    // \"department\": \"b5767117-11d1-4245-a5de-7113189eb592\",\n    \"name\": \"Probability and statistics\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1462,7 +3170,7 @@
 							"variable": [
 								{
 									"key": "courseId",
-									"value": "f8b01851-36b0-4db3-b918-9835e6b8fbe6"
+									"value": "0362483a-a97f-41e4-bd2f-06c9eb073d16"
 								}
 							]
 						}
@@ -1606,142 +3314,6 @@
 			]
 		},
 		{
-			"name": "grades",
-			"item": [
-				{
-					"name": "Get grades",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/grades",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"grades"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Grade",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"studentId\": \"e36c637b-d38a-4612-b6d8-a4b07b161699\",\n    \"courseId\": \"f8b01851-36b0-4db3-b918-9835e6b8fbe6\",\n    \"percentage\": 70,\n    \"grade\": 5\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/grades",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"grades"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Grade",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/grades/:gradeId",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"grades",
-								":gradeId"
-							],
-							"variable": [
-								{
-									"key": "gradeId",
-									"value": "ce125cfd-af8d-4c9f-8de7-e35256a04818"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update grade",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"percentage\": 60\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/grades/:gradeId",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"grades",
-								":gradeId"
-							],
-							"variable": [
-								{
-									"key": "gradeId",
-									"value": "54b5150f-30de-4236-9c76-1d44b4cfe10d"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Grade Details",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/api/grades/:gradeId",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"api",
-								"grades",
-								":gradeId"
-							],
-							"variable": [
-								{
-									"key": "gradeId",
-									"value": "4b83a70c-2299-44bc-8d2c-9659706757f9"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "departments",
 			"item": [
 				{
@@ -1779,12 +3351,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:4000/api/departments",
-							"protocol": "http",
+							"raw": "{{url}}/api/departments",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "4000",
 							"path": [
 								"api",
 								"departments"
@@ -1985,7 +3555,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"type\": \"admin\",\n    \"name\": \"admin\",\n    \"email\": \"admin@abv.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"7MI08000\",\n    \"semester\": 6,\n    \"group\": 6\n}",
+							"raw": "{\n    \"type\": \"admin\",\n    \"name\": \"Kristiyan Todorov\",\n    \"email\": \"kristiyant@fmi.uni-sofia.bg\",\n    \"password\": \"test123\",\n    \"degree\": \"bachelor\",\n    \"facultyNumber\": \"6MI0800076\",\n    \"semester\": 6,\n    \"group\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
