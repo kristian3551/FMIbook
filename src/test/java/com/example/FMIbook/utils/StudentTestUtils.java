@@ -90,6 +90,40 @@ public class StudentTestUtils {
                 });
     }
 
+    public Map<String, Object> updateStudent(Student student, String token) throws Exception {
+        String studentContent = String.format("""
+                {
+                    "name": "%s",
+                    "email": "%s",
+                    "facultyNumber": "%s",
+                    "semester": %d,
+                    "group": %d,
+                    "description": "%s",
+                    "degree": "%s"
+                }
+                """,
+                student.getName(),
+                student.getEmail(),
+                student.getFacultyNumber(),
+                student.getSemester(),
+                student.getGroup(),
+                student.getDescription(),
+                student.getDegree());
+        MvcResult result = mvc.perform(MockMvcRequestBuilders
+                        .put("/api/students/" + student.getId())
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(studentContent))
+                .andReturn();
+        if (result.getResponse().getContentAsString().isEmpty()) {
+            return new HashMap<>();
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(result.getResponse().getContentAsString(),
+                new TypeReference<>() {
+                });
+    }
+
     public void deleteStudent(UUID id, String token) throws Exception {
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/students/" + id)

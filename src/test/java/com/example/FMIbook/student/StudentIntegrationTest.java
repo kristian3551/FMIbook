@@ -34,6 +34,8 @@ public class StudentIntegrationTest {
 
         Map<String, Object> response = studentTestUtils.addStudent(student, authTestUtils.getAdminAccessToken());
 
+        studentTestUtils.deleteStudent(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
+
         Assert.isTrue(response.get("name").equals(student.getName()), "Name is wrong");
         Assert.isTrue(response.get("facultyNumber").equals("6MI0800076"), "FN is wrong");
         Assert.isTrue(response.get("semester").equals(6), "Semester is wrong");
@@ -42,8 +44,6 @@ public class StudentIntegrationTest {
         Assert.isTrue(((List<Object>)response.get("courses")).isEmpty(), "Courses are returned");
         Assert.isTrue(((List<Object>)response.get("achievements")).isEmpty(), "Achievements are returned");
         Assert.isTrue(((List<Object>)response.get("grades")).isEmpty(), "Grades are returned");
-
-        studentTestUtils.deleteStudent(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
     }
 
     @Test
@@ -55,10 +55,10 @@ public class StudentIntegrationTest {
         Map<String, Object> resultStudent = studentTestUtils.getStudentDetails(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken());
-        Assert.isTrue(resultStudent.get("name").equals(student.getName()), "Name is wrong");
         studentTestUtils.deleteStudent(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken());
+        Assert.isTrue(resultStudent.get("name").equals(student.getName()), "Name is wrong");
     }
 
     @Test
@@ -90,6 +90,30 @@ public class StudentIntegrationTest {
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken());
         Assert.isTrue(resultStudent.containsKey("code"), "Student is found but should not");
+    }
+
+    @Test
+    public void testUpdateStudent() throws Exception {
+        Student student = StudentTestUtils.generateTestStudent();
+
+        Map<String, Object> addedStudent = studentTestUtils.addStudent(
+                student,
+                authTestUtils.getAdminAccessToken());
+
+        student.setId(UUID.fromString((String) addedStudent.get("id")));
+        student.setName("Updated" + student.getName());
+        student.setDescription("Updated" + student.getDescription());
+        student.setGroup(student.getGroup() + 1);
+
+        Map<String, Object> updatedStudent = studentTestUtils.updateStudent(
+                student,
+                authTestUtils.getAdminAccessToken());
+
+        studentTestUtils.deleteStudent(UUID.fromString((String) addedStudent.get("id")), authTestUtils.getAdminAccessToken());
+
+        Assert.isTrue(updatedStudent.get("name").equals(student.getName()), "Student name is not updated");
+        Assert.isTrue(updatedStudent.get("description").equals(student.getDescription()), "Student description is not updated");
+        Assert.isTrue(updatedStudent.get("group").equals(student.getGroup()), "Student group is not updated");
     }
 
     @Test

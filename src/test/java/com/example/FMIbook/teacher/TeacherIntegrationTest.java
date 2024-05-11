@@ -36,12 +36,12 @@ public class TeacherIntegrationTest {
                 teacher, authTestUtils.getAdminAccessToken()
         );
 
+        teacherTestUtils.deleteTeacher(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
+
         Assert.isTrue(response.get("name").equals(teacher.getName()), "Name is wrong");
         Assert.isTrue(response.get("degree").equals(teacher.getDegree()), "Degree is wrong");
         Assert.isTrue(response.get("email").equals(teacher.getEmail()), "Email is wrong");
         Assert.isTrue(((List<Object>)response.get("courses")).isEmpty(), "Courses are returned");
-
-        teacherTestUtils.deleteTeacher(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
     }
 
     @Test
@@ -54,11 +54,12 @@ public class TeacherIntegrationTest {
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
-        Assert.isTrue(resultStudent.get("name").equals(teacher.getName()), "Name is wrong");
         teacherTestUtils.deleteTeacher(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
+
+        Assert.isTrue(resultStudent.get("name").equals(teacher.getName()), "Name is wrong");
     }
 
     @Test
@@ -92,6 +93,28 @@ public class TeacherIntegrationTest {
                 authTestUtils.getAdminAccessToken()
         );
         Assert.isTrue(resultStudent.containsKey("code"), "Student is found but should not");
+    }
+
+    @Test
+    public void testUpdateStudent() throws Exception {
+        Teacher teacher = TeacherTestUtils.generateTestTeacher();
+
+        Map<String, Object> addedStudent = teacherTestUtils.addTeacher(
+                teacher,
+                authTestUtils.getAdminAccessToken());
+
+        teacher.setId(UUID.fromString((String) addedStudent.get("id")));
+        teacher.setName("Updated" + teacher.getName());
+        teacher.setDegree("Updated" + teacher.getDegree());
+
+        Map<String, Object> updateTeacher = teacherTestUtils.updateTeacher(
+                teacher,
+                authTestUtils.getAdminAccessToken());
+
+        teacherTestUtils.deleteTeacher(UUID.fromString((String) addedStudent.get("id")), authTestUtils.getAdminAccessToken());
+
+        Assert.isTrue(updateTeacher.get("name").equals(teacher.getName()), "Teacher name is not updated");
+        Assert.isTrue(updateTeacher.get("degree").equals(teacher.getDegree()), "Teacher degree is not updated");
     }
 
     @Test
