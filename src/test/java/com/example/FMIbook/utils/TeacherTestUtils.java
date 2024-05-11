@@ -37,7 +37,7 @@ public class TeacherTestUtils {
         return teacher;
     }
 
-    private static final String TEACHER_TEST_NAME = "TestUser";
+    private static final String TEACHER_TEST_NAME = "TestTeacher";
 
     public List<Map<String, Object>> getTeachers(String token) throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
