@@ -55,49 +55,23 @@ public class Course {
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
     @ManyToMany(targetEntity = Student.class)
     private List<Student> students;
-
     @ManyToMany(targetEntity = Teacher.class)
     private List<Teacher> teachers;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Section> sections;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<CoursePost> posts;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Achievement> achievements;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Task> tasks;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="department_id")
+    @JoinColumn(name = "department_id")
     private Department department;
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", year=" + year +
-                ", semester='" + semester + '\'' +
-                ", category='" + category + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 
     public Course(UUID id,
                   String name,
@@ -135,5 +109,23 @@ public class Course {
         this.description = description;
         this.students = students;
         this.teachers = teachers;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", year=" + year +
+                ", semester='" + semester + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

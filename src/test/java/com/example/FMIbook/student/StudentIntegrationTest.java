@@ -41,9 +41,9 @@ public class StudentIntegrationTest {
         Assert.isTrue(response.get("semester").equals(6), "Semester is wrong");
         Assert.isTrue(response.get("degree").equals("bachelor"), "Degree is wrong");
         Assert.isTrue(response.get("email").equals(student.getEmail()), "Email is wrong");
-        Assert.isTrue(((List<Object>)response.get("courses")).isEmpty(), "Courses are returned");
-        Assert.isTrue(((List<Object>)response.get("achievements")).isEmpty(), "Achievements are returned");
-        Assert.isTrue(((List<Object>)response.get("grades")).isEmpty(), "Grades are returned");
+        Assert.isTrue(((List<Object>) response.get("courses")).isEmpty(), "Courses are returned");
+        Assert.isTrue(((List<Object>) response.get("achievements")).isEmpty(), "Achievements are returned");
+        Assert.isTrue(((List<Object>) response.get("grades")).isEmpty(), "Grades are returned");
     }
 
     @Test
@@ -68,9 +68,9 @@ public class StudentIntegrationTest {
                 authTestUtils.getAdminAccessToken());
 
         Assert.isTrue(response.containsKey("code"), "Code is empty");
-        Assert.isTrue(((Integer)response.get("code")) == 1001, "Code is wrong");
+        Assert.isTrue(((Integer) response.get("code")) == 1001, "Code is wrong");
         Assert.isTrue(response.containsKey("status"), "Status is empty");
-        Assert.isTrue(((Integer)response.get("status")) == 404, "Status is wrong");
+        Assert.isTrue(((Integer) response.get("status")) == 404, "Status is wrong");
         Assert.isTrue(response.get("message").equals("student not found"), "Message is wrong");
     }
 

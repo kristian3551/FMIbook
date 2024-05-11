@@ -6,12 +6,12 @@ import com.example.FMIbook.domain.users.student.StudentRepository;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.users.teacher.TeacherDTO;
 import com.example.FMIbook.domain.users.teacher.TeacherRepository;
-import com.example.FMIbook.utils.exception.ForbiddenException;
-import com.example.FMIbook.utils.jwt.JwtService;
 import com.example.FMIbook.domain.users.user.User;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import com.example.FMIbook.domain.users.user.UserRepository;
 import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
+import com.example.FMIbook.utils.exception.ForbiddenException;
+import com.example.FMIbook.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -96,8 +96,7 @@ public class AuthService {
             );
             studentRepository.save((Student) user);
             jwtToken = jwtService.generateToken(user);
-        }
-        else if (request.getType().equals("teacher")) {
+        } else if (request.getType().equals("teacher")) {
             user = new Teacher(
                     request.getEmail(),
                     passwordEncoder.encode(request.getPassword()),
@@ -119,8 +118,8 @@ public class AuthService {
 
     public AuthenticationResponse registerAdmin(RegisterRequest request) {
         User admin = new User(
-            request.getEmail(),
-            passwordEncoder.encode(request.getPassword())
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword())
         );
         userRepository.save(admin);
         String jwtToken = jwtService.generateToken(admin);

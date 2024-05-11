@@ -15,10 +15,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class StudentTestUtils {
+    private static final AtomicInteger index = new AtomicInteger(0);
+    private static final String USER_TEST_NAME = "TestStudent";
     @Autowired
     private MockMvc mvc;
-
-    private static final AtomicInteger index = new AtomicInteger(0);
 
     public static Student generateTestStudent() {
         String name = USER_TEST_NAME + index.getAndIncrement();
@@ -37,8 +37,6 @@ public class StudentTestUtils {
         return student;
     }
 
-    private static final String USER_TEST_NAME = "TestStudent";
-
     public List<Map<String, Object>> getStudents(String token) throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                         .get("/api/students")
@@ -56,17 +54,17 @@ public class StudentTestUtils {
 
     public Map<String, Object> addStudent(Student student, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s",
-                    "email": "%s",
-                    "facultyNumber": "%s",
-                    "password": "%s",
-                    "semester": %d,
-                    "group": %d,
-                    "description": "%s",
-                    "degree": "%s"
-                }
-                """,
+                        {
+                            "name": "%s",
+                            "email": "%s",
+                            "facultyNumber": "%s",
+                            "password": "%s",
+                            "semester": %d,
+                            "group": %d,
+                            "description": "%s",
+                            "degree": "%s"
+                        }
+                        """,
                 student.getName(),
                 student.getEmail(),
                 student.getFacultyNumber(),
@@ -92,16 +90,16 @@ public class StudentTestUtils {
 
     public Map<String, Object> updateStudent(Student student, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s",
-                    "email": "%s",
-                    "facultyNumber": "%s",
-                    "semester": %d,
-                    "group": %d,
-                    "description": "%s",
-                    "degree": "%s"
-                }
-                """,
+                        {
+                            "name": "%s",
+                            "email": "%s",
+                            "facultyNumber": "%s",
+                            "semester": %d,
+                            "group": %d,
+                            "description": "%s",
+                            "degree": "%s"
+                        }
+                        """,
                 student.getName(),
                 student.getEmail(),
                 student.getFacultyNumber(),

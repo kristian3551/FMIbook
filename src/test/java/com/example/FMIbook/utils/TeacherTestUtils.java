@@ -16,13 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class TeacherTestUtils {
+    private static final AtomicInteger index = new AtomicInteger(0);
+    private static final String TEACHER_TEST_NAME = "TestTeacher";
     @Autowired
     private MockMvc mvc;
-
     @Autowired
     private JwtService jwtService;
-
-    private static final AtomicInteger index = new AtomicInteger(0);
 
     public static Teacher generateTestTeacher() {
         String name = TEACHER_TEST_NAME + index.getAndIncrement();
@@ -36,8 +35,6 @@ public class TeacherTestUtils {
 
         return teacher;
     }
-
-    private static final String TEACHER_TEST_NAME = "TestTeacher";
 
     public List<Map<String, Object>> getTeachers(String token) throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
@@ -56,13 +53,13 @@ public class TeacherTestUtils {
 
     public Map<String, Object> addTeacher(Teacher teacher, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s",
-                    "email": "%s",
-                    "password": "%s",
-                    "degree": "%s"
-                }
-                """,
+                        {
+                            "name": "%s",
+                            "email": "%s",
+                            "password": "%s",
+                            "degree": "%s"
+                        }
+                        """,
                 teacher.getName(),
                 teacher.getEmail(),
                 teacher.getPassword(),
@@ -84,12 +81,12 @@ public class TeacherTestUtils {
 
     public Map<String, Object> updateTeacher(Teacher teacher, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s",
-                    "email": "%s",
-                    "degree": "%s"
-                }
-                """,
+                        {
+                            "name": "%s",
+                            "email": "%s",
+                            "degree": "%s"
+                        }
+                        """,
                 teacher.getName(),
                 teacher.getEmail(),
                 teacher.getDegree());

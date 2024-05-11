@@ -60,9 +60,9 @@ public class DepartmentIntegrationTest {
                 authTestUtils.getAdminAccessToken());
 
         Assert.isTrue(response.containsKey("code"), "Code is empty");
-        Assert.isTrue(((Integer)response.get("code")) == 1501, "Code is wrong");
+        Assert.isTrue(((Integer) response.get("code")) == 1501, "Code is wrong");
         Assert.isTrue(response.containsKey("status"), "Status is empty");
-        Assert.isTrue(((Integer)response.get("status")) == 404, "Status is wrong");
+        Assert.isTrue(((Integer) response.get("status")) == 404, "Status is wrong");
         Assert.isTrue(response.get("message").equals("department not found"), "Message is wrong");
     }
 

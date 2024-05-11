@@ -16,10 +16,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class DepartmentTestUtils {
+    private static final AtomicInteger index = new AtomicInteger(0);
+    private static final String DEPARTMENT_TEST_NAME = "TestDepartment";
     @Autowired
     private MockMvc mvc;
-
-    private static final AtomicInteger index = new AtomicInteger(0);
 
     public static Department generateTestDepartment() {
         String name = DEPARTMENT_TEST_NAME + index.getAndIncrement();
@@ -27,8 +27,6 @@ public class DepartmentTestUtils {
                 .name(name)
                 .build();
     }
-
-    private static final String DEPARTMENT_TEST_NAME = "TestDepartment";
 
     public List<Map<String, Object>> getDepartments(String token) throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
@@ -47,10 +45,10 @@ public class DepartmentTestUtils {
 
     public Map<String, Object> addDepartment(Department department, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s"
-                }
-                """,
+                        {
+                            "name": "%s"
+                        }
+                        """,
                 department.getName());
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                         .post("/api/departments")
@@ -69,10 +67,10 @@ public class DepartmentTestUtils {
 
     public Map<String, Object> updateDepartment(Department department, String token) throws Exception {
         String studentContent = String.format("""
-                {
-                    "name": "%s"
-                }
-                """,
+                        {
+                            "name": "%s"
+                        }
+                        """,
                 department.getName());
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                         .put("/api/departments/" + department.getId())
