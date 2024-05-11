@@ -5,7 +5,7 @@ import com.example.FMIbook.utils.exception.NotFoundException;
 public class TeacherNotFoundException extends NotFoundException {
     public static final int CODE = 1201;
     public TeacherNotFoundException() {
-        super(CODE);
+        super("teacher not found", CODE);
     }
 
     public TeacherNotFoundException(String message) {
