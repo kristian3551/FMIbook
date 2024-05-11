@@ -82,7 +82,7 @@ public class StudentService {
         }
 
         if (studentDto.getGroup() != null) {
-            student.setGroup(studentDto.getSemester());
+            student.setGroup(studentDto.getGroup());
         }
 
         if (studentDto.getDescription() != null) {
