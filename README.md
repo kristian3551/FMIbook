@@ -41,6 +41,10 @@ FIREBASE_PRIVATE_KEY={your private key to Firebase storage}
 *Before running make sure you have configured database properly and
 there is an existing database with this name.*
 
+## Run tests
+
+In order to run a file with tests, first you need to pass *environmental variables* from above.
+The process is the same because a mocked environment is instantiated each time tests are run.
 
 ## Technologies
 
