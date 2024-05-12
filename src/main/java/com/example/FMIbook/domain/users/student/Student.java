@@ -71,11 +71,6 @@ public class Student extends User {
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
     public Student(UUID id,
                    String name,
                    String facultyNumber,
@@ -161,6 +156,11 @@ public class Student extends User {
         this.degree = degree;
         this.courses = courses;
         this.setRole(Role.STUDENT);
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
     @Override

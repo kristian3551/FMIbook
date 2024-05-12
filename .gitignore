@@ -33,6 +33,5 @@ build/
 .vscode/
 .env
 
-src/main/resources/fmibook-firebase-config.json
 src/main/resources/application.properties
 .DS_Store
