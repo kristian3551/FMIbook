@@ -73,6 +73,13 @@ public class Teacher extends User {
         this.setRole(Role.TEACHER);
     }
 
+    public Teacher(UUID id, String email, String password, String name, String degree) {
+        super(id, email, password);
+        this.name = name;
+        this.degree = degree;
+        this.setRole(Role.TEACHER);
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +

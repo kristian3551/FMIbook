@@ -19,8 +19,14 @@ public class CreatePolicy {
                         .equals(Permission.ADMIN_CREATE.getPermission()));
     }
 
+    private static boolean hasTeacherCreateRights(User user) {
+        return user.getAuthorities().stream().anyMatch(
+                grantedAuthority -> grantedAuthority.toString()
+                        .equals(Permission.TEACHER_CREATE.getPermission()));
+    }
+
     public static boolean canCreateCourse(User user, Course course) {
-        return hasAdminCreateRights(user);
+        return hasAdminCreateRights(user) || hasTeacherCreateRights(user);
     }
 
     public static boolean canCreateAchievement(User user, Achievement achievement) {

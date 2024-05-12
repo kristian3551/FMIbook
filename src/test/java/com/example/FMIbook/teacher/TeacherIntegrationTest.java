@@ -3,7 +3,9 @@ package com.example.FMIbook.teacher;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.utils.AuthTestUtils;
 import com.example.FMIbook.utils.TeacherTestUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeacherIntegrationTest {
     @Autowired
     private MockMvc mvc;
@@ -28,15 +31,20 @@ public class TeacherIntegrationTest {
     @Autowired
     private AuthTestUtils authTestUtils;
 
+    @BeforeAll
+    public void addAuthEntities() {
+        authTestUtils.addAuthEntities();
+    }
+
     @Test
     public void testAddStudent() throws Exception {
         Teacher teacher = TeacherTestUtils.generateTestTeacher();
 
-        Map<String, Object> response = teacherTestUtils.addTeacher(
+        Map<String, Object> response = teacherTestUtils.addOne(
                 teacher, authTestUtils.getAdminAccessToken()
         );
 
-        teacherTestUtils.deleteTeacher(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
+        teacherTestUtils.delete(UUID.fromString((String) response.get("id")), authTestUtils.getAdminAccessToken());
 
         Assert.isTrue(response.get("name").equals(teacher.getName()), "Name is wrong");
         Assert.isTrue(response.get("degree").equals(teacher.getDegree()), "Degree is wrong");
@@ -48,13 +56,13 @@ public class TeacherIntegrationTest {
     public void testGetStudentDetails() throws Exception {
         Teacher teacher = TeacherTestUtils.generateTestTeacher();
 
-        Map<String, Object> addedStudent = teacherTestUtils.addTeacher(teacher, authTestUtils.getAdminAccessToken());
+        Map<String, Object> addedStudent = teacherTestUtils.addOne(teacher, authTestUtils.getAdminAccessToken());
 
-        Map<String, Object> resultStudent = teacherTestUtils.getTeacherDetails(
+        Map<String, Object> resultStudent = teacherTestUtils.getDetails(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
-        teacherTestUtils.deleteTeacher(
+        teacherTestUtils.delete(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
@@ -64,7 +72,7 @@ public class TeacherIntegrationTest {
 
     @Test
     public void testGetNonExistingStudent() throws Exception {
-        Map<String, Object> response = teacherTestUtils.getTeacherDetails(
+        Map<String, Object> response = teacherTestUtils.getDetails(
                 UUID.randomUUID(), authTestUtils.getAdminAccessToken()
         );
 
@@ -79,16 +87,16 @@ public class TeacherIntegrationTest {
     public void testDeleteStudent() throws Exception {
         Teacher teacher = TeacherTestUtils.generateTestTeacher();
 
-        Map<String, Object> addedStudent = teacherTestUtils.addTeacher(
+        Map<String, Object> addedStudent = teacherTestUtils.addOne(
                 teacher, authTestUtils.getAdminAccessToken()
         );
 
-        teacherTestUtils.deleteTeacher(
+        teacherTestUtils.delete(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
 
-        Map<String, Object> resultStudent = teacherTestUtils.getTeacherDetails(
+        Map<String, Object> resultStudent = teacherTestUtils.getDetails(
                 UUID.fromString((String) addedStudent.get("id")),
                 authTestUtils.getAdminAccessToken()
         );
@@ -99,7 +107,7 @@ public class TeacherIntegrationTest {
     public void testUpdateStudent() throws Exception {
         Teacher teacher = TeacherTestUtils.generateTestTeacher();
 
-        Map<String, Object> addedStudent = teacherTestUtils.addTeacher(
+        Map<String, Object> addedStudent = teacherTestUtils.addOne(
                 teacher,
                 authTestUtils.getAdminAccessToken());
 
@@ -107,11 +115,11 @@ public class TeacherIntegrationTest {
         teacher.setName("Updated" + teacher.getName());
         teacher.setDegree("Updated" + teacher.getDegree());
 
-        Map<String, Object> updateTeacher = teacherTestUtils.updateTeacher(
+        Map<String, Object> updateTeacher = teacherTestUtils.updateOne(
                 teacher,
                 authTestUtils.getAdminAccessToken());
 
-        teacherTestUtils.deleteTeacher(UUID.fromString((String) addedStudent.get("id")), authTestUtils.getAdminAccessToken());
+        teacherTestUtils.delete(UUID.fromString((String) addedStudent.get("id")), authTestUtils.getAdminAccessToken());
 
         Assert.isTrue(updateTeacher.get("name").equals(teacher.getName()), "Teacher name is not updated");
         Assert.isTrue(updateTeacher.get("degree").equals(teacher.getDegree()), "Teacher degree is not updated");
@@ -121,9 +129,9 @@ public class TeacherIntegrationTest {
     public void testAddStudentByStudentShouldNotWork() throws Exception {
         Teacher teacher = TeacherTestUtils.generateTestTeacher();
 
-        Map<String, Object> response = teacherTestUtils.addTeacher(teacher, authTestUtils.getStudentAccessToken());
+        Map<String, Object> response = teacherTestUtils.addOne(teacher, authTestUtils.getStudentAccessToken());
         Assert.isTrue(response.isEmpty(), "Student is created but should not");
-        response = teacherTestUtils.addTeacher(teacher, authTestUtils.getTeacherAccessToken());
+        response = teacherTestUtils.addOne(teacher, authTestUtils.getTeacherAccessToken());
         Assert.isTrue(response.isEmpty(), "Student is created but should not");
     }
 }
