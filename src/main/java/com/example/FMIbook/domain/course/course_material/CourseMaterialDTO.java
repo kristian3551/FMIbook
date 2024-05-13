@@ -48,7 +48,7 @@ public class CourseMaterialDTO {
                 .id(courseMaterial.getId())
                 .name(courseMaterial.getName())
                 .description(courseMaterial.getDescription())
-                .section(SectionDTO.serializeLightweight(courseMaterial.getSection()))
+                .section(SectionDTO.serializeLightweight(courseMaterial.getSection(), true, false))
                 .materials(courseMaterial.getMaterials() != null
                 ? courseMaterial.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList()
                         : new ArrayList<>())

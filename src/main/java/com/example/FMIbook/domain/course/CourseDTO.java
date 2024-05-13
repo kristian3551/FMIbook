@@ -90,7 +90,7 @@ public class CourseDTO {
                 ? course.getTeachers().stream().map(TeacherDTO::serializeLightweight).toList()
                 : new ArrayList<>();
         List<SectionDTO> sections = course.getSections() != null
-            ? course.getSections().stream().map(SectionDTO::serializeFromEntity).toList()
+            ? course.getSections().stream().map(section -> SectionDTO.serializeLightweight(section, false, true)).toList()
                 : new ArrayList<>();
 
         DepartmentDTO departmentDTO = DepartmentDTO.serializeLightweight(course.getDepartment());

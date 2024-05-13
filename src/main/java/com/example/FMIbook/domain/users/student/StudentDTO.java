@@ -82,6 +82,7 @@ public class StudentDTO extends UserDTO {
                 .degree(student.getDegree())
                 .achievements(new ArrayList<>())
                 .courses(new ArrayList<>())
+                .takenCourses(new ArrayList<>())
                 .build();
         result.setId(student.getId());
         result.setEmail(student.getEmail());

@@ -37,16 +37,20 @@ public class SectionDTO {
                 '}';
     }
 
-    public static SectionDTO serializeLightweight(Section section) {
+    public static SectionDTO serializeLightweight(Section section, boolean withCourse, boolean withMaterials) {
         if (section == null) {
             return null;
         }
+        List<CourseMaterialDTO> materials = section.getCourseMaterials() != null
+                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+
         return SectionDTO.builder()
                 .id(section.getId())
                 .name(section.getName())
                 .priority(section.getPriority())
-                .course(null)
-                .courseMaterials(new ArrayList<>())
+                .course(withCourse ? CourseDTO.serializeLightweight(section.getCourse()) : null)
+                .courseMaterials(withMaterials ? materials : new ArrayList<>())
                 .build();
     }
 
@@ -56,7 +60,7 @@ public class SectionDTO {
         }
 
         List<CourseMaterialDTO> materials = section.getCourseMaterials() != null
-                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeFromEntity).toList()
+                ? section.getCourseMaterials().stream().map(CourseMaterialDTO::serializeLightweight).toList()
                 : new ArrayList<>();
         return new SectionDTO(section.getId(),
                 section.getName(),
