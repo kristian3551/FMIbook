@@ -22,6 +22,7 @@ public class GradeRequestDTO {
     private UUID studentId;
     @NotNull(message = "courseId is null")
     private UUID courseId;
+    private Boolean isFinal = false;
 
     @Override
     public String toString() {

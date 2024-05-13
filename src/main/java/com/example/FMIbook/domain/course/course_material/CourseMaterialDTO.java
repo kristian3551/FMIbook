@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class CourseMaterialDTO {
     private String description;
     private SectionDTO section;
     private List<MaterialDTO> materials;
+    private LocalDateTime createdAt;
 
     public static CourseMaterialDTO serializeLightweight(CourseMaterial courseMaterial) {
         if (courseMaterial == null) {
@@ -32,6 +34,7 @@ public class CourseMaterialDTO {
                 .description(courseMaterial.getDescription())
                 .section(null)
                 .materials(courseMaterial.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList())
+                .createdAt(courseMaterial.getCreatedAt())
                 .build();
     }
 
@@ -49,6 +52,7 @@ public class CourseMaterialDTO {
                 .materials(courseMaterial.getMaterials() != null
                 ? courseMaterial.getMaterials().stream().map(MaterialDTO::serializeFromEntity).toList()
                         : new ArrayList<>())
+                .createdAt(courseMaterial.getCreatedAt())
                 .build();
     }
 }

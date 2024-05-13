@@ -45,6 +45,9 @@ public class Grade {
     @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL)
     private List<Submission> submissions;
 
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isFinal;
+
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
@@ -62,20 +65,5 @@ public class Grade {
                 ", percentage=" + percentage +
                 ", grade=" + grade +
                 '}';
-    }
-
-    public Grade(UUID id, Student student, Course course, Integer percentage, Double grade) {
-        this.id = id;
-        this.student = student;
-        this.course = course;
-        this.percentage = percentage;
-        this.grade = grade;
-    }
-
-    public Grade(Student student, Course course, Integer percentage, Double grade) {
-        this.student = student;
-        this.course = course;
-        this.percentage = percentage;
-        this.grade = grade;
     }
 }

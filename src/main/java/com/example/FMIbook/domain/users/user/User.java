@@ -81,4 +81,16 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isAdmin() {
+        return this.role.equals(Role.ADMIN);
+    }
+
+    public boolean isStudent() {
+        return this.role.equals(Role.STUDENT);
+    }
+
+    public boolean isTeacher() {
+        return this.role.equals(Role.TEACHER);
+    }
 }

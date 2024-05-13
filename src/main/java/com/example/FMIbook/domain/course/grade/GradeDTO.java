@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -24,23 +25,9 @@ public class GradeDTO {
 
     private Double grade;
 
-    @Override
-    public String toString() {
-        return "Grade{" +
-                "uuid=" + id +
-                ", student=" + student +
-                ", course=" + course +
-                ", percentage=" + percentage +
-                ", grade=" + grade +
-                '}';
-    }
+    private Boolean isFinal = false;
 
-    public GradeDTO(StudentDTO student, CourseDTO course, Integer percentage, Double grade) {
-        this.student = student;
-        this.course = course;
-        this.percentage = percentage;
-        this.grade = grade;
-    }
+    private LocalDateTime createdAt;
 
     public static GradeDTO serializeLightweight(Grade grade, boolean withStudent, boolean withCourse) {
         if (grade == null) {
@@ -52,6 +39,7 @@ public class GradeDTO {
                 .percentage(grade.getPercentage())
                 .course(withCourse ? CourseDTO.serializeLightweight(grade.getCourse()) : null)
                 .student(withStudent ? StudentDTO.serializeLightweight(grade.getStudent()) : null)
+                .createdAt(grade.getCreatedAt())
                 .build();
     }
 
@@ -60,12 +48,25 @@ public class GradeDTO {
             return null;
         }
 
-        return new GradeDTO(
-                grade.getId(),
-                StudentDTO.serializeLightweight(grade.getStudent()),
-                CourseDTO.serializeLightweight(grade.getCourse()),
-                grade.getPercentage(),
-                grade.getGrade()
-        );
+        return GradeDTO.builder()
+                .id(grade.getId())
+                .grade(grade.getGrade())
+                .percentage(grade.getPercentage())
+                .course(CourseDTO.serializeLightweight(grade.getCourse()))
+                .student(StudentDTO.serializeLightweight(grade.getStudent()))
+                .isFinal(grade.getIsFinal())
+                .createdAt(grade.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    public String toString() {
+        return "Grade{" +
+                "uuid=" + id +
+                ", student=" + student +
+                ", course=" + course +
+                ", percentage=" + percentage +
+                ", grade=" + grade +
+                '}';
     }
 }

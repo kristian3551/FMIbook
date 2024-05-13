@@ -2,7 +2,6 @@ package com.example.FMIbook.domain.users.student;
 
 import com.example.FMIbook.domain.course.CourseDTO;
 import com.example.FMIbook.domain.course.achievement.AchievementDTO;
-import com.example.FMIbook.domain.course.grade.GradeDTO;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -31,8 +29,8 @@ public class StudentDTO extends UserDTO {
     private String description;
     private String degree;
     private List<CourseDTO> courses;
-    private List<GradeDTO> grades;
     private List<AchievementDTO> achievements;
+    private List<CourseDTO> takenCourses;
 
     @Override
     public String toString() {
@@ -48,29 +46,6 @@ public class StudentDTO extends UserDTO {
                 ", description='" + description + '\'' +
                 ", degree='" + degree + '\'' +
                 '}';
-    }
-
-    public StudentDTO(UUID id,
-                      String name,
-                      String facultyNumber,
-                      String email,
-                      Integer semester,
-                      Integer group,
-                      String description,
-                      String degree,
-                      List<CourseDTO> courses,
-                      List<GradeDTO> grades,
-                      List<AchievementDTO> achievements) {
-        super(id, email);
-        this.name = name;
-        this.facultyNumber = facultyNumber;
-        this.semester = semester;
-        this.group = group;
-        this.description = description;
-        this.degree = degree;
-        this.courses = courses;
-        this.grades = grades;
-        this.achievements = achievements;
     }
 
     public String getSpecialty() {
@@ -107,7 +82,6 @@ public class StudentDTO extends UserDTO {
                 .degree(student.getDegree())
                 .achievements(new ArrayList<>())
                 .courses(new ArrayList<>())
-                .grades(new ArrayList<>())
                 .build();
         result.setId(student.getId());
         result.setEmail(student.getEmail());
@@ -122,27 +96,32 @@ public class StudentDTO extends UserDTO {
         List<CourseDTO> courses = student.getCourses() != null
                 ? student.getCourses().stream().map(CourseDTO::serializeLightweight).toList()
                 : new ArrayList<>();
-        List<GradeDTO> grades = student.getGrades() != null
-                ? student.getGrades().stream().map(grade -> GradeDTO.serializeLightweight(grade, false, true)).toList()
-                : new ArrayList<>();
         List<AchievementDTO> achievements = student.getAchievements() != null
                 ? student.getAchievements().stream().map(
                         achievement -> AchievementDTO.serializeLightweight(achievement, false, true)
         ).toList()
                 : new ArrayList<>();
 
-        return new StudentDTO(
-                student.getId(),
-                student.getName(),
-                student.getFacultyNumber(),
-                student.getEmail(),
-                student.getSemester(),
-                student.getGroup(),
-                student.getDescription(),
-                student.getDegree(),
-                courses,
-                grades,
-                achievements
-        );
+        List<CourseDTO> takenCourses = student.getCourses() != null && student.getGrades() != null
+                ? student.getCourses().stream().filter(course ->
+                    student.getGrades().stream().anyMatch(
+                            grade -> grade.getCourse().getId().equals(course.getId()) && grade.getIsFinal())
+                    ).map(CourseDTO::serializeLightweight).toList()
+                : new ArrayList<>();
+
+        StudentDTO result = StudentDTO.builder()
+                .name(student.getName())
+                .facultyNumber(student.getFacultyNumber())
+                .semester(student.getSemester())
+                .group(student.getGroup())
+                .description(student.getDescription())
+                .degree(student.getDegree())
+                .courses(courses)
+                .achievements(achievements)
+                .takenCourses(takenCourses)
+                .build();
+        result.setId(student.getId());
+        result.setEmail(student.getEmail());
+        return result;
     }
 }

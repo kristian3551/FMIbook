@@ -31,23 +31,24 @@ public class TaskResponseDTO {
     @NotEmpty(message = "type is empty")
     private String type;
     private List<SubmissionDTO> submissions;
+    private LocalDateTime createdAt;
 
     public static TaskResponseDTO serializeLightweight(Task task) {
         if (task == null) {
             return null;
         }
 
-        return new TaskResponseDTO(
-                task.getId(),
-                task.getName(),
-                task.getStartDate(),
-                task.getEndDate(),
-                task.getDescription(),
-                task.getCourse().getId(),
-                task.getType(),
-                new ArrayList<>()
-        );
-
+        return TaskResponseDTO.builder()
+                .id(task.getId())
+                .name(task.getName())
+                .startDate(task.getStartDate())
+                .endDate(task.getEndDate())
+                .description(task.getDescription())
+                .course(task.getCourse().getId())
+                .type(task.getType())
+                .submissions(new ArrayList<>())
+                .createdAt(task.getCreatedAt())
+                .build();
     }
 
     public static TaskResponseDTO serializeFromEntity(Task task) {
@@ -55,17 +56,18 @@ public class TaskResponseDTO {
             return null;
         }
 
-        return new TaskResponseDTO(
-                task.getId(),
-                task.getName(),
-                task.getStartDate(),
-                task.getEndDate(),
-                task.getDescription(),
-                task.getCourse().getId(),
-                task.getType(),
-                task.getSubmissions() != null
-                ? task.getSubmissions().stream().map(SubmissionDTO::serializeFromEntity).toList()
-                        : new ArrayList<>()
-        );
+        return TaskResponseDTO.builder()
+                .id(task.getId())
+                .name(task.getName())
+                .startDate(task.getStartDate())
+                .endDate(task.getEndDate())
+                .description(task.getDescription())
+                .course(task.getCourse().getId())
+                .type(task.getType())
+                .submissions(task.getSubmissions() != null
+                        ? task.getSubmissions().stream().map(SubmissionDTO::serializeFromEntity).toList()
+                        : new ArrayList<>())
+                .createdAt(task.getCreatedAt())
+                .build();
     }
 }

@@ -116,7 +116,6 @@ public class DepartmentIntegrationTest {
         Department department = DepartmentTestUtils.generateTestDepartment();
 
         Map<String, Object> response = departmentTestUtils.addOne(department, authTestUtils.getStudentAccessToken());
-        System.out.println(response);
         Assert.isTrue(response.isEmpty(), "Department is created but should not");
         response = departmentTestUtils.addOne(department, authTestUtils.getTeacherAccessToken());
         Assert.isTrue(response.isEmpty(), "Department is created but should not");

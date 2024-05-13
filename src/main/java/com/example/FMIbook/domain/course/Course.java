@@ -56,18 +56,23 @@ public class Course {
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
     @ManyToMany(targetEntity = Student.class)
+    @OrderBy("name ASC")
     private List<Student> students;
     @ManyToMany(targetEntity = Teacher.class)
+    @OrderBy("name ASC")
     private List<Teacher> teachers;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OrderBy("priority ASC")
     private List<Section> sections;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OrderBy("created_at DESC")
     private List<CoursePost> posts;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Achievement> achievements;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OrderBy("created_at DESC")
     private List<Task> tasks;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")

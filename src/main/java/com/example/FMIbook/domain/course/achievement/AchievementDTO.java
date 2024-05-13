@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -20,6 +20,7 @@ public class AchievementDTO {
     private String description;
     private StudentDTO student;
     private CourseDTO course;
+    private LocalDateTime createdAt;
 
     public static AchievementDTO serializeLightweight(Achievement achievement, boolean withStudent, boolean withCourse) {
         if (achievement == null) {
@@ -32,6 +33,7 @@ public class AchievementDTO {
                 .description(achievement.getDescription())
                 .student(withStudent ? StudentDTO.serializeLightweight(achievement.getStudent()) : null)
                 .course(withCourse ? CourseDTO.serializeLightweight(achievement.getCourse()) : null)
+                .createdAt(achievement.getCreatedAt())
                 .build();
     }
 
@@ -40,12 +42,13 @@ public class AchievementDTO {
             return null;
         }
 
-        return new AchievementDTO(
-                achievement.getId(),
-                achievement.getName(),
-                achievement.getDescription(),
-                StudentDTO.serializeLightweight(achievement.getStudent()),
-                CourseDTO.serializeLightweight(achievement.getCourse())
-        );
+        return AchievementDTO.builder()
+                .id(achievement.getId())
+                .name(achievement.getName())
+                .description(achievement.getDescription())
+                .student(StudentDTO.serializeLightweight(achievement.getStudent()))
+                .course(CourseDTO.serializeLightweight(achievement.getCourse()))
+                .createdAt(achievement.getCreatedAt())
+                .build();
     }
 }

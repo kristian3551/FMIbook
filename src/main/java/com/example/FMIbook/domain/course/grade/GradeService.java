@@ -3,10 +3,13 @@ package com.example.FMIbook.domain.course.grade;
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.course.CourseRepository;
 import com.example.FMIbook.domain.course.exception.CourseNotFoundException;
+import com.example.FMIbook.domain.policy.ReadPolicy;
+import com.example.FMIbook.domain.policy.exception.CannotReadException;
 import com.example.FMIbook.domain.users.student.Student;
 import com.example.FMIbook.domain.users.student.StudentRepository;
 import com.example.FMIbook.domain.course.grade.exception.GradeNotFoundException;
 import com.example.FMIbook.domain.users.student.exception.StudentNotFoundException;
+import com.example.FMIbook.domain.users.user.User;
 import com.example.FMIbook.utils.ServiceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,13 +34,36 @@ public class GradeService {
         this.courseRepository = courseRepository;
     }
 
-    public List<GradeDTO> findAll(
+    public List<GradeDTO> findAllByCourse(
+            UUID courseId,
+            User user,
             Integer limit,
             Integer offset,
-            String sort
+            String sort,
+            UUID studentId
     ) {
-        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "percentage", Sort.Direction.DESC);
-        Page<Grade> grades = gradeRepository.findAll(page);
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isEmpty()) {
+            throw new CourseNotFoundException();
+        }
+        if (!ReadPolicy.canReadCourse(user, course.get())) {
+            throw new CannotReadException();
+        }
+
+        Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "created_at", Sort.Direction.DESC);
+        Page<Grade> grades;
+
+        if (user.isAdmin() || user.isTeacher()) {
+            if (studentId != null) {
+                grades = gradeRepository.findByCourseAndStudent(courseId, studentId, page);
+            }
+            else {
+                grades = gradeRepository.findByCourse(courseId, page);
+            }
+        }
+        else {
+            grades = gradeRepository.findByCourseAndStudent(courseId, user.getId(), page);
+        }
         return grades.getContent().stream().map(GradeDTO::serializeFromEntity).toList();
     }
 
@@ -60,8 +86,13 @@ public class GradeService {
         if (course.isEmpty()) {
             throw new CourseNotFoundException();
         }
-
-        Grade grade = new Grade(student.get(), course.get(), gradeDto.getPercentage(), gradeDto.getGrade());
+        Grade grade = Grade.builder()
+                .student(student.get())
+                .course(course.get())
+                .percentage(gradeDto.getPercentage())
+                .grade(gradeDto.getGrade())
+                .isFinal(gradeDto.getIsFinal())
+                .build();
         gradeRepository.save(grade);
         return GradeDTO.serializeFromEntity(grade);
     }
@@ -96,6 +127,10 @@ public class GradeService {
                 throw new StudentNotFoundException();
             }
             grade.setStudent(student.get());
+        }
+
+        if (gradeDto.getIsFinal() != null) {
+            grade.setIsFinal(gradeDto.getIsFinal());
         }
 
         gradeRepository.save(grade);

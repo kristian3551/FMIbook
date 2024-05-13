@@ -51,7 +51,7 @@ public class StudentIntegrationTest {
         Assert.isTrue(response.get("email").equals(student.getEmail()), "Email is wrong");
         Assert.isTrue(((List<Object>) response.get("courses")).isEmpty(), "Courses are returned");
         Assert.isTrue(((List<Object>) response.get("achievements")).isEmpty(), "Achievements are returned");
-        Assert.isTrue(((List<Object>) response.get("grades")).isEmpty(), "Grades are returned");
+        Assert.isTrue(((List<Object>) response.get("takenCourses")).isEmpty(), "Taken courses are returned");
     }
 
     @Test

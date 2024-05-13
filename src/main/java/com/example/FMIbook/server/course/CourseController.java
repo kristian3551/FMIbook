@@ -5,6 +5,8 @@ import com.example.FMIbook.domain.course.CourseRequestDTO;
 import com.example.FMIbook.domain.course.CourseService;
 import com.example.FMIbook.domain.course.achievement.AchievementDTO;
 import com.example.FMIbook.domain.course.achievement.AchievementRequestDTO;
+import com.example.FMIbook.domain.course.grade.GradeDTO;
+import com.example.FMIbook.domain.course.grade.GradeService;
 import com.example.FMIbook.domain.course.posts.PostDTO;
 import com.example.FMIbook.domain.course.posts.PostRequestDTO;
 import com.example.FMIbook.domain.course.section.SectionDTO;
@@ -24,10 +26,12 @@ import java.util.UUID;
 @RequestMapping(path = "api/courses")
 public class CourseController {
     private final CourseService courseService;
+    private final GradeService gradeService;
 
     @Autowired
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, GradeService gradeService) {
         this.courseService = courseService;
+        this.gradeService = gradeService;
     }
 
     @GetMapping
@@ -162,5 +166,17 @@ public class CourseController {
     @DeleteMapping("tasks/{taskId}")
     public void deleteTask(@PathVariable UUID taskId, @AuthenticationPrincipal User user) {
         courseService.deleteTask(taskId, user);
+    }
+
+    @GetMapping("{courseId}/grades")
+    public List<GradeDTO> findAllByCourse(
+            @PathVariable UUID courseId,
+            @AuthenticationPrincipal User user,
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) UUID studentId
+    ) {
+        return gradeService.findAllByCourse(courseId, user, limit, offset, sort, studentId);
     }
 }

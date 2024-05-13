@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,6 +35,8 @@ public class PostDTO {
 
     private List<PostDTO> childrenPosts;
 
+    private LocalDateTime createdAt;
+
     public static PostDTO serializeLightweight(CoursePost post) {
         if (post == null) {
             return null;
@@ -47,6 +50,7 @@ public class PostDTO {
                 .rate(post.getRate())
                 .user(UserDTO.serializeFromEntity(post.getUser()))
                 .childrenPosts(new ArrayList<>())
+                .createdAt(post.getCreatedAt())
                 .build();
     }
 
@@ -67,6 +71,7 @@ public class PostDTO {
                 .rate(post.getRate())
                 .user(UserDTO.serializeFromEntity(post.getUser()))
                 .childrenPosts(childrenPosts)
+                .createdAt(post.getCreatedAt())
                 .build();
     }
 }
