@@ -3,6 +3,7 @@ package com.example.FMIbook.domain.course.achievement;
 import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.users.student.Student;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,8 @@ public class Achievement {
     private UUID id;
 
     @Column
-    @Pattern(regexp = ".+", message = "name is empty")
+    @NotNull(message = "achievement is null")
+    @NotEmpty(message = "name is empty")
     private String name;
 
     @Column(columnDefinition = "TEXT")

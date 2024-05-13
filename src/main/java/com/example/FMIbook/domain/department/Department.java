@@ -2,6 +2,7 @@ package com.example.FMIbook.domain.department;
 
 import com.example.FMIbook.domain.course.Course;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class Department {
     private UUID id;
 
     @Column(nullable = false)
+    @NotNull(message = "name is null")
     @Pattern(regexp = ".+", message = "name is empty")
     private String name;
 

@@ -113,17 +113,21 @@ public class CourseService {
         List<Teacher> teachers = courseDto.getTeachers() != null
                 ? teacherRepository.findAllById(courseDto.getTeachers())
                 : new ArrayList<>();
+        Optional<Department> department = courseDto.getDepartment() != null
+                ? departmentRepository.findById(courseDto.getDepartment())
+                : Optional.empty();
 
-        Course course = new Course(
-                courseDto.getName(),
-                courseDto.getYear(),
-                courseDto.getSemester(),
-                courseDto.getCategory(),
-                courseDto.getType(),
-                courseDto.getDescription(),
-                students,
-                teachers
-        );
+        Course course = Course.builder()
+                .name(courseDto.getName())
+                .year(courseDto.getYear())
+                .semester(courseDto.getSemester())
+                .category(courseDto.getCategory())
+                .type(courseDto.getType())
+                .description(courseDto.getDescription())
+                .students(students)
+                .teachers(teachers)
+                .department(department.orElse(null))
+                .build();
 
         if (!CreatePolicy.canCreateCourse(user, course)) {
             throw new CannotCreateException();

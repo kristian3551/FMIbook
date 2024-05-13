@@ -36,17 +36,17 @@ public class Grade {
     private Course course;
 
     @Column(nullable = false)
-    @NotNull
+    @NotNull(message = "percentage is null")
     private Integer percentage;
 
     @Column
     private Double grade;
 
-    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL)
-    private List<Submission> submissions;
-
     @Column(columnDefinition = "boolean default false")
     private Boolean isFinal;
+
+    @OneToMany(mappedBy = "grade", cascade = CascadeType.ALL)
+    private List<Submission> submissions;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

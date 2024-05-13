@@ -30,7 +30,6 @@ public class CourseDTO {
 
     private String category;
 
-    @Pattern(regexp = "(compulsory|selectable)", message = "type is invalid")
     private String type;
 
     private String description;

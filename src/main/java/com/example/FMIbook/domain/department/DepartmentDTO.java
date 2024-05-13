@@ -17,7 +17,8 @@ import java.util.UUID;
 @Builder
 public class DepartmentDTO {
     private UUID id;
-    @Pattern(regexp = "[A-Za-z ]+", message = "name is empty")
+
+    @Pattern(regexp = ".+", message = "name is empty")
     private String name;
     private List<CourseDTO> courses;
 

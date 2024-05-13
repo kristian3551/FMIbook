@@ -4,6 +4,8 @@ import com.example.FMIbook.domain.course.Course;
 import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +25,8 @@ import java.util.UUID;
 @Table(name = "teachers")
 public class Teacher extends User {
     @Column(nullable = false)
-    @Pattern(regexp = ".+", message = "name is empty")
+    @NotNull(message = "name is null")
+    @NotEmpty(message = "name is empty")
     private String name;
 
     @Column

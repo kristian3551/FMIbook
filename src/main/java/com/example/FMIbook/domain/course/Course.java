@@ -1,13 +1,13 @@
 package com.example.FMIbook.domain.course;
 
 import com.example.FMIbook.domain.course.achievement.Achievement;
+import com.example.FMIbook.domain.course.grade.Grade;
+import com.example.FMIbook.domain.course.posts.CoursePost;
+import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.course.task.Task;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.users.student.Student;
-import com.example.FMIbook.domain.course.grade.Grade;
 import com.example.FMIbook.domain.users.teacher.Teacher;
-import com.example.FMIbook.domain.course.section.Section;
-import com.example.FMIbook.domain.course.posts.CoursePost;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -34,13 +34,14 @@ public class Course {
     private UUID id;
 
     @Column(nullable = false)
-    @NotNull
+    @NotNull(message = "name is null")
     private String name;
 
     @Column(nullable = false)
     private Integer year;
 
     @Column(nullable = false)
+    @NotNull(message = "semester is null")
     private String semester;
 
     @Column(nullable = false)

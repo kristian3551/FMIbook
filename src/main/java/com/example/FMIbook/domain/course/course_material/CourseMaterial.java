@@ -4,6 +4,7 @@ import com.example.FMIbook.domain.course.section.Section;
 import com.example.FMIbook.domain.material.Material;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class CourseMaterial {
     private UUID id;
 
     @Column(nullable = false)
+    @NotNull(message = "name is null")
     @NotEmpty(message = "name is empty")
     private String name;
 
