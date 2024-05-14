@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CourseTestUtils extends BaseTestUtils {
     private static final AtomicInteger index = new AtomicInteger(0);
     private static final String COURSE_TEST_NAME = "TestCourse";
-    private MockMvc mvc;
 
     @Autowired
     public CourseTestUtils(MockMvc mvc) {
@@ -25,8 +24,8 @@ public class CourseTestUtils extends BaseTestUtils {
                 .builder()
                 .name(name)
                 .year(2024)
-                .semester("summer")
-                .category("ЯКН")
+                .semester("winter")
+                .category("CSC")
                 .type("selectable")
                 .description("mnogo dobar kurs")
                 .students(new ArrayList<>())
@@ -50,7 +49,7 @@ public class CourseTestUtils extends BaseTestUtils {
                         """,
                 course.getName(),
                 course.getYear(),
-                course.getStudents(),
+                course.getSemester(),
                 course.getCategory(),
                 course.getType(),
                 course.getDescription());
@@ -73,7 +72,7 @@ public class CourseTestUtils extends BaseTestUtils {
                         """,
                 course.getName(),
                 course.getYear(),
-                course.getStudents(),
+                course.getSemester(),
                 course.getCategory(),
                 course.getType(),
                 course.getDescription(),
@@ -101,7 +100,7 @@ public class CourseTestUtils extends BaseTestUtils {
                         """,
                 course.getName(),
                 course.getYear(),
-                course.getStudents(),
+                course.getSemester(),
                 course.getCategory(),
                 course.getType(),
                 course.getDescription()

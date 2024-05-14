@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DepartmentTestUtils extends BaseTestUtils {
     private static final AtomicInteger index = new AtomicInteger(0);
     private static final String DEPARTMENT_TEST_NAME = "TestDepartment";
-    private MockMvc mvc;
 
     @Autowired
     public DepartmentTestUtils(MockMvc mvc) {

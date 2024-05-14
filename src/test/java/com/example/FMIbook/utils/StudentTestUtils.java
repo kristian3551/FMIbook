@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class StudentTestUtils extends BaseTestUtils {
     private static final AtomicInteger index = new AtomicInteger(0);
     private static final String USER_TEST_NAME = "TestStudent";
-    private MockMvc mvc;
 
     public StudentTestUtils(MockMvc mvc) {
         super(mvc, "students");
