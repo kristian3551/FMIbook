@@ -5,7 +5,6 @@ import jakarta.validation.Path;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -48,23 +47,6 @@ public class BaseExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
-    public ResponseEntity<Map<String, Object>> handleInternalError(RuntimeException ex) {
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("status", 500);
-        errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "Error occurred");
-        logger.error(errorResponse.toString());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    public ResponseEntity<Map<String, Object>> handleApiError(ApiException ex) {
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("status", 400);
-        errorResponse.put("code", ex.getCode());
-        errorResponse.put("message", ex.getMessage());
-        logger.error(errorResponse.toString());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     public ResponseEntity<Map<String, Object>> handleValidationError(MethodArgumentNotValidException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         Map<String, Object> errors = new HashMap<>();
@@ -89,7 +71,7 @@ public class BaseExceptionHandler {
         });
         errorResponse.put("errors", errors);
         errorResponse.put("status", 400);
-        errorResponse.put("message", "database constraint errors");
+        errorResponse.put("message", "validation errors");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

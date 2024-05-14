@@ -7,6 +7,7 @@ import com.example.FMIbook.utils.AuthTestUtils;
 import com.example.FMIbook.utils.CourseTestUtils;
 import com.example.FMIbook.utils.StudentTestUtils;
 import com.example.FMIbook.utils.TeacherTestUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,9 +29,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CourseIntegrationTest {
     @Autowired
-    private MockMvc mvc;
-
-    @Autowired
     private CourseTestUtils courseTestUtils;
 
     @Autowired
@@ -43,8 +41,13 @@ public class CourseIntegrationTest {
     private AuthTestUtils authTestUtils;
 
     @BeforeAll
-    public void beforeAllTests() {
+    public void addAuthEntities() {
         authTestUtils.addAuthEntities();
+    }
+
+    @AfterAll
+    public void deleteAuthEntities() {
+        authTestUtils.deleteAuthEntities();
     }
 
     @Test
@@ -183,7 +186,6 @@ public class CourseIntegrationTest {
         course.setType("asdasdasddsa");
 
         Map<String, Object> errors = courseTestUtils.addOne(course, authTestUtils.getAdminAccessToken());
-        System.out.println(errors);
         Assert.isTrue(errors.get("status").equals(400), "Status is not returned");
         Assert.isTrue(errors.get("message").equals("validation errors"), "Message is not right");
         Assert.isTrue(((Map<String, Object>) errors.get("errors")).get("name").equals("name is empty"), "Name error message is not right");

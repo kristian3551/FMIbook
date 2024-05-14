@@ -6,11 +6,10 @@ import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
@@ -18,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @Builder
@@ -30,7 +30,8 @@ public class Teacher extends User {
     private String name;
 
     @Column
-    @Pattern(regexp = ".+", message = "degree is empty")
+    @NotNull(message = "degree is null")
+    @NotEmpty(message = "degree is empty")
     private String degree;
 
     @ManyToMany(mappedBy = "teachers")

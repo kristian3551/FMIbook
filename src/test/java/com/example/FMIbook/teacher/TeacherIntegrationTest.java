@@ -3,6 +3,7 @@ package com.example.FMIbook.teacher;
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.utils.AuthTestUtils;
 import com.example.FMIbook.utils.TeacherTestUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,9 +24,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeacherIntegrationTest {
     @Autowired
-    private MockMvc mvc;
-
-    @Autowired
     private TeacherTestUtils teacherTestUtils;
 
     @Autowired
@@ -34,6 +32,11 @@ public class TeacherIntegrationTest {
     @BeforeAll
     public void addAuthEntities() {
         authTestUtils.addAuthEntities();
+    }
+
+    @AfterAll
+    public void deleteAuthEntities() {
+        authTestUtils.deleteAuthEntities();
     }
 
     @Test
@@ -123,6 +126,30 @@ public class TeacherIntegrationTest {
 
         Assert.isTrue(updateTeacher.get("name").equals(teacher.getName()), "Teacher name is not updated");
         Assert.isTrue(updateTeacher.get("degree").equals(teacher.getDegree()), "Teacher degree is not updated");
+    }
+
+    @Test
+    public void testAddNonValidTeacher() throws Exception {
+        Teacher teacher = TeacherTestUtils.generateTestTeacher();
+        teacher.setEmail("asdasd");
+        teacher.setDegree("");
+        teacher.setName("");
+
+        Map<String, Object> errorObject = teacherTestUtils.addOne(teacher, authTestUtils.getAdminAccessToken());
+        Assert.isTrue(errorObject.get("status").equals(400), "Status is not valid");
+        Assert.isTrue(errorObject.get("message").equals("validation errors"), "Message is not valid");
+        Assert.isTrue((
+                (Map<String, String>) errorObject.get("errors")).get("name").equals("name is empty"),
+                "Name error message is not valid"
+        );
+        Assert.isTrue((
+                        (Map<String, String>) errorObject.get("errors")).get("email").equals("email is invalid"),
+                "Email error message is not valid"
+        );
+        Assert.isTrue((
+                        (Map<String, String>) errorObject.get("errors")).get("degree").equals("degree is empty"),
+                "Degree error message is not valid"
+        );
     }
 
     @Test

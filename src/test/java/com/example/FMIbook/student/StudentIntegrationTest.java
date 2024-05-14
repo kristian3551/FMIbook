@@ -3,6 +3,7 @@ package com.example.FMIbook.student;
 import com.example.FMIbook.domain.users.student.Student;
 import com.example.FMIbook.utils.AuthTestUtils;
 import com.example.FMIbook.utils.StudentTestUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,9 +24,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class StudentIntegrationTest {
     @Autowired
-    private MockMvc mvc;
-
-    @Autowired
     private StudentTestUtils studentTestUtils;
 
     @Autowired
@@ -34,6 +32,11 @@ public class StudentIntegrationTest {
     @BeforeAll
     public void addAuthEntities() {
         authTestUtils.addAuthEntities();
+    }
+
+    @AfterAll
+    public void deleteAuthEntities() {
+        authTestUtils.deleteAuthEntities();
     }
 
     @Test
@@ -132,5 +135,45 @@ public class StudentIntegrationTest {
         Assert.isTrue(response.isEmpty(), "Student is created but should not");
         response = studentTestUtils.addOne(student, authTestUtils.getTeacherAccessToken());
         Assert.isTrue(response.isEmpty(), "Student is created but should not");
+    }
+
+    @Test
+    public void testAddNonValidStudent() throws Exception {
+        Student student = StudentTestUtils.generateTestStudent();
+        student.setEmail("asdasdasdasd");
+        student.setName("");
+        student.setFacultyNumber("qweqweqwe");
+        student.setSemester(null);
+        student.setGroup(null);
+        student.setDegree("");
+
+        Map<String, Object> errors = studentTestUtils.addOne(student, authTestUtils.getAdminAccessToken());
+
+        Assert.isTrue(errors.get("status").equals(400), "Status is not returned");
+        Assert.isTrue(errors.get("message").equals("validation errors"), "Message is not right");
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("name").equals("name is empty"),
+                "Name error message is not right"
+        );
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("email").equals("email is invalid"),
+                "Email error message is not right"
+        );
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("facultyNumber").equals("faculty number is invalid"),
+                "Email error message is not right"
+        );
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("semester").equals("semester is null"),
+                "Semester error message is not right"
+        );
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("group").equals("group is null"),
+                "Semester error message is not right"
+        );
+        Assert.isTrue(
+                ((Map<String, String>) errors.get("errors")).get("degree").equals("degree is empty"),
+                "Degree error message is not right"
+        );
     }
 }

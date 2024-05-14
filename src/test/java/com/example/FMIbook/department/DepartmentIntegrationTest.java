@@ -3,6 +3,7 @@ package com.example.FMIbook.department;
 import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.utils.AuthTestUtils;
 import com.example.FMIbook.utils.DepartmentTestUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,9 +23,6 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DepartmentIntegrationTest {
     @Autowired
-    private MockMvc mvc;
-
-    @Autowired
     private DepartmentTestUtils departmentTestUtils;
 
     @Autowired
@@ -33,6 +31,11 @@ public class DepartmentIntegrationTest {
     @BeforeAll
     public void addAuthEntities() {
         authTestUtils.addAuthEntities();
+    }
+
+    @AfterAll
+    public void deleteAuthEntities() {
+        authTestUtils.deleteAuthEntities();
     }
 
     @Test

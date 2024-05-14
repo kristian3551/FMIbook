@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @Builder
@@ -54,6 +56,8 @@ public class Student extends User {
     private String description;
 
     @Column(nullable = false)
+    @NotNull(message = "degree is null")
+    @NotEmpty(message = "degree is empty")
     private String degree;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)

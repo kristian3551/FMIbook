@@ -25,15 +25,13 @@ public class AuthTestUtils {
             6,
             6,
             "",
-            ""
+            "bachelor"
     );
     private final Teacher teacher = new Teacher(UUID.randomUUID(),
             "authTeacher@abv.bg",
             "test123",
             "authTeacher",
             "professor");
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     private JwtService jwtService;
     @Autowired
@@ -46,20 +44,34 @@ public class AuthTestUtils {
     public void addAuthEntities() {
         try {
             userRepository.save(user);
-        } catch (Exception ex) {
-            System.out.println("cannot create admin");
+        } catch (Exception ignored) {
         }
 
         try {
             studentRepository.save(student);
-        } catch (Exception ex) {
-            System.out.println("cannot create student");
+        } catch (Exception ignored) {
         }
 
         try {
             teacherRepository.save(teacher);
-        } catch (Exception ex) {
-            System.out.println("cannot create teacher");
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void deleteAuthEntities() {
+        try {
+            userRepository.delete(user);
+        } catch (Exception ignored) {
+        }
+
+        try {
+            studentRepository.delete(student);
+        } catch (Exception ignored) {
+        }
+
+        try {
+            teacherRepository.delete(teacher);
+        } catch (Exception ignored) {
         }
     }
 
