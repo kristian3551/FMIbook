@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CourseRequestDTO {
     private UUID id;
 
-    @Pattern(regexp = ".+", message = "name is blank")
+    @Pattern(regexp = ".+", message = "name is empty")
     private String name;
 
     private Integer year;

@@ -175,6 +175,33 @@ public class CourseIntegrationTest {
     }
 
     @Test
+    public void testAddNonValidCourseShouldReturnError() throws Exception {
+        Course course = CourseTestUtils.generateTestEntity();
+        course.setName("");
+        course.setSemester("asdasd");
+        course.setCategory("qweqwe");
+        course.setType("asdasdasddsa");
+
+        Map<String, Object> errors = courseTestUtils.addOne(course, authTestUtils.getAdminAccessToken());
+        System.out.println(errors);
+        Assert.isTrue(errors.get("status").equals(400), "Status is not returned");
+        Assert.isTrue(errors.get("message").equals("validation errors"), "Message is not right");
+        Assert.isTrue(((Map<String, Object>) errors.get("errors")).get("name").equals("name is empty"), "Name error message is not right");
+        Assert.isTrue((
+                (Map<String, Object>) errors.get("errors")).get("semester").equals("semester is invalid"),
+                "Semester error message is not right"
+        );
+        Assert.isTrue((
+                        (Map<String, Object>) errors.get("errors")).get("category").equals("category is invalid"),
+                "Category error message is not right"
+        );
+        Assert.isTrue((
+                        (Map<String, Object>) errors.get("errors")).get("type").equals("type is invalid"),
+                "Type error message is not right"
+        );
+    }
+
+    @Test
     public void testAddCourseByStudentShouldNotWork() throws Exception {
         Course course = CourseTestUtils.generateTestEntity();
 
