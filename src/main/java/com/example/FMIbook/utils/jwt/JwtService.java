@@ -19,6 +19,10 @@ import java.util.function.Function;
 public class JwtService {
     @Value("${security.secret-key}")
     private String secretKey;
+    @Value(("${security.jwt-access-milliseconds}"))
+    private Integer accessTokenValidity;
+    @Value(("${security.jwt-refresh-milliseconds}"))
+    private Integer refreshTokenValidity;
 
     public JwtService() {
     }
@@ -47,19 +51,24 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userDetails, accessTokenValidity);
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails, refreshTokenValidity);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            UserDetails userDetails,
+            int milliseconds
     ) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 48))
+                .setExpiration(new Date(System.currentTimeMillis() + milliseconds))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

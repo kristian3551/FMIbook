@@ -12,15 +12,18 @@ import com.example.FMIbook.domain.users.user.UserRepository;
 import com.example.FMIbook.domain.users.user.exception.UserNotFoundException;
 import com.example.FMIbook.utils.exception.ForbiddenException;
 import com.example.FMIbook.utils.jwt.JwtService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Data
 public class AuthService {
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
@@ -28,21 +31,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
-
-    @Autowired
-    public AuthService(StudentRepository studentRepository,
-                       TeacherRepository teacherRepository,
-                       UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       JwtService jwtService,
-                       AuthenticationManager authManager) {
-        this.studentRepository = studentRepository;
-        this.teacherRepository = teacherRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-        this.authManager = authManager;
-    }
+    private final UserDetailsService userDetailsService;
 
     public AuthenticationResponse login(AuthenticationRequest request) {
         authManager.authenticate(
@@ -54,17 +43,19 @@ public class AuthService {
 
         Optional<Student> student = studentRepository.findByEmail(request.getEmail());
         if (student.isPresent()) {
-            String token = jwtService.generateToken(student.get());
+            String accessToken = jwtService.generateToken(student.get());
             return new AuthenticationResponse(
-                    token,
+                    accessToken,
+                    jwtService.generateRefreshToken(student.get()),
                     StudentDTO.serializeFromEntity(student.get())
             );
         }
         Optional<Teacher> teacher = teacherRepository.findByEmail(request.getEmail());
         if (teacher.isPresent()) {
-            String token = jwtService.generateToken(teacher.get());
+            String accessToken = jwtService.generateToken(teacher.get());
             return new AuthenticationResponse(
-                    token,
+                    accessToken,
+                    jwtService.generateRefreshToken(student.get()),
                     TeacherDTO.serializeFromEntity(teacher.get())
             );
         }
@@ -73,6 +64,7 @@ public class AuthService {
             String token = jwtService.generateToken(admin.get());
             return new AuthenticationResponse(
                     token,
+                    jwtService.generateRefreshToken(student.get()),
                     TeacherDTO.serializeFromEntity(admin.get())
             );
         }
@@ -112,7 +104,9 @@ public class AuthService {
         }
 
         return new AuthenticationResponse(
-                jwtToken, UserDTO.serializeFromEntity(user)
+                jwtToken,
+                jwtService.generateRefreshToken(user),
+                UserDTO.serializeFromEntity(user)
         );
     }
 
@@ -125,7 +119,29 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(admin);
 
         return new AuthenticationResponse(
-                jwtToken, UserDTO.serializeFromEntity(admin)
+                jwtToken,
+                jwtService.generateRefreshToken(admin),
+                UserDTO.serializeFromEntity(admin)
         );
+    }
+
+    public AuthenticationResponse refreshToken(String refreshToken) {
+        if (refreshToken == null || !refreshToken.startsWith("Bearer ")) {
+            throw new ForbiddenException("refresh token is invalid", 403);
+        }
+
+        String jwt = refreshToken.substring(7);
+        String userEmail = jwtService.extractUsername(jwt);
+        if (userEmail != null) {
+            UserDetails user = userDetailsService.loadUserByUsername(userEmail);
+            if (jwtService.isTokenValid(jwt, user)) {
+                return AuthenticationResponse.builder()
+                        .refreshToken(jwtService.generateRefreshToken(user))
+                        .accessToken(jwtService.generateToken(user))
+                        .user(null)
+                        .build();
+            }
+        }
+        throw new ForbiddenException("cannot refresh token", 403);
     }
 }

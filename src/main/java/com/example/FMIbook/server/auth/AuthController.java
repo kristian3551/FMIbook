@@ -4,11 +4,11 @@ import com.example.FMIbook.domain.auth.AuthService;
 import com.example.FMIbook.domain.auth.AuthenticationRequest;
 import com.example.FMIbook.domain.auth.AuthenticationResponse;
 import com.example.FMIbook.domain.auth.RegisterRequest;
-import com.example.FMIbook.domain.users.user.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +36,16 @@ public class AuthController {
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        AuthenticationResponse authResponse = authService.refreshToken(request.getHeader("refreshToken"));
+        response.setHeader("refreshToken", authResponse.getRefreshToken());
+        response.setHeader("accessToken", authResponse.getAccessToken());
     }
 
     @PostMapping("/register-admin")
