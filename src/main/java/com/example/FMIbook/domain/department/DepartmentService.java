@@ -32,14 +32,8 @@ public class DepartmentService {
     }
 
     public DepartmentDTO getOne(UUID id) {
-        Optional<Department> department = departmentRepository.findById(id);
-
-        if (department.isEmpty()) {
-            throw new DepartmentNotFoundException();
-        }
-
-        departmentRepository.save(department.get());
-        return DepartmentDTO.serializeFromEntity(department.get());
+        Department department = departmentRepository.findById(id).orElseThrow(DepartmentNotFoundException::new);
+        return DepartmentDTO.serializeFromEntity(department);
     }
 
     public DepartmentDTO addOne(Department department) {
@@ -48,13 +42,7 @@ public class DepartmentService {
     }
 
     public DepartmentDTO update(UUID id, DepartmentDTO departmentDto) {
-        Optional<Department> departmentOpt = departmentRepository.findById(id);
-
-        if (departmentOpt.isEmpty()) {
-            throw new DepartmentNotFoundException();
-        }
-
-        Department department = departmentOpt.get();
+        Department department = departmentRepository.findById(id).orElseThrow(DepartmentNotFoundException::new);
 
         if (departmentDto.getName() != null) {
             department.setName(departmentDto.getName());
@@ -65,12 +53,7 @@ public class DepartmentService {
     }
 
     public void delete(UUID id) {
-        Optional<Department> departmentOpt = departmentRepository.findById(id);
-
-        if (departmentOpt.isEmpty()) {
-            throw new DepartmentNotFoundException();
-        }
-
-        departmentRepository.delete(departmentOpt.get());
+        Department department = departmentRepository.findById(id).orElseThrow(DepartmentNotFoundException::new);
+        departmentRepository.delete(department);
     }
 }
