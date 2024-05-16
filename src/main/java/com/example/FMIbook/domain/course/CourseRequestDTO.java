@@ -35,6 +35,8 @@ public class CourseRequestDTO {
     @Pattern(regexp = ".+", message = "description is blank")
     private String description;
 
+    private Boolean isPublic;
+
     private List<UUID> students;
 
     private List<UUID> teachers;

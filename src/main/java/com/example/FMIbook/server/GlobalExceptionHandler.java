@@ -60,4 +60,12 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "IO error occurred");
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGeneralError(Exception ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 500);
+        errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "Unexpected error occurred");
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
