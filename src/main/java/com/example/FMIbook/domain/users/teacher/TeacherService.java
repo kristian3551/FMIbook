@@ -35,12 +35,8 @@ public class TeacherService {
     }
 
     public TeacherDTO getOne(UUID id) {
-        Optional<Teacher> teacher = teacherRepository.findById(id);
-        if (teacher.isEmpty()) {
-            throw new TeacherNotFoundException();
-        }
-
-        return TeacherDTO.serializeFromEntity(teacher.get());
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
+        return TeacherDTO.serializeFromEntity(teacher);
     }
 
     public TeacherDTO addOne(Teacher teacher) {
@@ -50,13 +46,8 @@ public class TeacherService {
     }
 
     public TeacherDTO update(UUID id, TeacherRequestDTO teacherDto) {
-        Optional<Teacher> teacherOpt = teacherRepository.findById(id);
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
 
-        if (teacherOpt.isEmpty()) {
-            throw new TeacherNotFoundException();
-        }
-
-        Teacher teacher = teacherOpt.get();
         if (teacherDto.getName() != null) {
             teacher.setName(teacherDto.getName());
         }
