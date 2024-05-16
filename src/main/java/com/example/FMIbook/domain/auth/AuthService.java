@@ -55,7 +55,7 @@ public class AuthService {
             String accessToken = jwtService.generateToken(teacher.get());
             return new AuthenticationResponse(
                     accessToken,
-                    jwtService.generateRefreshToken(student.get()),
+                    jwtService.generateRefreshToken(teacher.get()),
                     TeacherDTO.serializeFromEntity(teacher.get())
             );
         }
@@ -64,7 +64,7 @@ public class AuthService {
             String token = jwtService.generateToken(admin.get());
             return new AuthenticationResponse(
                     token,
-                    jwtService.generateRefreshToken(student.get()),
+                    jwtService.generateRefreshToken(admin.get()),
                     TeacherDTO.serializeFromEntity(admin.get())
             );
         }

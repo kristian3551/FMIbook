@@ -54,6 +54,10 @@ public class Course {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(columnDefinition = "boolean default false")
+    @NotNull(message = "is public is null")
+    private boolean isPublic = false;
+
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
     @ManyToMany(targetEntity = Student.class)
@@ -78,44 +82,6 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
-
-    public Course(UUID id,
-                  String name,
-                  Integer year,
-                  String semester,
-                  String category,
-                  String type,
-                  String description,
-                  List<Student> students,
-                  List<Teacher> teachers) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.category = category;
-        this.type = type;
-        this.description = description;
-        this.students = students;
-        this.teachers = teachers;
-    }
-
-    public Course(String name,
-                  Integer year,
-                  String semester,
-                  String category,
-                  String type,
-                  String description,
-                  List<Student> students,
-                  List<Teacher> teachers) {
-        this.name = name;
-        this.year = year;
-        this.semester = semester;
-        this.category = category;
-        this.type = type;
-        this.description = description;
-        this.students = students;
-        this.teachers = teachers;
-    }
 
     @PrePersist
     protected void onCreate() {

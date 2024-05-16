@@ -53,6 +53,10 @@ public class UpdatePolicy {
     }
 
     public static boolean canModifyPost(User user, CoursePost post) {
+        if (hasAdminUpdateRights(user)) {
+            return true;
+        }
+
         return user.getId().equals(post.getUser().getId());
     }
 

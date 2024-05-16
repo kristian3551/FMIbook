@@ -19,6 +19,10 @@ public class ReadPolicy {
             return true;
         }
 
+        if (course.isPublic()) {
+            return true;
+        }
+
         return course.getStudents().stream().anyMatch(student -> student.getId().equals(user.getId()))
                 || course.getTeachers().stream().anyMatch(student -> student.getId().equals(user.getId()));
 

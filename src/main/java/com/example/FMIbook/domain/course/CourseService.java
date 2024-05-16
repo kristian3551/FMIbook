@@ -127,6 +127,7 @@ public class CourseService {
                 .students(students)
                 .teachers(teachers)
                 .department(department.orElse(null))
+                .isPublic(courseDto.getIsPublic())
                 .build();
 
         if (!CreatePolicy.canCreateCourse(user, course)) {
@@ -180,6 +181,10 @@ public class CourseService {
 
         if (courseDto.getDescription() != null) {
             course.setDescription(courseDto.getDescription());
+        }
+
+        if (courseDto.getIsPublic() != null) {
+            course.setPublic(courseDto.getIsPublic());
         }
 
         if (courseDto.getDepartment() != null) {

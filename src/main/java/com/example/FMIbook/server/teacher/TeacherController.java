@@ -2,6 +2,7 @@ package com.example.FMIbook.server.teacher;
 
 import com.example.FMIbook.domain.users.teacher.Teacher;
 import com.example.FMIbook.domain.users.teacher.TeacherDTO;
+import com.example.FMIbook.domain.users.teacher.TeacherRequestDTO;
 import com.example.FMIbook.domain.users.teacher.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class TeacherController {
 
     @PutMapping("{teacherId}")
     public TeacherDTO update(@PathVariable UUID teacherId,
-                            @RequestBody @Valid TeacherDTO teacherDto) {
+                            @RequestBody @Valid TeacherRequestDTO teacherDto) {
         return teacherService.update(teacherId, teacherDto);
     }
 

@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.department;
 
 import com.example.FMIbook.domain.course.Course;
+import com.example.FMIbook.domain.users.teacher.Teacher;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -33,6 +34,9 @@ public class Department {
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Course> courses;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Teacher> teachers;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
