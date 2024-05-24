@@ -17,6 +17,8 @@ public class UserDTO {
     @Email(message = "email is invalid")
     private String email;
 
+    private Role role;
+
     public UserDTO(String email) {
         this.email = email;
     }
@@ -26,6 +28,6 @@ public class UserDTO {
             return null;
         }
 
-        return new UserDTO(user.getId(), user.getEmail());
+        return new UserDTO(user.getId(), user.getEmail(), user.getRole());
     }
 }

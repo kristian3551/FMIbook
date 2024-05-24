@@ -8,6 +8,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -58,6 +59,24 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("status", 500);
         errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "IO error occurred");
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthException(
+            AuthenticationException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 401);
+        errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "Unauthorized");
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGeneralError(Exception ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 500);
+        errorResponse.put("message", ex.getMessage() != null ? ex.getMessage() : "Unexpected error occurred");
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -86,6 +86,7 @@ public class StudentDTO extends UserDTO {
                 .build();
         result.setId(student.getId());
         result.setEmail(student.getEmail());
+        result.setRole(student.getRole());
         return result;
     }
 
@@ -123,6 +124,7 @@ public class StudentDTO extends UserDTO {
                 .build();
         result.setId(student.getId());
         result.setEmail(student.getEmail());
+        result.setRole(student.getRole());
         return result;
     }
 }

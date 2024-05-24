@@ -1,10 +1,11 @@
 package com.example.FMIbook.domain.material;
 
 import com.example.FMIbook.domain.material.exception.MaterialNotFoundException;
-import com.example.FMIbook.utils.storage.FirebaseStorageService;
+import com.example.FMIbook.utils.storage.StorageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,8 @@ import java.util.UUID;
 @Service
 public class MaterialService {
     @Autowired
-    private final FirebaseStorageService storageService;
+    @Qualifier("firebaseStorageService")
+    private final StorageService storageService;
     @Autowired
     private final MaterialRepository  materialRepository;
 

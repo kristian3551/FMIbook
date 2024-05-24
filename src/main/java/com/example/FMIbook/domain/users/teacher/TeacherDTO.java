@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.users.teacher;
 
 import com.example.FMIbook.domain.course.CourseDTO;
+import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.UserDTO;
 import lombok.*;
 
@@ -19,8 +20,8 @@ public class TeacherDTO extends UserDTO {
 
     private List<CourseDTO> courses;
 
-    public TeacherDTO(UUID id, String name, String email, String degree, List<CourseDTO> courses) {
-        super(id, email);
+    public TeacherDTO(UUID id, String name, String email, Role role, String degree, List<CourseDTO> courses) {
+        super(id, email, role);
         this.name = name;
         this.degree = degree;
         this.courses = courses;
@@ -37,6 +38,7 @@ public class TeacherDTO extends UserDTO {
                 .build();
         result.setId(teacher.getId());
         result.setEmail(teacher.getEmail());
+        result.setRole(teacher.getRole());
         return result;
     }
 
@@ -48,6 +50,7 @@ public class TeacherDTO extends UserDTO {
                 teacher.getId(),
                 teacher.getName(),
                 teacher.getEmail(),
+                teacher.getRole(),
                 teacher.getDegree(),
                 teacher.getCourses() != null
                 ? teacher.getCourses().stream().map(CourseDTO::serializeLightweight).toList()

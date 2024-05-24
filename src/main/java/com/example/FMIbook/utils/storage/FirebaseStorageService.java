@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class FirebaseStorageService {
+public class FirebaseStorageService implements StorageService {
     @Value("${firebase.storage-bucket}")
     private String bucketName;
 
