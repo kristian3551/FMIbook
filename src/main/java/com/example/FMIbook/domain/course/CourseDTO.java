@@ -34,6 +34,8 @@ public class CourseDTO {
 
     private String description;
 
+    private boolean isPublic;
+
     private List<StudentDTO> students;
 
     private List<TeacherDTO> teachers;
@@ -75,6 +77,7 @@ public class CourseDTO {
                 .sections(new ArrayList<>())
                 .category(course.getCategory())
                 .tasks(new ArrayList<>())
+                .isPublic(course.isPublic())
                 .build();
     }
 
@@ -113,6 +116,7 @@ public class CourseDTO {
                 .department(departmentDTO)
                 .tasks(tasks)
                 .sections(sections)
+                .isPublic(course.isPublic())
                         .build();
     }
 }

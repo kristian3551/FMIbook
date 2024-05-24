@@ -1,6 +1,5 @@
 package com.example.FMIbook.domain.users.student;
 
-import com.example.FMIbook.domain.policy.CreatePolicy;
 import com.example.FMIbook.domain.policy.DeletePolicy;
 import com.example.FMIbook.domain.policy.UpdatePolicy;
 import com.example.FMIbook.domain.policy.exception.CannotDeleteException;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,12 +36,8 @@ public class StudentService {
     }
 
     public StudentDTO getOne(UUID id) {
-        Optional<Student> student = studentRepository.findById(id);
-        if (student.isEmpty()) {
-            throw new StudentNotFoundException();
-        }
-
-        return StudentDTO.serializeFromEntity(student.get());
+        Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+        return StudentDTO.serializeFromEntity(student);
     }
 
     public StudentDTO addOne(Student student, User user) {
@@ -53,13 +47,7 @@ public class StudentService {
     }
 
     public StudentDTO update(UUID id, @Valid StudentDTO studentDto, User user) {
-        Optional<Student> studentOpt = studentRepository.findById(id);
-
-        if (studentOpt.isEmpty()) {
-            throw new StudentNotFoundException();
-        }
-
-        Student student = studentOpt.get();
+        Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
 
         if (!UpdatePolicy.canModifyStudent(user, student)) {
             throw new CannotUpdateException();
@@ -99,15 +87,12 @@ public class StudentService {
     }
 
     public void delete(UUID id, User user) {
-        Optional<Student> student = studentRepository.findById(id);
-        if (student.isEmpty()) {
-            throw new StudentNotFoundException();
-        }
+        Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
 
-        if (!DeletePolicy.canDeleteStudent(user, student.get())) {
+        if (!DeletePolicy.canDeleteStudent(user, student)) {
             throw new CannotDeleteException();
         }
 
-        studentRepository.delete(student.get());
+        studentRepository.delete(student);
     }
 }

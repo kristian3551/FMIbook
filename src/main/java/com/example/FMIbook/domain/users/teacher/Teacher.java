@@ -1,6 +1,7 @@
 package com.example.FMIbook.domain.users.teacher;
 
 import com.example.FMIbook.domain.course.Course;
+import com.example.FMIbook.domain.department.Department;
 import com.example.FMIbook.domain.users.user.Role;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.persistence.*;
@@ -36,6 +37,10 @@ public class Teacher extends User {
 
     @ManyToMany(mappedBy = "teachers")
     private List<Course> courses;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

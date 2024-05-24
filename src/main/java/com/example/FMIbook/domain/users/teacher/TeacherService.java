@@ -1,7 +1,11 @@
 package com.example.FMIbook.domain.users.teacher;
 
+import com.example.FMIbook.domain.department.Department;
+import com.example.FMIbook.domain.department.DepartmentRepository;
+import com.example.FMIbook.domain.department.exception.DepartmentNotFoundException;
 import com.example.FMIbook.domain.users.teacher.exception.TeacherNotFoundException;
 import com.example.FMIbook.utils.ServiceUtils;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,15 +18,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Data
 public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public TeacherService(TeacherRepository teacherRepository, PasswordEncoder passwordEncoder) {
-        this.teacherRepository = teacherRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final DepartmentRepository departmentRepository;
 
     public List<TeacherDTO> findAll(
             Integer limit,
@@ -31,16 +31,12 @@ public class TeacherService {
     ) {
         Pageable page = ServiceUtils.buildOrder(limit, offset, sort, "name", Sort.Direction.ASC);
         Page<Teacher> teachers = teacherRepository.findAll(page);
-        return teachers.getContent().stream().map(TeacherDTO::serializeFromEntity).toList();
+        return teachers.getContent().stream().map(TeacherDTO::serializeLightweight).toList();
     }
 
     public TeacherDTO getOne(UUID id) {
-        Optional<Teacher> teacher = teacherRepository.findById(id);
-        if (teacher.isEmpty()) {
-            throw new TeacherNotFoundException();
-        }
-
-        return TeacherDTO.serializeFromEntity(teacher.get());
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
+        return TeacherDTO.serializeFromEntity(teacher);
     }
 
     public TeacherDTO addOne(Teacher teacher) {
@@ -49,14 +45,9 @@ public class TeacherService {
         return TeacherDTO.serializeFromEntity(teacher);
     }
 
-    public TeacherDTO update(UUID id, TeacherDTO teacherDto) {
-        Optional<Teacher> teacherOpt = teacherRepository.findById(id);
+    public TeacherDTO update(UUID id, TeacherRequestDTO teacherDto) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
 
-        if (teacherOpt.isEmpty()) {
-            throw new TeacherNotFoundException();
-        }
-
-        Teacher teacher = teacherOpt.get();
         if (teacherDto.getName() != null) {
             teacher.setName(teacherDto.getName());
         }
@@ -69,17 +60,17 @@ public class TeacherService {
             teacher.setDegree(teacherDto.getDegree());
         }
 
+        if (teacherDto.getDepartmentId() != null) {
+            Department department = departmentRepository.findById(teacherDto.getDepartmentId()).orElseThrow(DepartmentNotFoundException::new);
+            teacher.setDepartment(department);
+        }
+
         teacherRepository.save(teacher);
         return TeacherDTO.serializeFromEntity(teacher);
     }
 
     public void delete(UUID id) {
-        Optional<Teacher> teacher = teacherRepository.findById(id);
-
-        if (teacher.isEmpty()) {
-            throw new TeacherNotFoundException();
-        }
-
-        teacherRepository.delete(teacher.get());
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(TeacherNotFoundException::new);
+        teacherRepository.delete(teacher);
     }
 }

@@ -15,6 +15,7 @@ import com.example.FMIbook.domain.course.task.TaskRequestDTO;
 import com.example.FMIbook.domain.course.task.TaskResponseDTO;
 import com.example.FMIbook.domain.users.user.User;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,22 +25,18 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "api/courses")
+@Data
 public class CourseController {
     private final CourseService courseService;
     private final GradeService gradeService;
-
-    @Autowired
-    public CourseController(CourseService courseService, GradeService gradeService) {
-        this.courseService = courseService;
-        this.gradeService = gradeService;
-    }
 
     @GetMapping
     public List<CourseDTO> findAll(
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset,
-            @RequestParam(required = false) String sort) {
-        return courseService.findAll(limit, offset, sort);
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String search) {
+        return courseService.findAll(limit, offset, sort, search);
     }
 
     @GetMapping("{studentId}")
